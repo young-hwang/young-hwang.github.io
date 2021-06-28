@@ -1,22 +1,25 @@
 import React from "react"
+import { Link } from "gatsby"
 
-export default () => {
+const Nav = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <a href="/">Home</a>
+    <nav className="nav">
+      <ul className="nav-list">
+        <li className="nav-list-item">
+          <Link to="/">Home</Link>
         </li>
-        <li>
-          <a href="/about">About</a>
+        <li className="nav-list-item">
+          <Link to="/blog">Blog</Link>
         </li>
-        <li>
-          <a href="/blog">Blog</a>
+        <li className="nav-list-item">
+          <Link to="/tags">Tags</Link>
         </li>
-        <li>
-          <a href="/contact">Contact</a>
+        <li className="nav-list-item">
+          <Link to="/contact">Contact</Link>
         </li>
       </ul>
     </nav>
   )
 }
+
+export default Nav;

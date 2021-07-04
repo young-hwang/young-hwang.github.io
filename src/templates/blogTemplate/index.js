@@ -3,7 +3,7 @@ import { graphql, Link } from "gatsby"
 
 import Layout from "../../components/Layout"
 
-export default Template = ({ data }) => {
+const Template = ({ data }) => {
   const post = data.markdownRemark
   const { title, author, date } = post.frontmatter
 
@@ -32,3 +32,5 @@ export const postQuery = graphql`
     }
   }
 `
+
+export default Template

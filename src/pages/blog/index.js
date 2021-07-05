@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../../components/Layout"
-import Post from "../../components/Post"
+import PostCard from "../../components/PostCard"
 
 const Blog = ({ data }) => {
   return (
@@ -13,7 +13,7 @@ const Blog = ({ data }) => {
         const { title, author, date, description, path } = post.node.frontmatter;
 
         return(
-          <Post
+          <PostCard
             title={title}
             author={author}
             date={date}

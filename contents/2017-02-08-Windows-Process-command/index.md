@@ -1,5 +1,5 @@
 ---
-path: /blog/2017-02-08-Windows-Process-Command
+path: /blog/2017-02-08-windows-process-command
 date: '2021-04-13'
 title: 'Windows Process Command'
 author: 'Young Hwang'

@@ -1,6 +1,6 @@
 const path = require('path')
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const postTemplate = path.resolve('src/templates/blogTemplate/index.js')
 
@@ -17,6 +17,14 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
+
+  if (result.errors) {
+    reporter.panicOnBuild(
+      `There was an error loading your blog posts`,
+      result.errors
+    )
+    return
+  }
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({

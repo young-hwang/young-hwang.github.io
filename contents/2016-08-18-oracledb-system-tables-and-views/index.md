@@ -1,5 +1,5 @@
 ---
-path: /blog/2016-08-18-oracle-database-system-tables-and-views
+path: '/blog/2016-08-18-oracle-database-system-tables-and-views'
 date: '2016-08-18'
 title: 'Oracle Database System Tables and Views'
 author: 'Young Hwang'

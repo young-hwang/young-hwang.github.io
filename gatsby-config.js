@@ -12,7 +12,13 @@ module.exports = {
   },
   /* Your site config here */
   plugins: [
-    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        footnotes: true,
+        gfm: true,
+      }
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

@@ -3,7 +3,7 @@ path: /blog/2018-10-11-oracledb-create-user
 title: 'Oracle DB 사용자 생성 및 권한 부여'
 author: 'Young Hwang'
 date: '2018-10-11'
-tags: [ 'OracleDB' ]
+tags: [ 'Oracle Database' ]
 ---
 
 ## 사용자 생성

@@ -4,7 +4,7 @@ date: '2016-12-30'
 title: 'Oracle Database Table space'
 author: 'Young Hwang'
 description: 'Oracle Database Table space'
-tags: ['OracleDB']
+tags: ['Oracle Database']
 ---
 
 ## Data block size 조회

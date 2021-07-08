@@ -4,7 +4,7 @@ date: '2016-08-18'
 title: 'Oracle Database System Tables and Views'
 author: 'Young Hwang'
 description: 'Oracle Database System Tables and Views'
-tags: ['OracleDB']
+tags: ['Oracle Database']
 ---
 
 ## System Prefix 설명

@@ -3,7 +3,7 @@ path: /blog/2018-03-18-oracledb-일일점검-대상
 title: 'Oracle DB 일일점검 대상'
 author: 'Young Hwang'
 date: '2018-03-10'
-tags: [ 'OracleDB' ]
+tags: [ 'Oracle Database' ]
 ---
 
 ## Instance Service 상태 확인

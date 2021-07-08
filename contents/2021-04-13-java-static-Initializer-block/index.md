@@ -4,7 +4,7 @@ date: '2021-04-13'
 title: 'Static Initializer Block의 이해'
 author: 'Young Hwang'
 description: '정적 블록의 이해를 위한 예제 구성'
-tags: ['java']
+tags: ['Java']
 ---
 
 ---

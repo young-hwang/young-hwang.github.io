@@ -25,6 +25,11 @@ module.exports = {
         name: `pages`,
         path: `${__dirname}/contents`
       }
+    },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+      }
     }
   ],
 }

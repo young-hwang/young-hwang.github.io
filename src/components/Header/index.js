@@ -1,8 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
 
-const Nav = () => {
+import { AppBar, Toolbar } from "@material-ui/core"
+
+const Header = () => {
   return (
+    <AppBar>
+      <Toolbar>
     <nav className="nav">
       <ul className="nav-list">
         <li className="nav-list-item">
@@ -19,7 +23,9 @@ const Nav = () => {
         </li>
       </ul>
     </nav>
+    </Toolbar>
+    </AppBar>
   )
 }
 
-export default Nav;
+export default Header;

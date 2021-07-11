@@ -8,8 +8,8 @@ import theme from "../../theme"
 
 const Layout = ({ children }) => (
   <>
-    <CssBaseline/>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Header />
       <main>{ children }</main>
     </ThemeProvider>

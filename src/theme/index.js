@@ -9,7 +9,7 @@ const theme = createMuiTheme({
     },
   },
   status: {
-    danger: colors.orange[500]
+    danger: colors.orange[700]
   }
 })
 

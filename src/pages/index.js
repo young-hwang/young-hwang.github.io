@@ -4,18 +4,13 @@ import { makeStyles } from "@material-ui/core"
 import { Checkbox } from "@material-ui/core"
 
 import Layout from "../components/Layout"
+import TestButton from "../components/TestButton"
 
-const useStyles = makeStyles((theme) => {
-  root: {
-  }
-})
 const Home = () => {
-  const classes = useStyles()
-
   return (
     <Layout>
       <h1>Home</h1>
-      <Checkbox defaultChecked classes={{ root: classes.root }} />
+      <TestButton />
     </Layout>
   )
 }

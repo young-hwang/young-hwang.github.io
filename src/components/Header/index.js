@@ -5,8 +5,8 @@ import { AppBar, Toolbar } from "@material-ui/core"
 
 const Header = () => {
   return (
-    <AppBar>
-      <Toolbar>
+    // <AppBar>
+    //   <Toolbar>
     <nav className="nav">
       <ul className="nav-list">
         <li className="nav-list-item">
@@ -23,8 +23,8 @@ const Header = () => {
         </li>
       </ul>
     </nav>
-    </Toolbar>
-    </AppBar>
+    // </Toolbar>
+    // </AppBar>
   )
 }
 

@@ -3,12 +3,14 @@ import PropTypes from "prop-types"
 import { CssBaseline } from "@material-ui/core"
 import { ThemeProvider, makeStyles } from "@material-ui/core/styles"
 
-import Header from "../Header"
 import theme from "../../theme"
+
+import Navbar from "../Navbar"
+import Sidebar from "../Sidebar"
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     display: 'flex',
     height: '100%',
     width: '100%',
@@ -18,7 +20,20 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     overflow: 'hidden',
-    paddingTop: 64
+    paddingTop: 64,
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: 256
+    }
+  },
+  container: {
+    display: 'flex',
+    flex: '1 1 auto',
+    overflow: 'hidden'
+  },
+  content : {
+    flex: '1 1 auto',
+    height: '100%',
+    overflow: 'hidden'
   }
 }))
 
@@ -26,12 +41,17 @@ const Layout = ({ children }) => {
   const classes = useStyles()
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} >
       <CssBaseline />
       <div className={classes.root} >
-        <Header />
+        <Navbar />
+        <Sidebar />
         <div className={classes.wrapper} >
-          <main>{ children }</main>
+          <div className={classes.container} >
+            <div className={classes.content} >
+              <main>{ children }</main>
+            </div>
+          </div>
         </div>
       </div>
     </ThemeProvider>

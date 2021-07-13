@@ -2,6 +2,18 @@ import { createMuiTheme } from "@material-ui/core/styles"
 import { colors } from "@material-ui/core"
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        ul: {
+          listStyleType: 'none'
+        },
+        li: {
+          float: 'left'
+        }
+      }
+    }
+  },
   palette: {
     background: {
       default: '#F4F6F8',

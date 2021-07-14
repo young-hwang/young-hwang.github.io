@@ -1,5 +1,5 @@
 ---
-path: '/blog/2016-12-30-oracledb-table-space'
+path: '/blog/2016-12-30-oracle-database-table-space'
 date: '2016-12-30'
 title: 'Oracle Database Table space'
 author: 'Young Hwang'

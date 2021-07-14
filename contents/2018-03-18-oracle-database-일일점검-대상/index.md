@@ -1,5 +1,5 @@
 ---
-path: /blog/2018-03-18-oracledb-일일점검-대상
+path: /blog/2018-03-18-oracle-database-일일점검-대상
 title: 'Oracle DB 일일점검 대상'
 author: 'Young Hwang'
 date: '2018-03-10'

@@ -1,4 +1,5 @@
 import React from 'react'
+import { makeStyles } from '@material-ui/styles'
 
 import {
   Avatar,
@@ -15,11 +16,20 @@ const user = {
   name: 'Young Hwang'
 }
 
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    flexshrink: 0,
+    width: theme.status.drawerWidth
+  }
+}))
+
 const Sidebar = () => {
+  const classes = useStyles()
+
   return (
     <>
-    <Hidden lgUp>
       <Drawer
+        className={classes.drawer}
         variant="permanent"
         anchor="left"
         PaperProps={{
@@ -30,7 +40,6 @@ const Sidebar = () => {
             }
           }}
       >
-        test
         <Box
           sx={{
             display: 'flex',
@@ -59,7 +68,6 @@ const Sidebar = () => {
             </Box>
         </Box>
       </Drawer>
-    </Hidden>
     </>
   )
 }

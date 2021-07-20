@@ -21,7 +21,8 @@ const theme = createMuiTheme({
     },
   },
   status: {
-    danger: colors.orange[700]
+    danger: colors.orange[700],
+    drawerWidth: 240
   }
 })
 

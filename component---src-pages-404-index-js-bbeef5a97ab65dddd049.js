@@ -1,0 +1,2 @@
+(self.webpackChunkgatsby_starter_hello_world=self.webpackChunkgatsby_starter_hello_world||[]).push([[911],{3673:function(e,t,l){"use strict";l.r(t);var r=l(7294),n=l(7177);t.default=function(){return r.createElement(n.Z,null,r.createElement("h1",null,"404: Not Found"))}}}]);
+//# sourceMappingURL=component---src-pages-404-index-js-bbeef5a97ab65dddd049.js.map

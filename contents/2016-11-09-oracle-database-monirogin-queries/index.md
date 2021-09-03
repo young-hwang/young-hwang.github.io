@@ -217,6 +217,14 @@ ORDER BY s.MODULE;
 alter system kill session 'sid, serial#'
 sid : session_id
 serial# : serial_no 을 의미한다.*/
-alter system kill session '534, 4481';
+alter system kill session '534, 4481'; -- 세션을 직접적으로 죽이지 않음. 스스로 죽어라고 통보하는 것. 오랫동안 응답을 기다리는 경우 발생
+alter system kill session '534, 4481' immediate; -- 죽은 것을 확인하지 않고 바로 현재 세션으로 리턴
+
+-- 세션을 죽이는 다른 방법
+-- 서버 프로세스를 바로 죽임
+-- OS에서 프로세스를 죽이는 것과 동일한 효과
+alter system disconnect session '534, 4481' post_transaction;
+alter system disconnect session '534, 4481' immediate;
+
 commit ;
 ```

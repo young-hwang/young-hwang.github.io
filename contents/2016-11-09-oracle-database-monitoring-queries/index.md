@@ -226,5 +226,21 @@ alter system kill session '534, 4481' immediate; -- 죽은 것을 확인하지 �
 alter system disconnect session '534, 4481' post_transaction;
 alter system disconnect session '534, 4481' immediate;
 
+-- kill session 으로 처리가 안될 시 서버 프로세스를 Kill 함
+-- Server Process ID 확인 쿼리
+SELECT
+    VS.SID,
+    VS.USERNAME,
+    VS.OSUSER,
+    VS.PROCESS FG_PID,VP.SPID BG_PID
+FROM
+    V$SESSION VS, V$PROCESS VP
+WHERE
+    VS.PADDR = VP.ADDR
+ORDER RY
+    VS.OSUSER;
+;
+
+-- kill -9 XXXXX
 commit ;
 ```

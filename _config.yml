@@ -13,8 +13,8 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Just the Docs
-description: A Jekyll theme for documentation
+title: Zero Base
+description: This blog is related to IT development.
 baseurl: "/young-hwang.github.io" # the subpath of your site, e.g. /blog
 url: "https://young-hwang.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 repository: young-hwang/young-hwang.github.io # for github-metadata
@@ -107,9 +107,9 @@ aux_links_new_tab: false
 nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
-nav_external_links:
-  - title: Just the Docs on GitHub
-    url: https://github.com/young-hwang/young-hwang.github.io
+#nav_external_links:
+#  - title: Just the Docs on GitHub
+#    url: https://github.com/young-hwang/young-hwang.github.io
 
 # Footer content
 # appears at the bottom of every page's main content
@@ -123,8 +123,6 @@ footer_content: "Copyright &copy; 2017-2020 Patrick Marsceill. Distributed by an
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
 last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
-
-
 
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true # show or hide edit this page link

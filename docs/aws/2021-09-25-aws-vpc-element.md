@@ -3,9 +3,6 @@ layout: default
 title: 'AWS VPC 구성 요소'
 parent: aws
 nav_order: 50
-date: '2021-08-31'
-author: 'Young Hwang'
-tags: ['aws']
 ---
 
 # AWS VPC 구성 요소

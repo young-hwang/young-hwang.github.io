@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 'AWS VPC 구성 요소'
+title: 'VPC 구성 요소'
 parent: aws
 nav_order: 50
 ---
 
-# AWS VPC 구성 요소
+# VPC 구성 요소
 
 ## VPC
 

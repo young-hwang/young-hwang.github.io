@@ -1,6 +1,15 @@
 ---
 layout: default
 title: '01 - MongoDB 소개'
+parent: MongoDB
+nav_order: 10
+date: '2023-02-05'
+author: 'Young Hwang'
+description: '01 - MongoDB 소개'
+tags: ['MongoDB']
+---
+layout: default
+title: '01 - MongoDB 소개'
 parent: mongodb
 nav_order: 60
 ---

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle DB 사용자 생성 및 권한 부여'
+title: 'DB 사용자 생성 및 권한 부여'
 parent: Oracle Database
 nav_order: 40
 author: 'Young Hwang'

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle Database System Tables and Views'
+title: 'System Tables and Views'
 parent: Oracle Database
 nav_order: 40
 date: '2016-08-18'

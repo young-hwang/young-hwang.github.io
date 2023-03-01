@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle Database Monitoring Queries'
+title: 'Monitoring Queries'
 parent: Oracle Database
 nav_order: 40
 date: '2016-11-09'

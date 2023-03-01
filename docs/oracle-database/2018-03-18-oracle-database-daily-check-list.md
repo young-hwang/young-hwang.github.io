@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle DB 일일점검 대상'
+title: 'DB 일일점검 대상'
 parent: Oracle Database
 nav_order: 40
 author: 'Young Hwang'

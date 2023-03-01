@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle Database Table space'
+title: 'Table space'
 parent: Oracle Database
 nav_order: 40
 date: '2016-12-30'

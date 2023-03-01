@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Oracle DB TDD(Table Definiton Document)'
+title: 'TDD(Table Definiton Document)'
 parent: Oracle Database
 nav_order: 40
 author: 'Young Hwang'

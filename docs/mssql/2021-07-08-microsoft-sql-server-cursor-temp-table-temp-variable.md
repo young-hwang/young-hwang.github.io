@@ -2,7 +2,7 @@
 layout: default
 title: '커서, 임시테이블, 테이블 변수의 이해'
 parent: MS-SQL
-nav_order: 50
+nav_order: 30
 date: '2021-07-08'
 author: 'Young Hwang'
 description: '커서, 임시테이블, 테이블 변수의 이해'

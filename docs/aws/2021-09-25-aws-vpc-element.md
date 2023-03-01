@@ -2,7 +2,7 @@
 layout: default
 title: 'VPC 구성 요소'
 parent: aws
-nav_order: 50
+nav_order: 90
 ---
 
 # VPC 구성 요소

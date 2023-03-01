@@ -1,7 +1,7 @@
 ---
 layout: default
 title: MS-SQL
-nav_order: 50
+nav_order: 30
 has_children: true
 permalink: /docs/mssql
 ---

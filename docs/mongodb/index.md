@@ -1,7 +1,7 @@
 ---
 layout: default
 title: MongoDB
-nav_order: 20
+nav_order: 60
 has_children: true
 permalink: /docs/mongodb
 ---

@@ -269,7 +269,7 @@ foobar.version
         
         24자리 16진수 문자열, 12바이트의 저장소
         
-        ![Screenshot 2023-02-09 at 10.49.22 PM.png](images/Screenshot_2023-02-09_at_10.49.22_PM.png)
+        ![Screenshot 2023-02-09 at 10.49.22 PM.png](https://young-hwang.github.io/docs/mongodb/images/Screenshot_2023-02-09_at_10.49.22_PM.png)
         
     - _id의 자동 생성
         

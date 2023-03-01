@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'MongoDB 완벽 가이드(01 - MongoDB 소개)'
+title: '01 - MongoDB 소개'
 parent: mongodb
 nav_order: 60
 ---

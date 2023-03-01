@@ -2,7 +2,7 @@
 layout: default
 title: 'Windows Process Command'
 parent: Windows
-nav_order: 80
+nav_order: 0
 date: '2021-04-13'
 author: 'Young Hwang'
 description: 'Windows Command 정리'

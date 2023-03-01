@@ -2,7 +2,7 @@
 layout: default
 title: 'Singleton Pattern의 이해'
 parent: Design Pattern
-nav_order: 10
+nav_order: 0
 date: '2021-04-13'
 author: 'Young Hwang'
 description: 'Singleton Pattern의 이해'

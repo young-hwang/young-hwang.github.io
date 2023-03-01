@@ -2,7 +2,7 @@
 layout: default
 title: 'IntelliJ  설정'
 parent: intelliJ
-nav_order: 20
+nav_order: 0
 date: '2022-05-12'
 author: 'Young Hwang'
 description: 'IntelliJ  설정'

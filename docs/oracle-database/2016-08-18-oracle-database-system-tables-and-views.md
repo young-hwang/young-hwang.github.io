@@ -2,7 +2,7 @@
 layout: default
 title: 'System Tables and Views'
 parent: Oracle Database
-nav_order: 40
+nav_order: 0
 date: '2016-08-18'
 author: 'Young Hwang'
 description: 'Oracle Database System Tables and Views'

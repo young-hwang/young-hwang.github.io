@@ -2,7 +2,7 @@
 layout: default
 title: '02 - MongoDB 시작'
 parent: MongoDB
-nav_order: 60
+nav_order: 1
 date: '2023-02-05'
 author: 'Young Hwang'
 description: '02 - MongoDB 시작'

@@ -2,7 +2,7 @@
 layout: default
 title: 'TDD(Table Definiton Document)'
 parent: Oracle Database
-nav_order: 40
+nav_order: 5
 author: 'Young Hwang'
 date: '2019-02-25'
 tags: [ 'Oracle Database' ]

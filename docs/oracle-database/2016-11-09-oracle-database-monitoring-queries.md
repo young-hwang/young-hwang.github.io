@@ -2,7 +2,7 @@
 layout: default
 title: 'Monitoring Queries'
 parent: Oracle Database
-nav_order: 40
+nav_order: 1
 date: '2016-11-09'
 author: 'Young Hwang'
 description: 'Oracle Database Monitoring Queries'

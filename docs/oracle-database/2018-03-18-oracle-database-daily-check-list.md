@@ -2,7 +2,7 @@
 layout: default
 title: 'DB 일일점검 대상'
 parent: Oracle Database
-nav_order: 40
+nav_order: 3
 author: 'Young Hwang'
 date: '2018-03-10'
 tags: [ 'Oracle Database' ]

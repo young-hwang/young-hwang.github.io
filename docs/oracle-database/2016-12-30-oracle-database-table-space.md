@@ -2,7 +2,7 @@
 layout: default
 title: 'Table space'
 parent: Oracle Database
-nav_order: 40
+nav_order: 2
 date: '2016-12-30'
 author: 'Young Hwang'
 description: 'Oracle Database Table space'

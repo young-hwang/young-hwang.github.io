@@ -2,7 +2,7 @@
 layout: default
 title: 'DB 사용자 생성 및 권한 부여'
 parent: Oracle Database
-nav_order: 40
+nav_order: 4
 author: 'Young Hwang'
 date: '2018-10-11'
 tags: [ 'Oracle Database' ]

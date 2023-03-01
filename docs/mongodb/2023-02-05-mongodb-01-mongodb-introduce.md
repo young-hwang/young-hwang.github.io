@@ -2,7 +2,7 @@
 layout: default
 title: '01 - MongoDB 소개'
 parent: MongoDB
-nav_order: 60
+nav_order: 0
 date: '2023-02-05'
 author: 'Young Hwang'
 description: '01 - MongoDB 소개'

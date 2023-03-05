@@ -279,3 +279,173 @@ cherry
 ```
 
 ## 4. $where 쿼리
+
+키:값 쌍으로도 다양한 쿼리가 가능하지만 정확하게 표현할 수 없는 쿼리도 존재
+임의의 자바스크립트를 쿼리의 일부분으로 실행 가능
+$where은 일반 쿼리보다 훨씬 느리니 사용에 주의(BSON => Javascript Object로 변환 필요)
+복잡한 쿼리를 다루는 방법으로 맵리듀스가 있음
+
+```shell
+# 문서내의 값이 동일한 값을 가지는 조회
+> db.foo.insertOne({apple: 1, banana: 6, peach: 3})
+> db.foo.insertOne({apple: 1, spinach: 4, watermelon: 4})
+
+> db.foo.find({$where: `function() {
+  for (var current in this) {
+    for (var other in this) {
+      if (current != other && this[current] == this.[other]) {
+        return true;
+      }
+    }    
+    return false;
+  }
+}`})
+```
+
+## 5. 커서
+
+데이터베이스는 커서를 사용하여 find의 결과를 반환
+
+최종 결과에 대해 강력한 제어권을 제공
+
+결과의 수를 제한, 결과 중 몇 개를 건너 뛰거나, 여러 키의 조합으로 어떤 방향으로라도 정렬 등
+
+쉘에서 커서를 생성하기 위해서는 문서들을 컬렉션에 집어넣고, 그에 대해 쿼리를 수행하고 결과를 지역변수에 할당
+
+```shell
+> for(i=0; i<100; i++) {
+    db.c.insert({x: i});
+}
+
+> var cursor = db.c.find()
+
+> while (cursor.hasNext()) {
+  obj = cursor.next();
+  console.dir(obj);
+} 
+{
+  _id: ObjectId {
+    [Symbol(id)]: Buffer(12) [Uint8Array] [
+      100,   3, 104, 52, 185,
+      100, 182,  56, 40, 189,
+       84, 181
+    ]
+  },
+  x: 0
+}
+...
+{
+  _id: ObjectId {
+    [Symbol(id)]: Buffer(12) [Uint8Array] [
+      100,   3, 104, 52, 185,
+      100, 182,  56, 40, 189,
+       85,  24
+    ]
+  },
+  x: 99
+}
+
+# find 호출 시 데이터베이스에 바로 쿼리 하지 않음
+> const cursor = db.foo.find().sort(x: 1).limit(1).skip(30);
+
+# cursor.hasNext() 호출을 한다고 가정시 해당 시점에 쿼리 요청을 수행한다.
+> cursor.hasNext()
+```
+
+### 제한, 건너뛰기, 정렬
+
+결과수 제한, 몇개의 결과 건너뛰기, 정렬 처리
+
+```shell
+# 3개의 결과만 반환
+> db.foo.find().limit(3)
+
+# 3개의 결과를 건너뛰고 반환
+> db.foo.find().skip(3)
+
+# 정렬은 객체를 매개변수로 가짐, 1-오름차순, -1-내림차순
+> db.foo.find().sort({name: 1, age: -1})
+```
+
+#### 비교순서
+
+-> 순서로 진행
+
+최소값형 - null형 - 숫자형(정수형, Long, Double) - 문자열형 - 객체/문서형 - 배열형 - 이진데이터형 - 객체ID형 - boolean형 - 날짜형 - 타임스탬프형 - 정규표현식형 - 최대값형
+
+### 많은 수의 skip 피하기
+
+문서수가 적을 경우 skip을 사용하여도 무리가 아니나 많은 수에서는 피하여야 함
+
+skip을 피하기 위해 일반으로 문서 자체에 조건을 추가 or 전 쿼리의 결과를 가지고 다음 쿼리 수행
+
+#### Skip을 사용하지 않고 페이지 나누기
+
+```shell
+# date에 따른 내림차순 정렬로 표시
+> var page1 = db.foo.find().sort({date: -1}).limit(100)
+
+# 마지막 값 저장
+> var latest = null;
+while(page1.hasNext()) {
+  latest = page1.next();
+  display(lastest);
+}
+
+# 마지막 값을 활용한 조회
+> var page2 = db.foo.find({date: {$lt: lastest.date}});
+page2.sort({date: -1}).limit(100)
+```
+
+#### 문서 랜덤 찾기
+
+컬렉션에서 랜덤으로 문서를 가져오는 방법
+
+```shell
+# 전체 개수를 세는 방법(비효율적)
+> var total = db.foo.count()
+> var random = Math.floor(Math.random() * total)
+> db.foo.find().skip(random).limit(1)
+
+# 문서를 생성시 램덤키를 생성
+> db.foo.insertOne({name: 'joe', random: Math.random()})
+> var random = Math.random();
+> result = db.foo.findOne({random: {$gt: random}})
+```
+
+#### 고급 쿼리 옵션
+
+$maxscan: 정수형 - 쿼리에서 살표볼 문서의 최대 숫자 지정
+
+$min: 문서형 - 쿼리의 시작 조건
+
+$max: 문서형 - 쿼리의 끝 조건
+
+$hint: 문서형 - 쿼리에 사용할 색인 지정
+
+$explan: boolean형 - 쿼리가 어덯게 수행될 것인지 설명 표현
+
+$snapshot: boolean형 - 쿼리 수행 후 일관된 스냅샷을 유지할 것을 지정
+
+#### 일괄적인 결과 얻기
+
+MongoDB에서 데이터를 꺼내고, 가공후, 다시 저장하는 과정
+
+```shell
+> cursor = db.foo.find();
+> while(cursor.hasNext()) {
+  var doc = cursor.next();
+  doc = process(doc);
+  db.foo.saveOne(doc);
+}
+```
+
+find 호출 시 시작 부분부터 결과를 가지고 오며 오른쪽으로 이동
+
+만약 처리결과가 기존보다 사이즈가 커지는 경우 컬렉션의 마지막에 재배치
+
+프로그램은 계속해서 문서를 가지고 오며 끝에 다다르면 재배치한 문서를 다시 반환
+
+이를 해결하려면 쿼리의 스냅샷을 찍어야함
+
+$snapshot 옵션 추가 시 쿼리는 바뀌지 않은 컬렉션의 뷰에서 실행됨

@@ -70,3 +70,72 @@ explain과 hint 도구를 활용해 서버가 생성한 색인을 사용하는�
 컬렉션이 메모리에서 정렬하기에 너무 크면 오류를 반환한다.
 
 ## 고유하게 식별되는 색인
+
+컬렉션의 색인은 각 색인을 고유하게 식별하는 문자열형의 이름이 있다.
+
+그 이름은 서버가 색인을 삭제하거나 조작할 때 사용한다.
+
+색인의 이름은 기본적으로 keyname1_deir1_keyname2_dir2...keynameN_dirN 형태이다.
+
+임의의 이름을 지정 할 수 있다.
+
+```shell
+> db.foo.ensureIndex({a: 1, b: 1}, {name: "alphabet"})
+```
+
+# 고유 색인(unique index)
+
+컬렉션의 모든 문서 내 주어진 키에 대해 값의 고유함을 보장한다.
+
+```shell
+> db.people.ensureIndex({username: 1}, {unique: true})
+```
+
+## 중복 제거하기
+
+기존 컬렉션에 고유 색인을 생성할 때, 일부 값이 중복될 수 있다.
+
+종복되면 색인 생성에 실패한다.
+
+때로는 중복된 값을 가지는 모든 문서를 삭제하고 싶은 경우 dropDups을 사용할 수 있다.
+
+dropDups 옵션은 처음 발견된 문서를 저장하고 중복된 값을 가지는 다음 문서를 제거한다.
+
+```shell
+> db.people.ensureIndex({username: 1}, {unique: true, dropDups: true})
+```
+
+## 복합 고유 색인
+
+복합 고유 색인도 생성할 수 있다. 
+
+키의 조합에 대한 값은 고유해야 한다.
+
+MongoDB에서 큰 파일을 저장하기 위한 표준 방법인 GridFS는 복합 고유 색인을 사용한다.
+
+# explain과 hint 사용하기
+
+explain은 쿼리에 대한 많은 정보를 주는 도구이다.
+
+```shell
+> db.foo.find().explain()
+```
+
+- "cursor":"BasicCursor"
+
+쿼리가 색인을 사용하지 않았음을 의미한다.
+
+- "nscanned":64
+
+데이터베이스가 훑은 문서의 수이다.
+
+반환받은 문서의 수와 가장 가깝도록 해야 한다.
+
+- "n":64
+
+반환받는 문서의 수 이다.
+
+- "milis":0
+
+
+  

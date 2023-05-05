@@ -1,3 +1,13 @@
+---
+layout: default
+title: 'Crash, MPM 대시보드 성능개선-실행 수'
+parent: mysql
+nav_order: 1
+date: '2022-03-07'
+author: 'Young Hwang'
+description: 'sql tunning'
+tags: ['mysql']
+---
 # Crash, MPM 대시보드 성능개선-실행 수
 
 1. [문제 인식]

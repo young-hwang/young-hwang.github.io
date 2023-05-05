@@ -10,7 +10,7 @@ imqa_user schema의 경우 기본이 되는 schema로 하나로 고정이 되나
 
 # 2. shard 구성 형태
 
-![Screenshot 2022-11-10 at 7.53.44 PM.png](Database%20Shard%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%20eb9cea7bf8694358b1cd99d9dff91b00/Screenshot_2022-11-10_at_7.53.44_PM.png)
+![Screenshot 2022-11-10 at 7.53.44 PM.png](https://young-hwang.github.io/docs/mysql/images/Screenshot_2022-11-10_at_7.53.44_PM.png)
 
 # 3. Web API 에서의 Connection 생성을 위한 플로우
 
@@ -19,7 +19,7 @@ imqa_user schema의 경우 기본이 되는 schema로 하나로 고정이 되나
 1. IMQA 에서 프로젝트 생성 시 Project Key 가 각 프로젝트 별로 생성이 된다.
 2. 해당 프로젝트의 Region 분리가 필요한 경우 Project Key와 Region된 DB의 접속 정보를 Config Server에 설정 하여(이미지-1 참조) 추후 각 애플리케이션에서 참조 할 수 있도록 한다.
 
-![이미지 - 1](Database%20Shard%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%20eb9cea7bf8694358b1cd99d9dff91b00/Screenshot_2022-11-10_at_6.01.16_PM.png)
+![이미지 - 1](https://young-hwang.github.io/docs/mysql/images/Screenshot_2022-11-10_at_6.01.16_PM.png)
 
 이미지 - 1
 
@@ -42,7 +42,7 @@ imqa_user schema의 경우 기본이 되는 schema로 하나로 고정이 되나
 
 리전 분리가 가능한 schema 들인 imqa_manage, imqa_aos_xxxx, imqa_ios_xxx 등과 같은 shema를 지정하기 위해서는 아래와 같이 url 지정이 되어야 한다.
 
-![Screenshot 2022-11-12 at 12.32.15 AM.png](Database%20Shard%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%20eb9cea7bf8694358b1cd99d9dff91b00/Screenshot_2022-11-12_at_12.32.15_AM.png)
+![Screenshot 2022-11-12 at 12.32.15 AM.png](https://young-hwang.github.io/docs/mysql/images/Screenshot_2022-11-12_at_12.32.15_AM.png)
 
 # 6. 개발 중 발생한 문제 사항
 

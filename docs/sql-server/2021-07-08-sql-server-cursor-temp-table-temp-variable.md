@@ -1,12 +1,12 @@
 ---
 layout: default
-title: '커서, 임시테이블, 테이블 변수의 이해'
-parent: MS-SQL
+title: 'cursor, temp table, table variable'
+parent: sql server
 nav_order: 30
 date: '2021-07-08'
 author: 'Young Hwang'
 description: '커서, 임시테이블, 테이블 변수의 이해'
-tags: ['MS-SQL']
+tags: ['sql server']
 ---
 
 ## 커서, 임시 테이블, 테이블 변수란

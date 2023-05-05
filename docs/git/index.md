@@ -1,6 +1,6 @@
 ---
 layout: default
-title: git
+title: Git
 nav_order: 70
 has_children: true
 permalink: /docs/git

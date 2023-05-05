@@ -1,9 +1,9 @@
 ---
 layout: default
-title: sql server
-nav_order: 30
+title: SQL Server
+nav_order: 40
 has_children: true
-permalink: /docs/mssql
+permalink: /docs/sql-server
 ---
 
 {: .fs-6 .fw-300 }

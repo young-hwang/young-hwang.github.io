@@ -1,6 +1,6 @@
 ---
 layout: default
-title: intelliJ
+title: IntelliJ
 nav_order: 90
 has_children: true
 permalink: /docs/intellij

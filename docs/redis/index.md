@@ -1,6 +1,6 @@
 ---
 layout: default
-title: redis
+title: Redis
 nav_order: 100
 has_children: true
 permalink: /docs/redis

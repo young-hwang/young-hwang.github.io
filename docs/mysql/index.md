@@ -1,6 +1,6 @@
 ---
 layout: default
-title: mysql
+title: MySQL
 nav_order: 50 
 has_children: true
 permalink: /docs/mysql

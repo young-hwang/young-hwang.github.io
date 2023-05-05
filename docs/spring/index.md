@@ -1,9 +1,9 @@
 ---
 layout: default
-title: AWS
-nav_order: 90
+title: Spring
+nav_order: 30
 has_children: true
-permalink: /docs/aws
+permalink: /docs/spring
 ---
 
 {: .fs-6 .fw-300 }

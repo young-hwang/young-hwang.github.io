@@ -47,7 +47,7 @@ exclude:
    - fixtures/
 
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/profile.jpeg"
+#logo: "/assets/images/profile.jpeg"
 
 # Enable or disable the site search
 # Supports true (default) or false

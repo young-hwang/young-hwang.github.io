@@ -9,12 +9,6 @@ description: 'count min sketch'
 tags: ['algorithm']
 ---
 
-# 소개
-
-안녕하세요. IMQA 개발팀에서 백엔드 영역의 개발 및 운영업무를 맡고 있는 황영 입니다.
-이번 글에서는 count min sketch 라는 sketch 알고리즘에 대하여 알아보고 아직 실무에 적용하지는 않았지만
-앞으로의 개선 방향에 대하여 이야기하고자 합니다.
-
 # 빈도 계산하기
 
 CM Sketch 는 G. Cormode 와 S. Muthukrishnan 가 2003년에 발표한 sketch 알고리즘으로 각 항목에 대한 빈도(frequency)를 표현하는 sketch 중 하나 입니다.

@@ -1,9 +1,0 @@
----
-layout: default
-title: AWS
-nav_order: 90
-has_children: true
-permalink: /docs/aws
----
-
-{: .fs-6 .fw-300 }

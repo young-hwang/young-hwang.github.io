@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Log.info("develop")
+title: log.info(develop)
 description: This blog is related to IT development.
 baseurl: "/young-hwang.github.io" # the subpath of your site, e.g. /blog
 url: "https://young-hwang.github.io" # the base hostname & protocol for your site, e.g. http://example.com
@@ -43,11 +43,14 @@ exclude:
    - package-lock.json
    - Rakefile
    - README.md
+   - CODE_OF_CONDUCT.md
+   - docker-compose.yml
+   - Dockerfile
  # theme test code
    - fixtures/
 
 # Set a path/url to a logo that will be displayed instead of the title
-#logo: "/assets/images/profile.jpeg"
+#logo: "/assets/images/just-the-docs.png"
 
 # Enable or disable the site search
 # Supports true (default) or false
@@ -79,8 +82,6 @@ search:
 # For copy button on code
 enable_copy_code_button: true
 
-# To disable support for mermaid diagrams (https://mermaid.js.org),
-# comment out the `mermaid` and `version` keys below
 # By default, consuming the theme as a gem leaves mermaid disabled; it is opt-in
 mermaid:
   # Version of mermaid library
@@ -88,8 +89,12 @@ mermaid:
   version: "9.1.6"
   # Put any additional configuration, such as setting the theme, in _includes/mermaid_config.js
   # See also docs/ui-components/code
-  # To load mermaid from a local file use the `path` key to specify the location of the library instead; e.g.
+  # To load mermaid from a local library, also use the `path` key to specify the location of the library; e.g.
+  # for (v10+):
+  # path: "/assets/js/mermaid.esm.min.mjs"
+  # for (<v10):
   # path: "/assets/js/mermaid.min.js"
+  # Note: copy both `mermaid.esm.min.mjs` (v10+) or `mermaid.min.js` (<v10) and the associated `.map` file from the specified version of `mermaid/dist` to `/assets/js/`.
 
 # Enable or disable heading anchors
 heading_anchors: true
@@ -123,6 +128,8 @@ footer_content: "Copyright &copy; 2017-2020 Patrick Marsceill. Distributed by an
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
 last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
+
+
 
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true # show or hide edit this page link

@@ -10,7 +10,7 @@ tags: ['Java']
 ---
 
 ---
-## Static Initializer Block(정적 초기화 블럭) 의 이해
+# Static Initializer Block(정적 초기화 블럭) 의 이해
 
 ```java
 Class.forName("com.mysql.jdbc.Driver");

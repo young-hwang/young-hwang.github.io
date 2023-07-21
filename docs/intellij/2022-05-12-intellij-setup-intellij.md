@@ -11,12 +11,6 @@ tags: ['IntelliJ']
 
 # IntelliJ 설정
 
-Created by: Young Hwang
-Created time: 2022년 5월 12일 오전 2:04
-Last edited by: Young Hwang
-Last edited time: 2022년 11월 30일 오전 12:08
-Tags: IntelliJ, Settings
-
 ```bash
 # IntelliJ vim 설정
 vi ~/.ideavimrc

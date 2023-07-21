@@ -2,7 +2,7 @@
 layout: default
 title: 'Reflection Basic'
 parent: Java
-nav_order: 1
+nav_order: 0
 date: '2022-05-11'
 author: 'Young Hwang'
 description: 'Reflection Basic'

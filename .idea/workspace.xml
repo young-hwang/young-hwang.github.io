@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5c344dc2-0bea-4088-af4f-cbc0e6ebef4d" name="Changes" comment="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;fix: reflection method&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <change beforePath="$PROJECT_DIR$/.devcontainer/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.devcontainer/base.Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.devcontainer/devcontainer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.devcontainer/post-create.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/young-hwang.github.io.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.stylelintrc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rakefile" beforeDir="false" afterPath="$PROJECT_DIR$/Rakefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_draft/2022-12-22_Database_Shard_적용.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/aux_nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/breadcrumbs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/children_nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/mermaid.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/search_footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/search_header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/components/sidebar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/css/callouts.scss.liquid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/css/custom.scss.liquid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/css/just-the-docs.scss.liquid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/fix_linenos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/footer_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/head.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/head.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/head_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/header_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/code_copy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/document.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/expand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/external_link.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/icons.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/link.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/icons/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/js/custom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/lunr/custom-data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/lunr/custom-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/mermaid_config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/nav_footer_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/search_placeholder_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/sorted_pages.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/title.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/toc_heading_custom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/vendor/anchor_headings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/default.html" beforeDir="false" afterPath="$PROJECT_DIR$/_layouts/default.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/_layouts/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/minimal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/post.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/table_wrappers.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/vendor/compress.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/base.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/code.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/color_schemes/dark.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/color_schemes/legacy_light.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/color_schemes/light.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/content.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/custom/custom.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/custom/setup.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/labels.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/layout.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/modules.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/navigation.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/print.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/search.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/skiptomain.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/mixins/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/mixins/_layout.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/mixins/_typography.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/mixins/mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/support/support.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/tables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/typography.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/_colors.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/_layout.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/_lists.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/_spacing.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/_typography.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/utilities/utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/OneDarkJekyll/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/OneDarkJekyll/syntax.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/OneLightJekyll/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/OneLightJekyll/syntax.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/normalize.scss/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/vendor/normalize.scss/normalize.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/just-the-docs-dark.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/just-the-docs-default.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/just-the-docs-light.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/large-image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/small-image.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/just-the-docs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/vendor/lunr.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/zzzz-search-data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/just-the-docs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/algorithm/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/design-pattern/2021-07-08-design-pattern-singleton-pattern.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/design-pattern/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/intellij/2022-05-12-intellij-setup-intellij.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/intellij/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/java/2021-04-13-java-static-Initializer-block.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/java/2022-05-11-java-reflection-basic.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/java/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/2023-02-05-mongodb-01-mongodb-introduce.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/2023-02-05-mongodb-02-start-mongodb.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/2023-02-09-mongodb-03-document-create-update-delete.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/2023-02-23-mongodb-04-query.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/2023-03-05-mongodb-05-index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mongodb/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mysql/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2016-08-18-oracle-database-system-tables-and-views.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2016-11-09-oracle-database-monitoring-queries.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2016-12-30-oracle-database-table-space.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2018-03-18-oracle-database-daily-check-list.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2018-10-11-oracle-database-create-user.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/2019-02-25-oracle-database-make-tdd.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/oracle-database/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/redis/2023-04-07-redis-hyperloglog.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/redis/images/Screenshot_2023-01-12_at_1.39.29_PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/redis/images/Screenshot_2023-01-12_at_1.44.41_PM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/redis/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/spring/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sql-server/2021-07-08-sql-server-cursor-temp-table-temp-variable.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/sql-server/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixtures/Gemfile-github-pages" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixtures/Gemfile-jekyll-3.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixtures/Gemfile-jekyll-4.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fixtures/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/mongodb-objectid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/just-the-docs.gemspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/tasks/search.rake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2MHJYxogKEPrOffADCA6x1Rqs9y" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/id_young/Github/young-hwang.github.io/_posts",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "/Users/id_young/Github/young-hwang.github.io/node_modules/stylelint",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/_posts" />
+      <recent name="$PROJECT_DIR$/assets/images" />
+      <recent name="$PROJECT_DIR$/_pages" />
+      <recent name="$PROJECT_DIR$/docs/mysql" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/spring" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$/_draft" />
+      <recent name="$PROJECT_DIR$/docs/mongodb" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5c344dc2-0bea-4088-af4f-cbc0e6ebef4d" name="Changes" comment="" />
+      <created>1677418626318</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677418626318</updated>
+      <workItem from="1677418630480" duration="5424000" />
+      <workItem from="1677462190800" duration="875000" />
+      <workItem from="1677505063400" duration="616000" />
+      <workItem from="1677646816666" duration="13465000" />
+      <workItem from="1677918284338" duration="5226000" />
+      <workItem from="1677942102518" duration="11789000" />
+      <workItem from="1679129231777" duration="1291000" />
+      <workItem from="1680839552416" duration="3948000" />
+      <workItem from="1680876864915" duration="5306000" />
+      <workItem from="1681627157364" duration="6005000" />
+      <workItem from="1683225258924" duration="5829000" />
+      <workItem from="1687226841636" duration="883000" />
+      <workItem from="1687232007989" duration="691000" />
+      <workItem from="1687232886761" duration="445000" />
+      <workItem from="1687233573444" duration="881000" />
+      <workItem from="1687391682610" duration="1226000" />
+      <workItem from="1690503786104" duration="25465000" />
+      <workItem from="1690953350572" duration="718000" />
+      <workItem from="1690972820048" duration="5809000" />
+      <workItem from="1692986673582" duration="5925000" />
+      <workItem from="1693034720304" duration="20022000" />
+    </task>
+    <task id="LOCAL-00001" summary="add index files">
+      <created>1677418777721</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677418777721</updated>
+    </task>
+    <task id="LOCAL-00002" summary="remove contents for test github action">
+      <created>1677418995152</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677418995152</updated>
+    </task>
+    <task id="LOCAL-00003" summary="rename index.md">
+      <created>1677420694090</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677420694090</updated>
+    </task>
+    <task id="LOCAL-00004" summary="remove aws">
+      <created>1677421111902</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677421111902</updated>
+    </task>
+    <task id="LOCAL-00005" summary="remove MIGRATION.md">
+      <created>1677422423798</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677422423798</updated>
+    </task>
+    <task id="LOCAL-00006" summary="remove docs/configuration.md">
+      <created>1677425145514</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677425145514</updated>
+    </task>
+    <task id="LOCAL-00007" summary="remove docs/customization.md">
+      <created>1677425238034</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1677425238034</updated>
+    </task>
+    <task id="LOCAL-00008" summary="remove docs files">
+      <created>1677425780397</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1677425780397</updated>
+    </task>
+    <task id="LOCAL-00009" summary="modify index.md">
+      <created>1677425939615</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1677425939615</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add aws files">
+      <created>1677426203213</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1677426203213</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add files">
+      <created>1677426344732</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1677426344732</updated>
+    </task>
+    <task id="LOCAL-00012" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;docs: MongoDB 완벽 가이드 01장 추가&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677651870784</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1677651870784</updated>
+    </task>
+    <task id="LOCAL-00013" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;인덱스 변경&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652225460</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652225460</updated>
+    </task>
+    <task id="LOCAL-00014" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;오라클 문서 제목 변경&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652323156</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652323156</updated>
+    </task>
+    <task id="LOCAL-00015" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;제목 변경&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652398428</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652398428</updated>
+    </task>
+    <task id="LOCAL-00016" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;파일명 변경&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652433209</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652433209</updated>
+    </task>
+    <task id="LOCAL-00017" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652869863</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652869863</updated>
+    </task>
+    <task id="LOCAL-00018" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;순서 수정&#10;&#10;#&lt;dㅅㄱ escription&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677652900885</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1677652900885</updated>
+    </task>
+    <task id="LOCAL-00019" summary="#&lt;type&gt;: &lt;subject&gt;&#10;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB 시작하기&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677654716730</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1677654716730</updated>
+    </task>
+    <task id="LOCAL-00020" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;이미지 경로 수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677655312263</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677655312263</updated>
+    </task>
+    <task id="LOCAL-00021" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;포스트 추가&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677657036800</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1677657036800</updated>
+    </task>
+    <task id="LOCAL-00022" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add post&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1677670752377</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1677670752377</updated>
+    </task>
+    <task id="LOCAL-00023" summary="내용 추가">
+      <created>1677940926305</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1677940926305</updated>
+    </task>
+    <task id="LOCAL-00024" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;Mongo db 쿼리&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1678024209669</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1678024209669</updated>
+    </task>
+    <task id="LOCAL-00025" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;HyperLogLog in Redis&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1680881281085</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1680881281085</updated>
+    </task>
+    <task id="LOCAL-00026" summary="remove search">
+      <created>1680881386948</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1680881386948</updated>
+    </task>
+    <task id="LOCAL-00027" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB index&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1681651694600</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1681651694600</updated>
+    </task>
+    <task id="LOCAL-00028" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB 복합 인덱스 &#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1681706944454</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1681706944454</updated>
+    </task>
+    <task id="LOCAL-00029" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 작성&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683225943658</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1683225943658</updated>
+    </task>
+    <task id="LOCAL-00030" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;title 변경 &#10;#&lt;description&gt;&#10;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683226298138</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1683226298138</updated>
+    </task>
+    <task id="LOCAL-00031" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add mysql folder&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683226395790</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1683226395790</updated>
+    </task>
+    <task id="LOCAL-00032" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 수정&#10;&#10;#&lt;desc문ㄱ ription&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683281376616</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1683281376616</updated>
+    </task>
+    <task id="LOCAL-00033" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;remove folder ms-sql -&gt; sql server&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683281956079</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1683281956079</updated>
+    </task>
+    <task id="LOCAL-00034" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;change titles&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1683289300005</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1683289300005</updated>
+    </task>
+    <task id="LOCAL-00035" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add profile picture&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1687228049863</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1687228049863</updated>
+    </task>
+    <task id="LOCAL-00036" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;update favicon&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <created>1687232680934</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1687232680934</updated>
+    </task>
+    <task id="LOCAL-00037" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;제거&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <option name="closed" value="true" />
+      <created>1690503813243</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1690503813243</updated>
+    </task>
+    <task id="LOCAL-00038" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <option name="closed" value="true" />
+      <created>1690504953305</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1690504953305</updated>
+    </task>
+    <task id="LOCAL-00039" summary="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;version up just-the-docs&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------">
+      <option name="closed" value="true" />
+      <created>1690549117869</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1690549117869</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;파일명 변경&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;순서 수정&#10;&#10;#&lt;dㅅㄱ escription&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB 시작하기&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;이미지 경로 수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;포스트 추가&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add post&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt;내용 추가&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="내용 추가" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;Mongo db 쿼리&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;HyperLogLog in Redis&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="remove search" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB index&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;MongoDB 복합 인덱스 &#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 작성&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;title 변경 &#10;#&lt;description&gt;&#10;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add mysql folder&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;문서 수정&#10;&#10;#&lt;desc문ㄱ ription&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;remove folder ms-sql -&gt; sql server&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;change titles&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;add profile picture&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;update favicon&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;제거&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;수정&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <MESSAGE value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;version up just-the-docs&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+    <option name="LAST_COMMIT_MESSAGE" value="#&lt;type&gt;: &lt;subject&gt;&#10;##### Subject 50 characters ################# -&gt; |&#10;version up just-the-docs&#10;#&lt;description&gt;&#10;# Body Message&#10;######## Body 72 characters ####################################### -&gt; |&#10;&#10;#&lt;issue-number&gt;&#10;# Issue Tracker Number or URL&#10;&#10;# --- COMMIT END ---&#10;# Type can be&#10;#   feat    : new feature&#10;#   fix     : bug fix&#10;#   refactor: refactoring production code&#10;#   style   : formatting, missing semi colons, etc; no code change&#10;#   docs    : changes to documentation&#10;#   test    : adding or refactoring tests&#10;#             no productin code change&#10;#   chore   : updating grunt tasks etc&#10;#             no production code change&#10;# ------------------&#10;# Remember me ~&#10;#   Capitalize the subject line&#10;#     제목줄은 대문자로 시작한다.&#10;#   Use the imperative mood in the subject line&#10;#     제목줄은 명령어로 작성한다.&#10;#   Do not end the subject line with a period&#10;#     제목줄은 마침표로 끝내지 않는다.&#10;#   Separate subject from body with a blank line&#10;#     본문과 제목에는 빈줄을 넣어서 구분한다.&#10;#   Use the body to explain what and why vs. how&#10;#     본문에는 &quot;어떻게&quot; 보다는 &quot;왜&quot;와 &quot;무엇을&quot; 설명한다.&#10;#   Can use multiple lines with &quot;-&quot; for bullet points in body&#10;#     본문에 목록을 나타낼때는 &quot;-&quot;로 시작한다.&#10;# ------------------" />
+  </component>
+</project>

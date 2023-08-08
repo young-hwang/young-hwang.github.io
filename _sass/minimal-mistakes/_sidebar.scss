@@ -105,6 +105,20 @@
   }
 }
 
+.sidebar__right.profile_hide {
+  margin-bottom: 1em;
+
+  @include breakpoint($large) {
+    width: $right-sidebar-width-narrow + $right-sidebar-width-narrow;
+    margin-right: -1 * ($right-sidebar-width-narrow + $right-sidebar-width-narrow);
+  }
+
+  @include breakpoint($x-large) {
+    width: $right-sidebar-width + $right-sidebar-width;
+    margin-right: -1 * ($right-sidebar-width + $right-sidebar-width);
+  }
+}
+
 .splash .sidebar__right {
   @include breakpoint($large) {
     position: relative;

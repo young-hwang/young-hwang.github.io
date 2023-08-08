@@ -68,6 +68,18 @@ body {
   }
 }
 
+.page.profile_hide {
+  @include breakpoint($large) {
+    width: calc(100%);
+    padding-right: $right-sidebar-width-narrow + $right-sidebar-width-narrow;
+  }
+
+  @include breakpoint($x-large) {
+    width: calc(100%);
+    padding-right: $right-sidebar-width + $right-sidebar-width;
+  }
+}
+
 .page__title {
   margin-top: 0;
   line-height: 1;
@@ -542,6 +554,16 @@ body {
   a {
     color: inherit;
     text-decoration: none;
+  }
+}
+
+.page__related.profile_hide {
+  @include breakpoint($large) {
+    width: calc(100%);
+  }
+
+  @include breakpoint($x-large) {
+    width: calc(100%);
   }
 }
 

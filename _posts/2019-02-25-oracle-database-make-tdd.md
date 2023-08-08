@@ -3,10 +3,10 @@ title: "TDD(Table Definiton Document)"
 last_modified_at: 2019-02-25T16:20:02-05:00
 categories:
 - Oracle Database
-  tags:
-- Oracle Database
-  toc: true
-  toc_sticky: true
+tags:
+  - Oracle Database
+toc: true
+toc_sticky: true
 ---
 
 # TDD 생성

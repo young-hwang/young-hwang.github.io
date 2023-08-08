@@ -18,6 +18,27 @@
   }
 }
 
+.profile_hide {
+  @include breakpoint($large) {
+    float: right;
+    width: calc(100%);
+  }
+
+  @include breakpoint($x-large) {
+    width: calc(100%);
+  }
+}
+
+.archive.profile_hide {
+  @include breakpoint($large) {
+    padding-right: $right-sidebar-width-narrow + $right-sidebar-width-narrow;
+  }
+
+  @include breakpoint($x-large) {
+    padding-right: $right-sidebar-width + $right-sidebar-width;
+  }
+}
+
 .archive__item {
   position: relative;
 

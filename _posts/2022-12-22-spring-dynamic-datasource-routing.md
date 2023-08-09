@@ -28,7 +28,7 @@ toc_sticky: true
 'javax.sql.DataSource' 인터페이스로 정의가 되어 있습니다.
 이 인터페이스는 데이터 베이스와의 연결을 설정하고 얻는데 사용됩니다.
 
-```mermaid
+```mermaid!
 classDiagram
     DataSource <|-- AbstractDataSource
     AbstractDataSource <|-- AbstractRoutingDataSource

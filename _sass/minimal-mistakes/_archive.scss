@@ -31,11 +31,11 @@
 
 .archive.profile_hide {
   @include breakpoint($large) {
-    padding-right: $right-sidebar-width-narrow + $right-sidebar-width-narrow;
+    padding-right: 0;
   }
 
   @include breakpoint($x-large) {
-    padding-right: $right-sidebar-width + $right-sidebar-width;
+    padding-right: 0;
   }
 }
 

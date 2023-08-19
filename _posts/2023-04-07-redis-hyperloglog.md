@@ -18,8 +18,8 @@ toc_sticky: true
 단순 계산으로도 하루의 이용자 수, 실행 수를 구하기 위해서는 60(분) * 24(시간) = 1440(건)의 데이터를 조회 후 중복 되는 키값을 제거하는 큰 비용이 발생했다.
 또한 이를 5분 단위, 10분 단위로 그룹화 하여 표현 하는 경우도 있어 조회 시 조회 시간이 10초 이상 걸리는 문제가 지속되었다.
 
-![분단위 데이터 집계 현황](https://young-hwang.github.io/addsets/images/Screenshot_2023-01-12_at_1.39.29_PM.png)
-![조회 시 데이터 집계 현황](https://young-hwang.github.io/assets/images/Screenshot_2023-01-12_at_1.44.41_PM.png)
+![분단위 데이터 집계 현황](https://onedrive.live.com/embed?resid=D8A12F7299BC2AA5%2150042&authkey=%21APq1rZ6LUg-3bvQ&width=696&height=181)
+![조회 시 데이터 집계 현황](https://onedrive.live.com/embed?resid=D8A12F7299BC2AA5%2150041&authkey=%21AIwjviJJdTgZetY&width=310&height=247)
         
 
 # HyperLogLog란

@@ -89,33 +89,12 @@
       position: sticky;
       top: 2em;
       float: right;
-
-      .toc {
-        .toc__menu {
-          overflow-y: auto;
-          max-height: calc(100vh - 7em);
-        }
-      }
     }
   }
 
   @include breakpoint($x-large) {
     width: $right-sidebar-width;
     margin-right: -1 * $right-sidebar-width;
-  }
-}
-
-.sidebar__right.profile_hide {
-  margin-bottom: 1em;
-
-  @include breakpoint($large) {
-    width: $right-sidebar-width-narrow + $right-sidebar-width-narrow;
-    margin-right: -1 * ($right-sidebar-width-narrow + $right-sidebar-width-narrow);
-  }
-
-  @include breakpoint($x-large) {
-    width: $right-sidebar-width + $right-sidebar-width;
-    margin-right: -1 * ($right-sidebar-width + $right-sidebar-width);
   }
 }
 

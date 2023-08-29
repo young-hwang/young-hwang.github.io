@@ -37,17 +37,6 @@
     }
   }
 
-  ol.profile_hide {
-    @include breakpoint($large) {
-      float: right;
-      width: calc(100%);
-    }
-
-    @include breakpoint($x-large) {
-      width: calc(100%);
-    }
-  }
-
   li {
     display: inline;
   }
@@ -211,8 +200,8 @@
       margin-left: 0;
     }
   }
-
-  img {
+  
+  img{
     -webkit-transition: none;
     transition: none;
   }

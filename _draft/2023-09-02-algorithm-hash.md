@@ -22,9 +22,44 @@ Collision(해시 충돌) 이란 서로 다른 두 개의 입력값에 대해 동
 해시 충돌을 줄이기 위해서 해시 함수가 균일한 결과값 분포(Uniform Distribution)를 가지도록 설계한다.
 그리고 입력값이 조금만 바껴도 해시값이 크게 달라지도록 구성합니다.(눈사태 효과 - Avalanche Effect)
 
-# 불변 데이터
+해시 함수 설계자는 다양한 방법을 사용할 수 있지만 기본적으로 대부분의 알고리즘은 비슷한 패턴을 보인다.
+어떤 내부의 상태를 키 비트와 함께 AND, OR, XOR, ADD, Shift, 매직넘버, 모듈러 산술 및 유사한 도구들의 일부 조합을 통해 바이트 단위를 반복적으로 뒤섞는다.
 
-# 해시 함수의 활용 예제
+예를 들어 아주 간단한 FNV-1 해시 함수를 함께 살펴보면 아래와 같다.
 
-rabbit
-redis
+```java
+public class FNVHash {
+
+    public static void main(String[] args) {
+        String data = "Hello, World!";
+        int hash = fnv1a32(data);
+        System.out.println("FNV-1a hash: " + hash);
+    }
+
+    private static int fnv1a32(String data) {
+        final int prime = 0x01000193;   // FNV Prime constant
+        int hash = 0x811c9dc5;  // FNV Offset basis
+
+        for (int i = 0; i < data.length(); i++) {
+            hash ^= data.charAt(i);
+            hash *= prime;
+        }
+
+        return hash;
+    }
+}
+```
+
+모든 해시 함수를 사용 시 평균적으로 출력 가능한 범위에 걸쳐 균일하게 분산되도록 입력 비트를 충분히 혼합할 수 있기를 바란다.
+
+수년에 걸쳐 품질과 복잡성이 매우 다양한 많은 해시 함수가 개발되었다.
+잘 알려진 16개의 해시 함수에 대하여 각 키의 길이 192 비트 또는 256 비트 인 4200만개의 키를 이용하여 충돌 없이 해시 할수 있는지를 대조하면 아래 이미지와 같다.
+
+![hash function collision]( https://onedrive.live.com/embed?resid=D8A12F7299BC2AA5%2150112&authkey=%21ALT5voJLUezjaRE&width=700&height=392 "hash function collision")
+
+
+---
+
+# 참고 자료
+
+<https://agkn.wordpress.com/2011/12/29/choosing-a-good-hash-function-part-2/#comments>

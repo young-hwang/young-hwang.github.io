@@ -19,7 +19,7 @@ JDBC Connection 설정을 위해 의례적으로 사용을 해오던 구문이�
 
 ---
 
-## JDBC Driver는 어떻게 객체가 만들어지는가?
+# JDBC Driver는 어떻게 객체가 만들어지는가?
 
  아래의 코드는 com.mysql.jdbc.Driver의 소스코드이다.
 
@@ -59,7 +59,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 
 ---
 
-## Static Initializer Block(정적 초기화 블럭)의 구동
+# Static Initializer Block(정적 초기화 블럭)의 구동
 
 - A static block can have several instructions that always run when a class is loaded into memory. It is also known as java static initializer block because we can initialize the static variables in the static block at runtime. A class can have any number of static blocks, The JVM executes them in sequence in which they have written. The static block in a program always executed first before any static method, non-static method, main method, or even instance block. Suppose we want to perform some operations at the time of class loading then we should use the static block should. *([https://javagoal.com/static-block-in-java/#1](https://javagoal.com/static-block-in-java/#1))*
 - 정적 블록은 클래스가 메모리에 로드 될 때 항상 실행되며 몇 가지 지침을 할 수 있습니다. 런타임에 정적 블록 의 정적 변수 를 초기화 할 수 있기 때문에 Java 정적 이니셜 라이저 블록 이라고도 합니다. 클래스는 정적 블록을 얼마든지 가질 수 있으며 JVM은 작성한 순서대로이를 실행합니다. 프로그램의 정적 블록은 항상 정적 메서드 , 비 정적 메서드 , 기본 메서드 또는 인스턴스 블록 보다 먼저 실행 됩니다.. 클래스 로딩시 몇 가지 작업을 수행하고 싶다면 정적 블록을 사용해야합니다.
@@ -68,11 +68,11 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 
 ---
 
-## Static Initializer Block(정적 초기화 블럭) Test
+# Static Initializer Block(정적 초기화 블럭) Test
 
 Static Initializer Block(정적 초기화 블럭)의 정확한 동작을 확인해 보기 위하여 여러 테스트를 시도해 보았다.
 
-### class.forName()을 이용한 작동 확인
+## class.forName()을 이용한 작동 확인
 
 ```java
 package io.ggammu.study.java;
@@ -106,7 +106,7 @@ Static Block
 
 class.forName() 호출 시 Item 클래스가 메모리에 올라오면서 Static Block이 정상적으로 실행 된다. Item 객체는 생성하지 않았으므로 Item Constructor는 호출 되지 않았다.
 
-### Static Method 호출 시 Static Block 동작 테스트
+## Static Method 호출 시 Static Block 동작 테스트
 
 ```java
 package io.ggammu.study.java;
@@ -145,7 +145,7 @@ Static Method
 
 해당 클래스의 Static 멤버(메소드, 변수) 호출 시 Static Block이 호출 된다. 객체를 생성하지 않아도 Static Block은 항상 실행이 되는 것을 확인 할 수 있다.
 
-### Main Method와 Static Block의 실행 순서
+## Main Method와 Static Block의 실행 순서
 
 ```java
 package io.ggammu.study.java;
@@ -178,7 +178,7 @@ Main Method
 
 클래스 로딩 경쟁 후 JVM은 기본 메소드에서 실행을 시작한다. 그러나 정적 블록은 클래스가 메모리에 로드 될 때 한 번만 실행되는 코드 블록이다. 런타임에 변수를 초기화하는 데 사용되기 때문에 정적 초기화 블록이라고도 한다. 따라서 JVM이 클래스를 메모리에로드 할 때 정적 블록을 실행한다. 정적이기 때문에 클래스의 객체 생성에 의존하지 않기 때문이다. main 메소드는 항상 클래스가 완전히로드 된 후에 실행된다.
 
-### Instance Block, Constructor와의 관계 확인
+## Instance Block, Constructor와의 관계 확인
 
 ```java
 package io.ggammu.study.java;
@@ -228,7 +228,7 @@ Static Method를 호출 후 Item객체를 두개 생성하여 Instance Block, Co
 
 ---
 
-## 활용 대상 및 예제
+# 활용 대상 및 예제
 
 
 - 정적 변수의 초기화가 다른 작업에 의존하는 경우

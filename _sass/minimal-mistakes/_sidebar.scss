@@ -351,7 +351,7 @@
   margin: 1.414em 0;
   padding: 0;
   padding-right: 5px;
-  font-size: 0.75em;
+  font-size: $type-size-5;
   list-style: none;
 
   @include breakpoint($large) {

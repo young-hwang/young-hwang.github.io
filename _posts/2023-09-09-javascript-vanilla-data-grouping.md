@@ -19,7 +19,7 @@ Java Stream의 groupingBy 같은 기능이 있을까 싶어 먼저 살펴 보았
 하지만 배열을 바로 그룹핑하는 메소드는 존재하지 않아 보인다.
 그래서 직접 구현해 보기로 하였다.
 
-```Java
+```java
 Map<BlogPostType, List<BlogPost>> postsPerType = posts.stream()
   .collect(groupingBy(BlogPost::getType));
 ```
@@ -33,7 +33,7 @@ Map<BlogPostType, List<BlogPost>> postsPerType = posts.stream()
 말로 이해하는건 쉽지 않은거 같다. 
 간단한 예제를 보면 쉽게 이해가 가능하다.
 
-```Javascript
+```javascript
 function sum(x, y, z) {
   return x + y + z;
 }
@@ -47,7 +47,7 @@ console.log(sum(...numbers));
 Java에서 사용하던 Variable Arguments (Varargs)과 동일하다. 
 다만 javascript에서는 아래와 같이 배열이나 객체의 리터럴하여 또 다른 배열이나 객체를 생성할 수 있다. 
 
-```Javascript
+```javascript
 // 배열 리터럴과 문자열
 [...numbers, "4", "five", 6];
 // Expected output: [1, 2, 3, "4", "five", 6]
@@ -64,7 +64,7 @@ Bracket notation(괄호 표기법)은 객체의 프로퍼티에 접근하는 다
 보통 객체의 프로퍼티에 접근하기 위해서는 Dot notation(점 표기법)을 사용할 것이다. 
 간단히 예를 살펴 보겠다.
 
-```Javascript
+```javascript
 
 const a = { name: "john", age: 17 }';
 
@@ -85,7 +85,7 @@ console.log(a["name"]);
 이제부터 본격적으로 함수를 만들어 보겠다. 
 아래의 함수는 객체 배열의 그룹핑할 컬럼을 기준으로 객체를 배열화하여 객체로 리턴하게 된다.
 
-```Javascript
+```javascript
 function grouping(items, key) {
   return items.reduce(
     (result, item) => ({
@@ -135,6 +135,6 @@ spread syntax와 bracket notation을 이용하여 데이터를 그룹화해 보�
 
 # 참조 자료
 
-https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array
-https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
+[https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array)
+[https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+[https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics)

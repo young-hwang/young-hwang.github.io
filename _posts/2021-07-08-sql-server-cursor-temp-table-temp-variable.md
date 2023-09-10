@@ -2,9 +2,10 @@
 title: "커서, 임시 테이블, 테이블 변수란"
 last_modified_at: 2021-07-08T16:20:02-05:00
 categories:
-  - SQL server
+  - sql-server
 tags:
-  - SQL server
+  - sql-server
+  - table variable
 toc: true
 toc_sticky: true
 ---

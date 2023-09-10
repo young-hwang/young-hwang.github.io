@@ -2,9 +2,10 @@
 title: "일일 점검"
 last_modified_at: 2018-03-18T16:20:02-05:00
 categories:
-  - Oracle Database
+  - oracle database
 tags:
-  - Oracle Database
+  - oracle database
+  - status
 toc: true
 toc_sticky: true
 ---

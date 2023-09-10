@@ -2,9 +2,10 @@
 title: "DB 사용자 생성 및 권한 부여"
 last_modified_at: 2018-03-18T16:20:02-05:00
 categories:
-  - Oracle Database
+  - oracle database
 tags:
-  - Oracle Database
+  - oracle database
+  - account
 toc: true
 toc_sticky: true
 ---

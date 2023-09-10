@@ -2,9 +2,10 @@
 title: "System Tables and Views"
 last_modified_at: 2016-08-18T16:20:02-05:00
 categories:
-  - Oracle Database
+  - oracle database
 tags:
-  - Oracle Database
+  - oracle database
+  - system schema
 toc: true
 toc_sticky: true
 ---

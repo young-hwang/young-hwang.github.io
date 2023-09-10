@@ -54,7 +54,7 @@ public class FNVHash {
 수년에 걸쳐 품질과 복잡성이 매우 다양한 많은 해시 함수가 개발되었다.
 잘 알려진 16개의 해시 함수에 대하여 각 키의 길이 192 비트 또는 256 비트 인 4200만개의 키를 이용하여 충돌 없이 해시 할수 있는지를 대조하면 아래 이미지와 같다.
 
-![hash function collision]( https://onedrive.live.com/embed?resid=D8A12F7299BC2AA5%2150112&authkey=%21ALT5voJLUezjaRE&width=700&height=392 "hash function collision")
+![hash function collision]( https://onedrive.live.com/embed?resid=884E6FE11C46974%211317&authkey=%21AEQXdW_Ly8CghIQ&width=700&height=392 "hash function collision")
 
 CPU 최적화 비암호화 해시의 일반적인 예로는 앞서 살펴본 FNV-1a와 Murmur3 등이 있다.
 비암호화 해시 함수(non-cryptographic hash functions, NCHFs)는 암호화 해시 함수 의 엄격한 보안 요구 사항 (예: 사전 이미지 저항 ) 이 필요하지 않은 애플리케이션을 위한 해시 함수 이므로 더 빠르고 리소스 집약도가 낮다.
@@ -76,7 +76,7 @@ Murmur라는 이름은 키를 잘게 자르는 데 사용되는 기본 연산인
 ---
 
 # 참고 자료
-<https://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction>
-<https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp>
-<https://github.com/aappleby/smhasher/wiki/MurmurHash3#bulk-speed-test-hashing-an-8-byte-aligned-256k-block>
-<https://agkn.wordpress.com/2011/12/29/choosing-a-good-hash-function-part-2/#comments>
+[https://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction](https://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction)
+[https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp](https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp)
+[https://github.com/aappleby/smhasher/wiki/MurmurHash3#bulk-speed-test-hashing-an-8-byte-aligned-256k-block](https://github.com/aappleby/smhasher/wiki/MurmurHash3#bulk-speed-test-hashing-an-8-byte-aligned-256k-block)
+[https://agkn.wordpress.com/2011/12/29/choosing-a-good-hash-function-part-2/#comments](https://agkn.wordpress.com/2011/12/29/choosing-a-good-hash-function-part-2/#comments)

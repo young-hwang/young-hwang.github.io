@@ -2,10 +2,10 @@
 title: "Initializer Block(초기화 블럭) 의 이해"
 last_modified_at: 2016-03-09T16:20:02-05:00
 categories:
-  - Java
+  - java
 tags:
-  - Java
-  - Initializer Block
+  - java
+  - initializer block
 toc: true
 toc_sticky: true
 ---

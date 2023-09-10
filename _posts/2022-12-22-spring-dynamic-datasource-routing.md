@@ -2,10 +2,10 @@
 title: "Dynamic Datasource Routing 적용기"
 last_modified_at: 2022-12-22T16:20:02-05:00
 categories:
-  - Spring
+  - spring
 tags:
-  - Spring
-  - Spring Data
+  - spring
+  - spring data
 toc: true
 toc_sticky: true
 ---

@@ -2,9 +2,10 @@
 title: "Table space"
 last_modified_at: 2016-12-30T16:20:02-05:00
 categories:
-  - Oracle Database
+  - oracle database
 tags:
-  - Oracle Database
+  - oracle database
+  - data block
 toc: true
 toc_sticky: true
 ---

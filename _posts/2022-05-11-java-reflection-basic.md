@@ -2,9 +2,10 @@
 title: "Reflection 이해"
 last_modified_at: 2022-05-11T16:20:02-05:00
 categories:
-  - Java
+  - java
 tags:
-  - Java
+  - java
+  - reflection
 toc: true
 toc_sticky: true
 ---

@@ -46,67 +46,139 @@ public class GreetingController{
 
 HandlerExceptionResolver를 정의하는 방법도 있다.
 이를 통해 응용 프로그램에서 발생하는 모든 예외를 해결할 수 있으며 REST API에 동일한 예외 처리 메커니즘을 구현할 수 있다.
-먼저 HandlerExceptionResolver 들이 어떻게 빈으로 등록이 되는지를 보겠다.
+Spring에서는 3가지의 HandlerExceptionResolver가 기본적으로 빈으로 등록된다.
+
+- ExceptionHandlerExceptionResolver
+- DefaultHandlerExceptionResolver
+- ResponseStatusExceptionResolver
+
+각각의 HandlerExceptionResolver에 대한 설명은 후술하도록 하고 먼저 HandlerExceptionResolver 들이 어떻게 빈으로 등록이 되는지를 보겠다.
+WebMvcAutoConfiguration 을 살표보면 inner class로 EnableWebMvcConfiguration 를 선언하고 있다. 
+해당 클래스는 DelegatingWebMvcConfiguration을 상속하고 있으며 이는 또 다시 WebMvcConfigurationSupport를 상속하고 있음을 확인할 수 있다.
 
 ```Java
-package org.springframework.web.servlet;
+package org.springframework.boot.autoconfigure.web.servlet;
 
-public class DispatcherServlet extends FrameworkServlet {
-    //...
-    
-	/**
-	 * This implementation calls {@link #initStrategies}.
-	 */
-	@Override
-	protected void onRefresh(ApplicationContext context) {  // 
-		initStrategies(context);
-	}
-    
-	/**
-	 * Initialize the strategy objects that this servlet uses.
-	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
-	 */
-	protected void initStrategies(ApplicationContext context) {
-	    //...
-		initHandlerAdapters(context);
-		initHandlerExceptionResolvers(context); // HandlerExceptionResolver 초기화
-		initRequestToViewNameTranslator(context);
-	    //...
-	}
-	
-    /**
-	 * Initialize the HandlerExceptionResolver used by this class.
-	 * <p>If no bean is defined with the given name in the BeanFactory for this namespace,
-	 * we default to no exception resolver.
-	 */
-	private void initHandlerExceptionResolvers(ApplicationContext context) {
-		this.handlerExceptionResolvers = null;
-
-		if (this.detectAllHandlerExceptionResolvers) { // 모든 ExceptionResolver에 대한 detect 여부 default: true
-			// Find all HandlerExceptionResolvers in the ApplicationContext, including ancestor contexts.
-			Map<String, HandlerExceptionResolver> matchingBeans = BeanFactoryUtils
-					.beansOfTypeIncludingAncestors(context, HandlerExceptionResolver.class, true, false);
-			if (!matchingBeans.isEmpty()) {
-				this.handlerExceptionResolvers = new ArrayList<>(matchingBeans.values());
-				// We keep HandlerExceptionResolvers in sorted order.
-				AnnotationAwareOrderComparator.sort(this.handlerExceptionResolvers);
-			}
-		}
-		else {
-			try {
-				HandlerExceptionResolver her =
-						context.getBean(HANDLER_EXCEPTION_RESOLVER_BEAN_NAME, HandlerExceptionResolver.class);
-				this.handlerExceptionResolvers = Collections.singletonList(her);
-			}
-			catch (NoSuchBeanDefinitionException ex) {
-				// Ignore, no HandlerExceptionResolver is fine too.
-			}
-		}
+@AutoConfiguration(after = { DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
+		ValidationAutoConfiguration.class })
+@ConditionalOnWebApplication(type = Type.SERVLET)
+@ConditionalOnClass({ Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class }) // 1 
+@ConditionalOnMissingBean(WebMvcConfigurationSupport.class) // 2 
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
+@ImportRuntimeHints(WebResourcesRuntimeHints.class)
+public class WebMvcAutoConfiguration {
 
     //...
+    
+	@Configuration(proxyBeanMethods = false)    // 3
+	@Import(EnableWebMvcConfiguration.class)    // 4 
+	@EnableConfigurationProperties({ WebMvcProperties.class, WebProperties.class })
+	@Order(0)
+	public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer, ServletContextAware {
+	    //...
+    }
+    
+  	@Configuration(proxyBeanMethods = false)    // 5
+	@EnableConfigurationProperties(WebProperties.class)
+	public static class EnableWebMvcConfiguration extends DelegatingWebMvcConfiguration implements ResourceLoaderAware {    // 6
+	    //...
+
+        // 7
+		@Override
+		protected ExceptionHandlerExceptionResolver createExceptionHandlerExceptionResolver() {
+			if (this.mvcRegistrations != null) {
+				ExceptionHandlerExceptionResolver resolver = this.mvcRegistrations
+					.getExceptionHandlerExceptionResolver();
+				if (resolver != null) {
+					return resolver;
+				}
+			}
+			return super.createExceptionHandlerExceptionResolver();
+		}
+
+	    //...
+    }
+    
+    //...  
 }
 ```
 
+```Java
+package org.springframework.web.servlet.config.annotation;
+
+public class WebMvcConfigurationSupport implements ApplicationContextAware, ServletContextAware { // 8
+
+    //...
+    
+    // 9
+    @Bean
+	public HandlerExceptionResolver handlerExceptionResolver(
+			@Qualifier("mvcContentNegotiationManager") ContentNegotiationManager contentNegotiationManager) {
+		List<HandlerExceptionResolver> exceptionResolvers = new ArrayList<>();
+		configureHandlerExceptionResolvers(exceptionResolvers);
+		if (exceptionResolvers.isEmpty()) { // 10 
+			addDefaultHandlerExceptionResolwers(exceptionResolvers, contentNegotiationManager); // 11 
+		}
+		extendHandlerExceptionResolvers(exceptionResolvers);
+		HandlerExceptionResolverComposite composite = new HandlerExceptionResolverComposite();
+		composite.setOrder(0);
+		composite.setExceptionResolvers(exceptionResolvers);    // 15 
+		return composite;
+	}
+	
+	// 실제 적인 default handlerExceptionResolvers instance 생성
+	// List<HandlerExceptionResolver> 에 생성된 instances 삽입
+	protected final void addDefaultHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers,
+			ContentNegotiationManager mvcContentNegotiationManager) {
+
+		ExceptionHandlerExceptionResolver exceptionHandlerResolver = createExceptionHandlerExceptionResolver(); // 12 
+		exceptionHandlerResolver.setContentNegotiationManager(mvcContentNegotiationManager);
+		exceptionHandlerResolver.setMessageConverters(getMessageConverters());
+		exceptionHandlerResolver.setCustomArgumentResolvers(getArgumentResolvers());
+		exceptionHandlerResolver.setCustomReturnValueHandlers(getReturnValueHandlers());
+		if (jackson2Present) {
+			exceptionHandlerResolver.setResponseBodyAdvice(
+					Collections.singletonList(new JsonViewResponseBodyAdvice()));
+		}
+		if (this.applicationContext != null) {
+			exceptionHandlerResolver.setApplicationContext(this.applicationContext);
+		}
+		exceptionHandlerResolver.afterPropertiesSet();
+		exceptionResolvers.add(exceptionHandlerResolver);
+
+		ResponseStatusExceptionResolver responseStatusResolver = new ResponseStatusExceptionResolver(); // 13
+		responseStatusResolver.setMessageSource(this.applicationContext);
+		exceptionResolvers.add(responseStatusResolver);
+
+		exceptionResolvers.add(new DefaultHandlerExceptionResolver());  // 14
+	}
+
+	
+	//...
+}
+```
+먼저 WebMvcAutoConfiguration이 작동하기 위해서는 아래의 조건이 만족되어야 한다.
+
+1. Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class 가 클래스 로더에 존재하여야 한다.
+2. WebMvcConfigurtionSupport clsss가 bean으로 등록되지 않아야 한다.
+
+그 다음 각각의 라인의 의미를 살펴보면 아래와 같다.
+
+3. WebMvcAutoConfigurationAdapter inner class 에 @Configuration annotaion으로 빈 설정 파일이다.
+4. @Import annotation으로 EnableWebMvcConfiguration.class 를 import하고 있다.
+5. EnableWebMvcConfiguration inner class 에 @Configuration annotation으로 빈 설정 파일이다.
+6. EnableWebMvcConfiguration은 DelegatingWebMvcConfiguration을 상속하고 있다.
+7. createExceptionHandlerExceptionResolver()을 override 하여 ExceptionHandlerExceptionResolver 객체를 생성한다.
+8. DelegatingWebMvcConfiguration은 WebMvcConfigurationSupport를 상속하고 있다.
+9. handlerExceptionResolver() 메소드에서 HandlerExceptionResolver bean을 생성한다.
+10. exceptionResolvers property 가 empty면 실행 default HandlerExceptionResolver 들을 생성한다.
+11. addDefaultHandlerExceptionResolwers() 메소드를 호출하여 default HandlerExceptionResolver를 생성하고 exceptionResolvers에 리스트 형태로 담는다.
+12. 7번에서 override 한 메소드를 이용하여 ExceptionHandlerExceptionResolver 객체를 생성한다.
+13. ResponseStatusExceptionResolver 객체를 생성 한다.
+14. DefaultHandlerExceptionResolver 생성를 생성 한다.
+15. HandlerExceptionResolverComposite 객체에 composite 패턴을 이용하여 빈으로 등록한다.
+
+이렇게 handlerExceptoinResolver 객체가 생성되게 된다.
 
 ## ExceptionHandlerExceptionResolver
 
@@ -118,14 +190,13 @@ package org.springframework.web.servlet.mvc.method.annotation;
 
 public class ExceptionHandlerExceptionResolver extends AbstractHandlerMethodExceptionResolver
 		implements ApplicationContextAware, InitializingBean {
-
-
 }
 ```
 
 ## DefaultHandlerExceptionResolver
 
 Spring 3.0에 도입 되었다.
+
 이는 대응하는 HTTP 상태 코드, 즉 클라이언트 오류 4xx 및 서버 오류 5xx 상태 코드에 대한 표준 Spring 예외를 해결하는 데 사용된다. 
 처리하는 Spring 예외의 전체 목록과 상태 코드에 매핑하는 방법은 다음과 같다.
 응답의 상태 코드를 올바르게 설정하지만, 한 가지 제한 사항은 응답 본문에 아무것도 설정하지 않는다는 것이다. 
@@ -136,7 +207,8 @@ REST API의 경우 상태 코드가 클라이언트에 제공하기에 충분하
 ## ResponseStatusExceptionResolver
 
 Spring 3.0에 도입 되었다.
-주요 업무는 사용자 지정 예외에서 사용 가능한 @ResponseStatus 주석을 사용하고 이러한 예외를 HTTP 상태 코드에 매핑하는 것이다.
+
+주요 업무는 사용자 지정 예외에서 사용 가능한 @ResponseStatus 주석을 사용하고 이러한 예외를 HTTP 상태 코드에 매핑한다.
 이러한 사용자 지정 예외는 다음과 같다.
 
 ```Java

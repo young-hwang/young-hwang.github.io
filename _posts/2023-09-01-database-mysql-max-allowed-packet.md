@@ -2,7 +2,7 @@
 title: "max_allowed_packet"
 last_modified_at: 2023-04-07T16:20:02-05:00
 categories:
-  - mysql
+  - database
 tags:
   - mysql
   - max_allowed_packet

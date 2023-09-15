@@ -2,7 +2,7 @@
 title: "Monitoring Queries"
 last_modified_at: 2016-11-09T16:20:02-05:00
 categories:
-  - oracle database
+  - database
 tags:
   - oracle database
   - tablespace

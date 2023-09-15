@@ -13,14 +13,14 @@ toc_sticky: true
 
 ## 1-1 OLAP의 의미
 
-![Screenshot 2022-12-09 at 12.12.06 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3fffa815-8263-4f1d-ba1a-62a28f9fcd3d/Screenshot_2022-12-09_at_12.12.06_AM.png)
+![Screenshot 2022-12-09 at 12.12.06 AM.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211365&authkey=%21AP_bJJaM2voBRyg&width=1364&height=270)
 
 온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.
 
 ## 1-2 OLAP의 여러 의미
 The different meanings of OLAP
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d3a9c9b7-12f3-4481-8b91-f3b0e3007183/Untitled.png)
+![Untitled](https://onedrive.live.com/embed?resid=884E6FE11C46974%211368&authkey=%21AF5qk8_Gx8_IK54&width=552&height=504)
 
 그림에서 보이듯 OLAP 용어에는 몇 가지 의미가 있다. 그 이유는 OLAP의 필수 요소가 저장 및 액세스에서 언어 계층에 이르기 까지 여러 기술 계층에서 표현 할 수 있기 때문이다.
 
@@ -102,7 +102,7 @@ The Distinction between Transaction and Decision Support Processing
 
 - Operational Activities 와 Analysis Based Decision Oriented Activities
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c4178be0-2ef7-4c39-84de-f3f7906d8c65/Untitled.png)
+![Untitled1](https://onedrive.live.com/embed?resid=884E6FE11C46974%211351&authkey=%21ABsdFvV1X6KeQhQ&width=468&height=231)
 
 운영과 분석 기반 의사 결정 지향 소프트웨어 활동 간의 이러한 차이로 서로 다른 하드웨어 시스템에서 서로 다른 소프트웨어 제품을 사용한다.
 
@@ -116,9 +116,8 @@ The Distinction between Transaction and Decision Support Processing
     - 더 많은 수의 동시 사용자를 지원
 - ABDOP(Analysis Based Decision Oriented Processing)
     - OLAP 라고 불리는 것은 모두 ABDOP 의 다양한 부문에 맞춰져 있다.
-    -
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba3cee5e-c0a2-4c8a-a99a-608c79f02fe1/Untitled.png)
+![Untitled2](https://onedrive.live.com/embed?resid=884E6FE11C46974%211357&authkey=%21APCjrPfG44SyNt8&width=916&height=720)
 
 원본 데이터에서 최종 사용자 소비까지의 처리 체인을 보여줍니다.
 
@@ -214,7 +213,7 @@ ABDOP 서버는 분석 계산을 수행해야 합니다.
 
 ## 3-1 저차원 데이터 셋(Lower-Dimensional Data Set)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e5651e5e-01f6-439f-8a83-e602e6e8cd5d/Untitled.png)
+![Untitled3](https://onedrive.live.com/embed?resid=884E6FE11C46974%211355&authkey=%21AA2bPfj3NbLXo-Y&width=936&height=532)
 
 그림 3.1은 2차원 그리드에서 월별로 구성된 5개의 판매 및 비용 데이터 열을 보여준다. 월은 행 마다 표현되고 모든 월의 합계가 맨 아래 행에 표시된다. 그리드에는 각 판매 또는 비용 변수에 대해 하나씩 5개의 열이 있다. 데이터 세트에는 행으로 정렬된 월 차원과 열로 정렬된 변수 차원의 두 가지 차원이 있다고 할 수 있다.
 
@@ -238,17 +237,17 @@ variable(변수)는 우리가 측정하는 항목이다.
 
 이것이 큐브입니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b05a9891-e570-48e3-afd4-6d975436a719/Untitled.png)
+![Untitled4](https://onedrive.live.com/embed?resid=884E6FE11C46974%211364&authkey=%21ADLCXuiqdZalGQ8&width=680&height=346)
 
 그림 3.2는 제품, 월 및 변수를 나타내는 3 차원 큐브를 보여줍니다.
 
 하지만 이 그림은 **차원 표현의 첫 번째 장애물이라 할 수 있다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/54a87220-0f25-4633-aff8-1328de8dda54/Untitled.png)
+![Untitled5](https://onedrive.live.com/embed?resid=884E6FE11C46974%211361&authkey=%21AFXWY1QXqebaFKs&width=432&height=296)
 
 3차원 큐브를 표현하였다고 하지만 실제 컴퓨터의 모니터는 2차원으로 3차원 큐브를 시각적 은유 일 뿐이다. 따라서 2차원 컴퓨터 화면으로는 인한 자연적인 한계가 있기에 소프트웨어 개발자는 보고 조작 하기 위한 최적의 방법에 대해 고심하게 되었다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c029bd9-73b3-4977-8fc9-4a3e72e217a0/Untitled.png)
+![Untitled6](https://onedrive.live.com/embed?resid=884E6FE11C46974%211356&authkey=%21AKuSol4bIPmnMU4&width=732&height=538)
 
 그림 3.5는 그림 3.2에서 시각화 된 3 차원 데이터 세트의 스프레드 시트와 같은 디스플레이를 보여줍니다. 대부분의 디스플레이는 그림 3.1에 표시된 2차원 디스플레이와 동일하게 보입니다.
 
@@ -256,11 +255,11 @@ variable(변수)는 우리가 측정하는 항목이다.
 
 변수, 시간 및 제품으로 구성된 3차원 데이터 세트는 *행, 열* 및 *페이지의* 세 가지 디스플레이 차원으로 컴퓨터 화면에서 재생됩니다. 그림 3.6과 같이 3차원 데이터 큐브와 해당 큐브의 한 조각을 보여주는 화면 디스플레이를 상상하기만 하면 됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0951e5ab-6914-48c7-9d50-464cf1a4df34/Untitled.png)
+![Untitled7](https://onedrive.live.com/embed?resid=884E6FE11C46974%211360&authkey=%21ACekwb0J1Yzyx1g&width=786&height=470)
 
 ## 3-2 3 차원을 넘어서
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f7dfae0d-5e72-4af9-aaec-b3d27795478a/Untitled.png)
+![Untitled8](https://onedrive.live.com/embed?resid=884E6FE11C46974%211369&authkey=%21AHYCzHCa9skxPuU&width=510&height=258)
 
 월별로 상점 체인별 측정을 추가한다고 가정합니다. 이제 4차원 데이터 세트가 생겼습니다. 그림 3.7은 4차원 큐브의 기술적 이름인 *테서랙트 (tesseract*)의 사진을 보여줍니다. 4차원 이상의 시각화를 위한 기초로 큐브를 사용하려고 하면 매우 지저분해질 수 있습니다. ㅈ
 
@@ -273,13 +272,13 @@ variable(변수)는 우리가 측정하는 항목이다.
 - 큐브의 특성
     - 모든 차원이 모든 점에서 공존한다.
 
-      ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6619475-cf8a-413a-b115-e5990290e1a6/Untitled.png)
+      ![Untitled9](https://onedrive.live.com/embed?resid=884E6FE11C46974%211366&authkey=%21AAY2roLCvNyxiPI&width=258&height=184)
 
       큐브의 한 가지 특성은 모든 차원이 모든 점에서 공존한다는 것이다. 이것은 그림 3.10에 나와 있으며, 3 차원 공간의  모든 점 ($x_n, y_n, z_n$)이 *x*, *y* 및 *z*  값으로 식별되는 방법을 보여줍니다. 큐브의 각 팩트는 각 차원의 값으로 식별됩니다. "공존하는 차원" 특성은 큐브와 데이터 생성 이벤트에서 공유됩니다.
 
     - 공존하는 각 차원이 다른 모든 차원과 독립적이다.
 
-      ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/77d34784-1328-4dd6-8de3-9b1f594b9018/Untitled.png)
+      ![Untitled10](https://onedrive.live.com/embed?resid=884E6FE11C46974%211359&authkey=%21AMYoPjEGfgk-SYg&width=281&height=206)
 
       큐브의 또 다른 특성은 공존하는 각 차원이 다른 모든 차원과 독립적이라는 것입니다. 그림 3.11에서 볼 수 있듯이 변경은 모든 차원에서 독립적으로 발생할 수 있습니다. 데이터 생성 이벤트의 관점에서 보면 모든 제품이 언제든지 판매 될 수 있음을 의미합니다. 그리고 언제든지 모든 제품을 판매 할 수 있습니다. 제품, 상점, 시간 및 변수가 서로 독립적이기 때문입니다. 따라서 "독립 차원" 특성은 큐브와 데이터 생성 이벤트에서 연관됩니다.
 
@@ -289,19 +288,20 @@ variable(변수)는 우리가 측정하는 항목이다.
 변수, 시간, 제품에 수직인 상점 체인을 추가하게 되는것은 논리적으로는 합당하지만 실제 물리적 공간에는 x, y, z로 이루어진 3차원에서는 3차원 이상을 나타낼 수 없다. 이것을 상상으로 이해하는 것도 쉬지 않다.
 
 ## 3-3 Multidimensional Type Structures (MTSs)
+
 다차원 유형 구조
 
 원하는 수의 이벤트 차원을 나타낼 수 있고 OLAP 메타 데이터를 표현하는 새로운 방법을 소개한다. MTS(다차원 유형 구조)라고 부를 수 있다.
 
 앞서 봤던 3차원 예제를 토대로 표현해 보면 시작할 때 세 개의 선 세그먼트가 있는데, 하나는 시간, 하나는 제품, 다른 하나는 변수에 대한 것입니다. 세 개의 선 세그먼트 각각에서 한 간격의 합집합은 이벤트와 큐브의 요소에 연결됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/39ef1f22-1916-4303-ba6b-b88a8d50cea5/Untitled.png)
+![Untitled11](https://onedrive.live.com/embed?resid=884E6FE11C46974%211358&authkey=%21AJw6tEJAIVxTSg0&width=584&height=370)
 
 그림 처럼 12개의 기간, 10개의 제품, 5개의 변수가 있는 경우 12 * 10 * 5 = 600개의 하이퍼큐브 교차점 또는 잠재적 데이터 포인트가 있다. 이러한 의미에서 MTS는 물리적 큐브보다 더 설명적이다. 그러나 MTS는 실제 데이터 요소를 표시하지 않고 차원 구성원의 가능한 조합만 표시한다. 따라서 여기에서는 적어도 모든 데이터 포인트를 암시 할 수있는 큐브보단 표현되는 수가 적다. (실제로 표시 할 수는 없지만). 다시 말하지만, 시각적 비유의 목적은 모델의 구조에 대한 유용한 표현을 제공하는 것입니다. 데이터를 표시하는 것이 디스플레이의 작업입니다.
 
 - 4차원 추가
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fca71396-7e73-40e2-86b3-d3d7ec543514/Untitled.png)
+![Untitled12](https://onedrive.live.com/embed?resid=884E6FE11C46974%211363&authkey=%21ALATGSPmW0IrOjQ&width=654&height=344)
 
 MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습니다. 큐브에 상점 차원을 추가하려고 시도했을 때를 기억하십니까? 굉장히 복잡해 보였다. 그러나 MTS는 그렇지 않습니다. 아주 쉽게 할 수 있다. 그림 3.14와 같이 stores라는 네 번째 줄 세그먼트를 추가하기만 하면 된다. MTS는 이벤트에서 추출된 데이터 요소의 수와 해당 논리적 구성을 표시합니다. 탐색할 수 있는 모든 차원과 모든 차원에서 얼마나 멀리 갈 수 있는지 보여줍니다. MTS는 하이퍼큐브 내부 및 하이퍼큐브 간의 계층 구조 및 데이터 흐름에 대한 정보도 표시할 수 있다. 큐브보다 더 많은 구조 정보를 표시하며 임의의 수의 차원에 대해 표시할 수 있습니다.
 
@@ -309,7 +309,7 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
 큐브를 이용한 다차원의 표현엔 한계가 있으면 MTS 또한 차원의 조합을 표현 한것일 뿐 실제 데이터를 보기엔 한계가 있습니다. 여기에서 3번째 장애물인 ***여러 논리적 차원을 물리적 (화면) 2차원에 매핑해야 하는 문제가 나타난다.***
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c029bd9-73b3-4977-8fc9-4a3e72e217a0/Untitled.png)
+![Untitled6](https://onedrive.live.com/embed?resid=884E6FE11C46974%211356&authkey=%21AKuSol4bIPmnMU4&width=732&height=538)
 
 앞서 본 그림과 같이 3 차원 그리드 스타일 인터페이스의 이미지를 다시 보겠다.
 
@@ -319,7 +319,7 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
 이것을 더 자세히 살펴 보겠다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b006c7b-cdd3-4785-af0d-53a72db95480/Untitled.png)
+![Untitled13](https://onedrive.live.com/embed?resid=884E6FE11C46974%211362&authkey=%21AKlij7XsGGG4S0Y&width=361&height=208)
 
 각 교차점의 이름이 명시적으로 작성된 변수 별 제품의 2차원 배열을 보여진다.
 
@@ -331,23 +331,23 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
 예를 들어, 그림 3.16은 원래 그림 3.15에 표시된 2차원 그리드에서 제품 내에 중첩된 변수의 1차원 목록을 만드는 방법을 보여줍니다. 목록이 제품을 스크롤할 때 각 제품에 대한 변수 차원의 모든 멤버를 스크롤하는 방법을 확인합니다. 일반 루프로 생각할 수 있습니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/12fb6c29-d80e-43a5-8fa3-7102aff06d5b/Untitled.png)
+![Untitled14](https://onedrive.live.com/embed?resid=884E6FE11C46974%211353&authkey=%21ACLZaBuT0R4U6C8&width=468&height=147)
 
 이것이 변수가 제품 내에 중첩된다는 의미입니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ac10cd3b-c243-4b7b-b307-dbd65580dab6/Untitled.png)
+![Untitled15](https://onedrive.live.com/embed?resid=884E6FE11C46974%211354&authkey=%21AGfRrHGRUjaufaU&width=468&height=234)
 
 대조적으로, 그림 3.17은 동일한 2 차원 그리드에서 변수 내에 중첩 된 제품의 1 차원 목록을 만드는 방법을 보여줍니다. 두 그림 모두에서 요소의 수 동일하며 차원을 결합해도 데이터가 손실되지 않는다.
 
 차원을 결합하는 방법을 배웠으므로 이제 이전 4차원 예제에 2차원을 추가하여 프로세스를 더 자세히 보겠다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b42f9fa4-cd04-478b-9c01-5686f61096e6/Untitled.png)
+![Untitled16](https://onedrive.live.com/embed?resid=884E6FE11C46974%211350&authkey=%21AGJK3dP3M_5YRrU&width=468&height=249)
 
 제품, 시간, 상점, 고객, 변수 및 시나리오로 구성된 6차원 데이터 세트를 보여줍니다.
 
 그림 3.20은 3차원 그리드 디스플레이의 행, 열 또는 페이지 역할에 연결된 그림 3.19의 각 차원을 보여줍니다. 그리드 표시의 행, 열 및 페이지 차원에서 여러 차원이 어떻게 결합되는지 확인합니다. 3차원에서 작동하는 동일한 시각적 디스플레이를 *N*  차원에서 작동하도록 쉽게 확장할 수 있습니다. 이제부터는 이러한 유형의 디스플레이를 multidimensional grid display(다차원 그리드)라고 합니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7309d43d-b059-4ffe-b44e-e79752b1a0e7/Untitled.png)
+![Untitled17](https://onedrive.live.com/embed?resid=884E6FE11C46974%211352&authkey=%21AOiMl2Ep7E489Bg&width=468&height=361)
 
 페이지로 표시된 차원에서 둘 이상의 멤버를 표시하려는 경우 둘 이상의 멤버를 정렬하는 방법을 선택해야 하며 평면 화면에서 선택할 수 있는 유일한 항목은 행 또는 열 입니다.
 
@@ -365,13 +365,11 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
   일반적으로 가로공간 보다 세로 공간이 더 많기 때문이다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6b7b1a9c-0f5d-46a8-ac44-d7478d226911/Untitled.png)
-
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/51aaea53-b40b-45ed-a589-da6887da2912/Untitled.png)
+  ![Untitled18](https://onedrive.live.com/embed?resid=884E6FE11C46974%211370&authkey=%21APE6M3iseL0ocOs&width=606&height=414)
+ 
+  ![Untitled19](https://onedrive.live.com/embed?resid=884E6FE11C46974%211371&authkey=%21AOyWl3jJsJGSOhc&width=432&height=504)
 
 - 무엇을 볼 것인지, 무엇을 비교 할 것인지 판단하여 표시 방법을 결정한다.
-
-
 
 # 4. LC 모델 소개(Location Contents)
 
@@ -417,7 +415,7 @@ LC 모델은 공용 OLAP 제품/모델의 상위 집합으로 LC 모델을 통�
 - OLAP 모델링에서 이슈별 접근 방식에 대한 비판
     - 모든 차원을 일반 차원으로 처리
 
-      ![Screenshot 2022-12-17 at 4.03.07 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bce1f1ae-69b4-468a-bca8-a0be81293304/Screenshot_2022-12-17_at_4.03.07_PM.png)
+      ![Screenshot 2022-12-17 at 4.03.07 PM.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211367&authkey=%21AF8zzDetI9_7eDQ&width=581&height=707)
 
     - 차원과 변수를 참조적으로 구별하는 항목: 계열 큐브
 

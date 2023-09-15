@@ -2,7 +2,7 @@
 title: "PM2 Cluster Mode의 이해"
 last_modified_at: 2022-05-12T10:00:00-11:00
 categories:
-- pm2
+- node
 tags:
 - pm2
 - node

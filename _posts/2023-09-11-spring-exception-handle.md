@@ -204,7 +204,6 @@ classDiagram
     <<abstract>>HttpServlet
     <<abstract>>HttpServletBean
     <<abstract>>FrameworkServlet
-    DispatcherServlet
 ```
 
 앞서 살펴본 WebMvcAutoConfiguration class를 보면 '@AutoConfiguration(after = { DispatcherServletAutoConfiguration.class, ... })' 이 선언된 것을 확인할 수 있다.
@@ -326,11 +325,9 @@ public class DispatcherServlet extends FrameworkServlet {
 
 이렇게 DispatchServlet에서 HandlerExceptionResolver 들이 주입되는것도 확인하였다.
 
-
 # 마무리
 
 지금까지 스프링에서 사용하는 HandlerExceptionResolever의 간단히 종류와 역할에 대해서 살펴보았다.
 또한 이러한 Resolver들이 어떻게 Bean으로 등록이 되고 DispatchServlet에 어떻게 주입이 되는지 까지도 보았다.
 스프링에서 Composite Pattern 패턴 이나 Tempate Method 패턴을 어떻게 활용하고 있는지도 살펴 볼수 있었다.
 다음에는 이 문서의 후속으로 어떻게 Controller에서 Exception을 핸들링하는지 HandlerExceptionResolver에서 어떻게 Exception을 확인하는지 알아보겠다.
-

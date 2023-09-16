@@ -70,7 +70,7 @@ Spring 3.0에 도입 되었다.
 
 주요 업무는 사용자 지정 예외에서 사용 가능한 @ResponseStatus 주석을 사용하고 이러한 예외를 HTTP 상태 코드에 매핑한다.
 
-## HandlerExceptionResolver들이 어떻게 Bean으로 등록되는가?
+# HandlerExceptionResolver들이 어떻게 Bean으로 등록되는가?
 
 그렇다면 어떻게 HandlerExceptionResolver 들이 빈으로 등록이 되는지 살펴 보겠다.
 Spring MVC의 자동 설정인 WebMvcAutoConfiguration을 먼저 살표보자.
@@ -191,7 +191,7 @@ inner class로 EnableWebMvcConfiguration 를 선언하고 있다.
 
 이러한 일련의 과정을 통하여 handlerExceptoinResolver 객체들이 빈으로 등록되게 된다.
 
-## handlerExceptoinResolver들은 어떻게 동작하는가?
+# handlerExceptoinResolver들은 어떻게 동작하는가?
 
 hanlderExceptionResolver가 빈으로 등록이 완료되었고 애플리케이션이 실행될 때 어떻게 실행이 되는지 살펴보도록 하겠다.
 MVC를 기준으로 살펴보기에 DispatcherServlet에서의 동작을 확인한다.

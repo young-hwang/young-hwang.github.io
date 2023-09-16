@@ -168,13 +168,7 @@ public class WebMvcConfigurationSupport implements ApplicationContextAware, Serv
 먼저 WebMvcAutoConfiguration이 작동하기 위해서는 아래의 조건이 만족되어야 한다.
 
 1. Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class 가 클래스 로더에 존재하여야 한다.
-2. WebMvcConfigurtionSupport clsss가 bean으로 등록되지 않아야 한다.
-
-inner class로 EnableWebMvcConfiguration 를 선언하고 있다.
-해당 클래스는 DelegatingWebMvcConfiguration을 상속하고 있으며 이는 또 다시 WebMvcConfigurationSupport를 상속하고 있음을 확인할 수 있다.
-
-그 다음 각각의 라인의 의미를 살펴보면 아래와 같다.
-
+2. WebMvcConfigurtionSupport clsss가 bean으로 등록되지 않아야 한다. 
 3. WebMvcAutoConfigurationAdapter inner class 에 @Configuration annotaion을 이용하여 빈 설정 클래스로 선언하고 있다.
 4. 그리고 @Import annotation으로 EnableWebMvcConfiguration.class 를 import하고 있는데 이 또한 WebMvcAutoConfiguration class 내에 존재한다.
 5. EnableWebMvcConfiguration inner class 에 @Configuration annotation으로 빈 설정 클래스 이다.
@@ -188,6 +182,12 @@ inner class로 EnableWebMvcConfiguration 를 선언하고 있다.
 13. ResponseStatusExceptionResolver 객체를 생성 한다.
 14. DefaultHandlerExceptionResolver 생성를 생성 한다.
 15. HandlerExceptionResolverComposite 객체에 composite 패턴을 이용하여 빈으로 등록한다.
+
+```mermaid!
+classDiagram
+    WebMvcConfigurationSupport <-- DelegatingWebMvcConfiguration
+    DelegatingWebMvcConfiguration <-- EnableWebMvcConfiguration
+```
 
 이러한 일련의 과정을 통하여 handlerExceptoinResolver 객체들이 빈으로 등록되게 된다.
 

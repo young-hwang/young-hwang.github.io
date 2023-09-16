@@ -23,7 +23,7 @@ Spring 5에서는 REST API에 기본적인 오류 처리를 위한 빠른 방법
 에러를 처리할 방법은 정의하고 @ExceptionHandler 어노테이션을 이용한다.
 해당 방법은 @Controller 레벨에서 처리하는 방법이다.
 
-```Java
+```java
 public class GreetingController{
     //...
     @ExceptionHandler({ CustomException1.class, CustomException2.class })
@@ -75,7 +75,7 @@ Spring 3.0에 도입 되었다.
 그렇다면 어떻게 HandlerExceptionResolver 들이 빈으로 등록이 되는지 살펴 보겠다.
 Spring MVC의 자동 설정인 WebMvcAutoConfiguration을 먼저 살표보자.
 
-```Java
+```java
 package org.springframework.boot.autoconfigure.web.servlet;
 
 @AutoConfiguration(after = { DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
@@ -122,7 +122,7 @@ public class WebMvcAutoConfiguration {
 }
 ```
 
-```Java
+```java
 package org.springframework.web.servlet.config.annotation;
 
 public class WebMvcConfigurationSupport implements ApplicationContextAware, ServletContextAware { // 8
@@ -196,7 +196,7 @@ inner class로 EnableWebMvcConfiguration 를 선언하고 있다.
 hanlderExceptionResolver가 빈으로 등록이 완료되었고 애플리케이션이 실행될 때 어떻게 실행이 되는지 살펴보도록 하겠다.
 MVC를 기준으로 살펴보기에 DispatcherServlet에서의 동작을 확인한다.
 
-```mermaid
+```mermaid!
 classDiagram
     HttpServlet <-- HttpServletBean
     HttpServletBean <-- FrameworkServlet
@@ -210,7 +210,7 @@ classDiagram
 즉 WebMvcAutoCongfiguration 설정이 이루어지기 전에 DispatcherServletAutoConfiguration.class 의 빈 설정이 먼저 진행 되어 DispatcherServlet이 빈으로 등록되게 된다.
 DispatcherServlet은 Servlet이 기에 사용자의 요청이 최초로 들어올때 init() 메소드를 통한 초기화가 이루어지게 된다.
 
-```Java
+```java
 public abstract class HttpServletBean extends HttpServlet implements EnvironmentCapable, EnvironmentAware {
 	//...
 	

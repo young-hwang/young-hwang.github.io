@@ -44,6 +44,8 @@ jobs:
       with:
         ruby-version: '3.1'
         bundler-cache: false
+    - name: Gem Install
+      run: gem install --system
     - name: Bundle Install
       run: BUNDLE_GEMFILE=fixtures/Gemfile-github-pages bundle install
     - name: Build Site

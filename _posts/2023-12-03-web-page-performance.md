@@ -22,4 +22,6 @@ toc_sticky: true
 
 발표 자료는 아래 링크를 통해 확인하실 수 있습니다.
 
+![K-DEVCON](https://onedrive.live.com/embed?resid=884E6FE11C46974%211447&authkey=%21ALxGXMDrzq21xtY&width=661&height=459)
+
 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/aKQ8d7i5FZkMKC?hostedIn=slideshare&page=upload" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>

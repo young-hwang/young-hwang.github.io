@@ -20,7 +20,7 @@ toc_sticky: true
 
 첫 공개 세미나라서 더욱 떨리고 긴장했는데, 다음에도 기회가 된다면 더욱 더 잘 준비해서 발표하고 싶습니다.
 
-발표 자료는 아래 링크를 통해 확인하실 수 있습니 다.
+발표 자료는 아래 링크를 통해 확인하실 수 있습니다.
 
 ![K-DEVCON](https://onedrive.live.com/embed?resid=884E6FE11C46974%211447&authkey=%21ALxGXMDrzq21xtY&width=661&height=459)
 

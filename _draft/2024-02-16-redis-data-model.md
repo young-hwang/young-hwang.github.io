@@ -121,3 +121,32 @@ classDiagram
 일반적으로 관계형 DB는 하나의 테이블과 관계되는 상대 테이블을 식별키(Priamry Key)와 외부키(Foreign Key)로 표현할 수 있으며 이를 통해 데이터 무결성을 보장할 수 있는 데이터 구조로 설계할 수 있습니다.
 그런데 하나의 테이블과 관계되는 상대 테이블이 자기 자신이 될 수도 있는 데이터 구조를 계층 구조(Tree Structure) 테이블이라고 표현합니다.
 Redis DB에서도 이와 같은 데이터 구조를 설계할 수 있는데 이를 Set/Sorted Set 테이블이라고 합니다.
+
+아래 그림에서 왼쪽 직사각형 도형은 직원 테이블이며 오른쪽은 주문 테이블 입니다.
+
+```mermaid
+classDiagram
+    class `Employee` {
+        employee_id
+        employee_name
+        employee_position
+        employee_salary
+        employee_hire_date
+        parent_id
+        child_id
+    }
+    class `Order:order_id` {
+        order_date
+        customer_name
+        emp_id
+        total
+        payment
+        employee_id
+    }
+```
+
+```Shell
+> sadd employee "employee_id:1001 employee_name: 'Wonman', employee_position: 'CEO', employee_salary: 1000000, employee_hire_date: '2018-01-01', parent_id: 0, child_id: 1002"
+    "empoloyee_id: 1002: employee_name: 'man', employee_position: 'finance', employee_salary: 10000, employee_hire_date: '2019-03-02', parent_id: 1, child_id: 1004"
+> smemebers employee
+```

@@ -45,7 +45,7 @@ classDiagram
 
 이와 같은 구조를 Redis DB의 Hash-Hash 데이터 모델이라고 표현할 수 있습니다.
 
-```Shell
+```bash
 > hmset order:201809123 customer_name "Wonman & KT" emp_name "Magie" total 45000 payment "Credit"
 > hgetall order:201809123
 > hmset translate:201809123 translate_id 12670 translate_date "2018-09-23" translate_status "Complete"
@@ -78,7 +78,7 @@ classDiagram
     }
 ```
 
-```Shell
+```bash
 > hmset order:201809123 customer_name "Wonman & KT" emp_name "Magie" total 45000 payment "Credit"
 > hgetall order:201809123
 > lpush order_detail:201809123 "<item_id>1</item_id><product_id>1001</product_id><qty>1</qty><price>1000</price>"
@@ -109,7 +109,7 @@ classDiagram
     }
 ```
 
-```Shell
+```bash
 > lpush product:1001 "prod_name: 'Apple', category: [cname1: c1000, cname2: c2000]"
 > lrange product:1001 0 -1
 > lpush category:c1000 "category_name: 'Tablet', products: [pname1: 1001, pname2: 1002]"
@@ -145,7 +145,7 @@ classDiagram
     }
 ```
 
-```Shell
+```bash
 > sadd employee "employee_id:1001 employee_name: 'Wonman', employee_position: 'CEO', employee_salary: 1000000, employee_hire_date: '2018-01-01', parent_id: 0, child_id: 1002"
     "empoloyee_id: 1002: employee_name: 'man', employee_position: 'finance', employee_salary: 10000, employee_hire_date: '2019-03-02', parent_id: 1, child_id: 1004"
 > smemebers employee

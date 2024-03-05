@@ -250,6 +250,106 @@ ORDER RY
 commit ;
 ```
 
+# Instance Service 상태 확인
+
+```sql
+SELECT INSATNCE_NAME, STATUS FROM V$INSTANCE;
+```
+
+# Resource 부족 확인
+
+```sql
+SELECT * FROM V$RESOURCE_LIMIT;
+```
+
+# Database Backup 확인
+
+```sql
+SELECT * FROM V$BACKUP;
+```
+
+# Redo 발생량 확인
+
+```sql
+SELECT  TO_CHAR(FIRST_TIME,'YYYY/MM/DD') "DATE",
+        COUNT(THREAD#) "COUNT"
+FROM    V$LOGHIST
+GROUP BY TO_CHAR(FIRST_TIME,'YYYY/MM/DD')
+ORDER BY TO_CHAR(FIRST_TIME,'YYYY/MM/DD') DESC;
+```
+
+# Listener 상태 확인
+
+```bash
+lsnrctl status
+```
+
+# Invalid Object 확인
+
+```sql
+COLUMN object_name FORMAT A30
+SELECT owner,
+       object_type,
+       object_name,
+       status
+FROM   dba_objects
+WHERE  status = 'INVALID'
+ORDER BY owner, object_type, object_name;
+
+SET SERVEROUTPUT ON SIZE 1000000
+BEGIN
+    FOR cur_rec IN
+    (   SELECT  owner,
+                object_name,
+                object_type,
+                DECODE(object_type, 'PACKAGE', 1,
+                    'PACKAGE BODY', 2, 2) AS recompile_order
+        FROM    dba_objects
+        WHERE   object_type IN ('PACKAGE', 'PACKAGE BODY', 'PROCEDURE', 'FUNCTION', 'TRIGGER')
+        AND     status != 'VALID'
+        ORDER BY 4)
+    LOOP
+        BEGIN
+            IF cur_rec.object_type != 'PACKAGE BODY' THEN
+                EXECUTE IMMEDIATE 'ALTER ' || cur_rec.object_type ||
+                    ' "' || cur_rec.owner || '"."' || cur_rec.object_name || '" COMPILE';
+            ElSE
+                EXECUTE IMMEDIATE 'ALTER PACKAGE "' || cur_rec.owner ||
+                    '"."' || cur_rec.object_name || '" COMPILE BODY';
+            END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                DBMS_OUTPUT.put_line(cur_rec.object_type || ' : ' || cur_rec.owner ||
+                    ' : ' || cur_rec.object_name);
+        END;
+    END LOOP;
+END;
+
+# Invalid Object 재컴파일
+sqlplus "/ AS SYSDBA"
+@Oracle_home/rdbms/admin/utlrp.sql
+```
+
+# Job 수행 여부 확인
+
+```sql
+SELECT  JOB,
+        SCHEMA_USER,
+        LAST_DATE,
+        LAST_SEC,
+        NEXT_DATE,
+        NEXT_SEC,
+        WHAT
+FROM    DBA_JOBS;
+```
+
+# Trace 확인
+
+```bash
+ls -ltr $ORACLE_BASE/admin/"SID"/bdump
+ls -ltr $ORACLE_BASE/admin/"SID"/udump
+```
+
 # 마무리
 
 Oracle 데이터베이스를 운영하면서 위 쿼리들을 활용하여 일상적인 점검을 수행하면 데이터베이스의 안정성과 성능을 향상시킬 수 있습니다.

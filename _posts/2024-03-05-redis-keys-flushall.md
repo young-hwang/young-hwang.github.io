@@ -1,3 +1,4 @@
+---
 title: "KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유"
 last_modified_at: 2024-03-05T00:00:00-00:00
 categories:
@@ -152,7 +153,7 @@ fushall을 이용해서 데이터를 지우는 속도를 측정해보면 아이�
 
 다음 소스 코드를 통해 flushall 명령에 대해 살펴 보겠습니다.
 
-/src/db.c
+> /src/db.c
 
 ```c++
 /* FLUSHALL [ASYNC]
@@ -176,7 +177,7 @@ flushallCommand 함수는 FLUSHALL 명령을 처리하는 함수 입니다.
 getFlushCommandFlags 함수를 통해 동기적으로 실행되어야 하는지, 아니면 비동기로 실행되어야 하는지 결정합니다.
 flushAllDataAndResetRDB 함수를 통해 실제 데이터를 지우는 작업을 수행합니다.
 
-/src/db.c
+> /src/db.c
 
 ```c++
 /* Flushes the whole server data set. */
@@ -202,7 +203,7 @@ void flushAllDataAndResetRDB(int flags) {
 emptyData 함수를 호출하여 모든 데이터를 비웁니다.
 첫번째 인자로 -1을 넘겨주면 모든 db를 비우게 됩니다.
 
-/src/db.c
+> /src/db.c
 
 ```c++
 /* Remove all data (keys and functions) from all the databases in a
@@ -263,7 +264,7 @@ long long emptyData(int dbnum, int flags, void(callback)(dict*)) {
 
 emptyDbStructure 함수를 호출하여 실제로 데이터베이스 구조를 비웁니다.
 
-/src/db.c
+> /src/db.c
 
 ```c++
 /* Remove all keys from the database(s) structure. The dbarray argument
@@ -305,7 +306,7 @@ long long emptyDbStructure(redisDb *dbarray, int dbnum, int async,
 kvstoreSize 함수를 호출하여 최종적으로 비워진 키의 수를 나타냅니다.
 kvstoreEmpty 함수를 호출하여 데이터를 비웁니다.
 
-/src/kvstore.c
+> /src/kvstore.c
 
 ```c++
 void kvstoreEmpty(kvstore *kvs, void(callback)(dict*)) {
@@ -336,7 +337,7 @@ void kvstoreEmpty(kvstore *kvs, void(callback)(dict*)) {
 kvstoreGetDict 함수를 호출하여 kvstore의 dict를 가져옵니다.
 dictEmpty 함수를 호출하여 딕셔너리를 비웁니다.
 
-/src/dict.c
+> /src/dict.c
 
 ```c++
 void dictEmpty(dict *d, void(callback)(dict*)) {
@@ -353,7 +354,7 @@ _dictClear 함수를 두 번 호출하여 딕셔너리의 두 해시 테이블�
 _dictClear 함수는 딕셔너리의 해시 테이블에서 모든 항목을 제거합니다.
 _dictClear(d, 0, callback) 은 첫 번째 해시 테이블을, _dictClear(d, 1, callback) 는 두 번째 해시 테이블을 비웁니다.
 
-/src/dict.c
+> /src/dict.c
 
 ```c++
 /* Destroy an entire dictionary */

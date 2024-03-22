@@ -148,14 +148,31 @@ Sentinel 2
 
 Redis 서버에서 제공하는 가장 기본적인 복제 시스템은 Master-Slave 서버 또는 Master-Slave-Sentinel 서버 구성입니다.
 
-### Master-Slave 복제 시스템
+## Master-Slave 복제 시스템
 
 사용자 데이터를 실시간으로 처리(입력, 수정, 삭제, 조회)할 수 있는 마스터 서버 1대에 대해 슬레이브 서버는 마스터 서버의 데이터가 실시간으로 복제됩니다.
 슬레이브 서버는 마스터 서버에 의해서 만 쓰기작업을 수행할 수 있고 사용자는 오직 읽기 작업만 수행할 수 있습니다.
 마스터 서버에 예기치 못한 장애가 발생하는 경우 슬레이브 서버는 마스터 서버로 자동 전환(FailOver)되지 않으며 사용자는 슬레이브 서버에 복제된 데이터를 이용하여 마스터 서버를 복구 할 수는 있습니다.
-마스터 서버에 장애가 발생하ㄴ슨 경우에도 슬레이브 서버에 대해서는 지속적인 읽기 작업을 수행할 수 있습니다.
+마스터 서버에 장애가 발생하는 경우에도 슬레이브 서버에 대해서는 지속적인 읽기 작업을 수행할 수 있습니다.
 
-### Master-Slave-Sentinel 복제 시스템
+한대의 슬레이브(Slave)는 오직 하나의 마스터(Master)에만 가질 수 있습니다.
+
+```mermaid
+flowchart LR
+  A[Redis Master] --> |Replication|B[Redis Slave]
+```
+
+또한 이를 이용해서 슬레이브가 다른 장비의 마스터로도 동작 할 수 있습니다.
+
+```mermaid
+flowchart LR
+  A[Redis Master1] --> |Replication|B[Redis 1st Slave]
+  A[Redis Master1] --> |Replication|C[Redis 1st Slave]
+  B[Redis 1st Slave] --> |Replication|D[Redis 2st Slave]
+  C[Redis 1st Slave] --> |Replication|E[Redis 2st Slave]
+```
+
+## Master-Slave-Sentinel 복제 시스템
 
 두번째 복제 시스템은 마스터-슬레이브-센티넬 서버 환경 입니다.
 마스터-슬레이브 환경에서 마스터 서버에 장애가 발생하더라도 슬레이브 서버를 통해 지속적인 읽기 작업을 수행할 수 있지만 쓰기 작업을 수행할 수 없기 때문에 일시적인 서비스 중단이 발생할 수 밖에 없습니다.

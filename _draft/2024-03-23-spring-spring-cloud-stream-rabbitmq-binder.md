@@ -207,7 +207,7 @@ default: true
 
 **declareExchange**
 
-목적지에 대한 교환 신고 여부.
+destication에 대한 exchange 신고 여부.
 
 default: true
 
@@ -571,3 +571,137 @@ public Consumer<Message<?>> input() {
 ```
 
 환경 및 컨슈머 빌더 구성에 대한 자세한 내용은 [RabbitMQ Stream Java Client document](https://rabbitmq.github.io/rabbitmq-stream-java-client/stable/htmlsingle/)를 참조하십시오.
+
+### 3.3.1 RabbitMQ super streams의 consumer 지원
+
+Super streams에 대한 내용은 해당 [Super streams](https://www.rabbitmq.com/blog/2022/07/13/rabbitmq-3-11-feature-preview-super-streams) 문서를 참조하세요.
+
+super streams를 사용하면 super streams의 각 파티션에서 단일 활성 소비자를 사용하여 자동으로 scale-up, scale-down 할 수 있습니다.
+
+구성 예:
+
+```java
+@Bean
+public Consumer<Thing> input() {
+    ...
+}
+```
+
+```text
+spring.cloud.stream.bindings.input-in-0.destination=super
+spring.cloud.stream.bindings.input-in-0.group=test
+spring.cloud.stream.bindings.input-in-0.consumer.instance-count=3
+spring.cloud.stream.bindings.input-in-0.consumer.concurrency=3
+spring.cloud.stream.rabbit.bindings.input-in-0.consumer.container-type=STREAM
+spring.cloud.stream.rabbit.bindings.input-in-0.consumer.super-stream=true
+```
+
+framework는 9개의 파티션으로 super라는 이름의 super streams를 생성합니다. 
+이 애플리케이션의 인스턴스는 최대 3개까지 배포할 수 있습니다.
+
+## 3.4 Advanced Listener Container Configuration
+
+binder 또는 binding 속성으로 노출되지 않는 listner container properties 설정하려면 ListenerContainerCustomizer 유형의 단일 빈을 application context에 추가합니다.
+binder와 binding 속성이 설정이 된 후 customizer가 호출 됩니다.
+customizer(configure() 메소드)는 consumer group 뿐만 아니라 queue name도 인수로 제공 됩니다.
+
+## 3.5 Advanced Queue/Exchange/Binding Configuration
+
+때때로 RabbitMQ 팀은 예를 들어 queue를 선언할 때 인수를 설정하여 사용할 수 있는 새 기능을 추가합니다. 
+일반적으로 이러한 기능은 적절한 속성을 추가하여 바인더에서 사용할 수 있지만 현재 버전에서는 즉시 사용할 수 없습니다. 
+이제 버전 3.0.1부터는 선언을 수행하기 직전에 선언 가능(queue, Exchange 또는 binding)을 수정하기 위해 응용프로그램 컨텍스트에 선언 가능 Customizer bean(들)을 추가할 수 있습니다. 
+이를 통해 현재 바인더에서 직접 지원되지 않는 인수를 추가할 수 있습니다.
+
+## 3.6 Receiving Batched Messages
+
+RabbitMQ 바인더를 사용하면 consumer bindings에서 처리되는 두 가지 유형의 배치가 있습니다.
+
+### 3.6.1 Batches Created by Producer
+
+일반적으로 만약 producer binding이 batch-enabled=true로 설정되거나 BatchingRabbitTemplate을 사용하여 메세지가 생성되었다면 batch의 element들은 listener method에 각각 호출되어 집니다.
+3.0 버전부터는 spring.cloud.stream.bindings.<name>.consumer.batch-mode가 true로 설정되어 있다면 해당 배치를 List<?>로 listener method에 제시할 수 있습니다.
+
+### 3.6.2 Consumer-side Batching
+
+3.1 버전부터는 consumer는 multiple inbound messages를 조합하여 하나의 배치로 구성 할수 있으며 변환된 payload의 List<?>로 application에 전달 할 수 있습니다.
+아래의 예제는 어떻게 사용을 하는지 간단한 예제 application을 보여줍니다.
+
+```text
+spring.cloud.stream.bindings.input-in-0.group=someGroup
+spring.cloud.stream.bindings.input-in-0.consumer.batch-mode=true
+
+spring.cloud.stream.rabbit.bindings.input-in-0.consumer.enable-batching=true
+spring.cloud.stream.rabbit.bindings.input-in-0.consumer.batch-size=10
+spring.cloud.stream.rabbit.bindings.input-in-0.consumer.receive-timeout=200
+```
+
+```java
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean
+	Consumer<List<Thing>> input() {
+		return list -> {
+			System.out.println("Received " + list.size());
+			list.forEach(thing -> {
+				System.out.println(thing);
+
+				// ...
+
+			});
+		};
+	}
+
+	@Bean
+	public ApplicationRunner runner(RabbitTemplate template) {
+		return args -> {
+			template.convertAndSend("input-in-0.someGroup", "{\"field\":\"value1\"}");
+			template.convertAndSend("input-in-0.someGroup", "{\"field\":\"value2\"}");
+		};
+	}
+
+	public static class Thing {
+
+		private String field;
+
+		public Thing() {
+		}
+
+		public Thing(String field) {
+			this.field = field;
+		}
+
+		public String getField() {
+			return this.field;
+		}
+
+		public void setField(String field) {
+			this.field = field;
+		}
+
+		@Override
+		public String toString() {
+			return "Thing [field=" + this.field + "]";
+		}
+
+	}
+
+}
+```
+
+```text
+Received 2
+Thing [field=value1]
+Thing [field=value2]
+```
+
+batch에서 message의 갯수는 batch-size와 receive-timeout 속성에 의해 결정됩니다.
+만약 receive-timeout 지정 시간이 지나도 새로운 메시지가 없다면 갯수가 적더라도 배치가 전달 됩니다.
+
+> Consumer-side batching은 오직 container-type=simple(default 값)인 경우에만 지원됩니다.
+
+

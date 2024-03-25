@@ -80,6 +80,9 @@ vendor/
 # *.iml
 # *.ipr
 
+# copilot
+.idea/copilot/
+
 # CMake
 cmake-build-*/
 

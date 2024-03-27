@@ -249,5 +249,19 @@ $ ps -eLF | grep redis
 $ strace -p 16310
 ```
 
-# System 사용
+# System 사양
 
+|          내용           |       최소 사양       |                 권장 사양                 |
+|:---------------------:|:-----------------:|:-------------------------------------:|
+| # of node per cluster |      2 Cores      |              >= 3 Cores               |
+|  # of cores per node  |      3 Cores      |              >= 8 Cores               |
+|          RAM          |       15GB        |                >= 30GB                |
+|        Storage        | SATA(RAM 크기 * 10) |                 40GB                  |
+| Persistentce Storage  |    RAM 크기 * 3     | >= RAM 크기 * 6 \n (>= RAM + Flash * 5) |
+|    Network    |        1G         |                >= 10G                 |
+
+서버의 사양을 어떻게 결정할 것인가?
+
+## 노드 수(# of node per cluster)
+
+하나의 standalone 서버를 구축하는 경우에 master 서버 1대, slave 서버 1대 그리고 FailOver와 Load Balancing을 위한 Sentinel 서버 1대를 구축하는 경우 최소 3대의 서버가 요구 됩니다.

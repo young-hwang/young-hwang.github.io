@@ -38,7 +38,7 @@ objects와 values 사이의 serialization을 통합하였습니다.
 - Redis Pub/Sub Messaging과 Redis Stream Listeners.
 - RedisList 나 RedisSet 같은 Java를 위한 Redis collection 구현.
 
-# 왜 Spring Data Redis 인가?
+## 왜 Spring Data Redis 인가?
 
 Spring Framework은 최고의 full-stack Java/EE 애플리케이션 프레임워크 이다.
 가벼운 컨테이너를 제공하고 dependency injection, AOP, portable service 추상화가 같은 비침습적 프로그래밍 모델을 지원한다.
@@ -48,7 +48,7 @@ NoSQL 저장 시스템은 수평확장과 속도를 위하여 관계형 데이�
 
 Spring Data Redis를 사용하면 spring의 뛰어난 인프라 지원을 통해 불필요한 Task와 저장소와 상호작용하기 요구되는 boilerpalte code 제거하여 Redis key-value 저장소를 사용하는 spring application을 쉽게 만들수 있다.
 
-# Redis Hig-level view 지원
+## Redis Hig-level view 지원
 
 Redis는 여러 구성요소를 제공합니다.
 대부분의 작업에 대하여 hight-level 추상화와 지원 서비스들이 최선의 선택입니다.
@@ -59,11 +59,11 @@ Redis는 여러 구성요소를 제공합니다.
 
 쉽게 초기화 하는 방법은 start.spring.io을 이용하여 Spring base 프로젝트를 만들거나 Spring Tool을 이용하여 Spring 프로젝트를 생성하는 것이다.
 
-# Example Repository
+## Example Repository
 
 Github에 있는 [spring-data-redis-examples]()의 다양한 예제는 download 가능하며 어떻게 라이브러리가 작동하는지 느낄수 있도록 도와준다. 
 
-# Hello World
+## Hello World
 
 첫번째, 당신은 redis server 설정이 필요하다.
 Spring Data Redis는 Redis 2.6 이상이 요구 되고 Spring Data Redis 는 Lettuce, jedis란 Redis를 위한 두 유명한 오픈 소스 라이브러리와 통합된다.
@@ -108,4 +108,109 @@ public class RedisApplication {
 
 # Drivers
 
-Redis와 Spring을 사용할 때 첫번째 작업중 하나는 저장소에 연결하는 것이다.
+Redis와 Spring을 사용할 때 첫번째 작업중 하나는 IoC Container를 통하여 저장소에 연결하는 것이다.
+그것을 위해서는 Java connect(or binding)가 요구 된다.
+어떠한 library를 선택하든 문제없이 하나의 Spring Data Redis APIs(모든 connector에 일관되게 작동함) 세트만 사용하여야 합니다.
+`org.springframework.data.redis.connection` 패키지와 그 안의 RedisConnection과 RedisConnectionFactory 인터페이스는 Redis에 대한 연결 활성화 탐색 및 검색을 위해 존재합니다.
+
+## RedisConnection and RedisConnectionFactory
+
+RedisConnection은 Redis Backend 통신을 제어하므로 Redis와 통신을 위한 core building block을 제공합니다. 
+또한 기본 연결 라이브러리 exceptions을 Srping의 일관린 DAO exception 계층으로 자동 변환하여 어떠한 코드 수정 없이 다른 connector들로 전환할 수 있으므로 작동이 동일하게 유지 됩니다.
+
+> **Note:** native library가 필요한 특정 케이스 위해서 RedisConnection은 통신에 사용되는 원시 object 반환하는 전용 메소드(getNativeConnection)를 제공한다. 
+
+활성화된 RedisConnection object는 RedisConnectionFactory를 통해 얻어진다.
+또한 PersistentExceptionTranslator object로 작동하므로 한번만 선언되면 transparent exception translation을 수행할 수 있습니다.
+예를 들어 @repositry annotation과 AOP를 사용하여 exception translation 할 수 있습니다.
+더 많은 정보를 위하여 spring framework documentation의 [전용 섹션](https://docs.spring.io/spring-framework/reference/data-access.html#orm-exception-translation)을 참조하세요.
+
+> **Note:** RedisConnection classes 는 thread-safe 하지 않습니다.
+> Lettuce의 StatefulRedisConnection과 같은 native connection을 사용하는 동안은 Thread-safe 하게지만 Spring Data Redis의 LettuceConnection은 thread-safe 하지 않습니다.
+> 그러므로 multi Threads에서 RedisConnection의 instance를 공유하면 안됩니다.
+> 이것은 특히 transactional 작업이나 BLPOP 같은 Redis 동작들과 명령어를 Blocking하는 경우에 해당됩니다.
+> transactional과 pipelining 작업을 위한 RedisConnection instance는 작업 올바르게 완료될 때까지 보호되지 않은 변경가능 상태로 유지하므로 multi threads에서 사용 시 안전하지 않습니다.
+> 이것은 의도적으로 설계된 것입니다.
+
+> **Tip:** 만약 성능상의 이유로 multi thread 환경에서 connections 같은 공유된 Redis 자원이 필요하다면 native connection을 확보하고 Redis client library API를 직접 사용해야 합니다.
+> 대안으로 RedisTemplate을 사용할 수 있으며 Thread-safe 환경 동작하기 위하여 connection을 획득 및 관리 한다.
+> RedisTemplate 상세한 정보는 [문서](https://docs.spring.io/spring-data/redis/reference/redis/template.html)를 참조하세요.
+
+> **Note:** 원시 설정에 의하여 factory 새로운 connection 이나 존재하는 connection(pool이나 공유된 native connection이 사용된 경우)을 반환합니다.
+
+RedisConnectionFactory를 사용하는 가장 쉬운 방법은 IoC Container를 통해 적절한 connection을 구성하고 이를 사용중인 class에 주입하는 것입니다.
+
+현재 불행히도 모든 커넥터가 모든 Redis 기능을 지원하지 않습니다.
+Connection API에서 기본 library 가 지원하지 않는 method가 실행 될 때 UnsupportedOperationException이 발생합니다.
+다음 개요에서는 개별 Redis connectors에서 지원되는 기능에 대해 설명합니다.
+
+Table 1. Feature Availability across Redis Connectors
+
+| Supported Feature          | Lettuce                                                                                      | Jedis                                                                                        |
+|----------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Standalone Connections     | X                                                                                            | X                                                                                            |
+| Master/Replica Connections | X                                                                                            |                                                                                              |
+| Redis Sentinel             | Master 검색, Sentinel 인증, Replica 읽기                                                           | Master 검색                                                                                    |
+| Redis Cluster              | Cluster 연결, Cluster Node 연결, Replica 읽기                                                      | Cluster 연결, Cluster Node 연결                                                                  |
+| Transport Channels         | TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets                                       | TCP                                                                                          |
+| Connection Pooling         | X(using commons-pool2)                                                                       | X(using commons-pool2)                                                                       |
+| Other Connection Features  | non-blocking 명령어를 위한 singleton-connneciton 공유                                                | Pipelining과 Transactions은 상호 배타적, pipeline/transaction에서 server/connection 명령어 사용 불가         |
+| SSL                        | X                                                                                            | X                                                                                            |
+| Pub/Sub                    | X                                                                                            | X                                                                                            |
+| Pipeline                   | X                                                                                            | X(pipelining과 transaction은 상호 배타적)                                                           |
+| Transactions               | X                                                                                            | X(pipelining과 transaction은 상호 배타적)                                                           |
+| Datatype support | Key, String, List, Set, SortecSet, Hash, Server, Stream, Scripting, Geo, HyperLogLog | Key, String, List, Set, SortedSet, Hash, Server, Stream, Scripting, Geo, HyperLogLog |
+| Reactive(non-blocking) API | X |  |
+
+## Configuring the Lettuce Connector
+
+Lettuce는 org.springframework.data.redis.connection.lettuce pacakge를 통하여 Spring Data Redis가 지원하는 Netty 기반의 오픈소스 connector 이다.
+
+```xml
+# pom.xml 파일의 dependencies 항목으로 아래의 내용을 추가합니다.
+<dependencies>
+
+  <!-- other dependency elements omitted -->
+
+  <dependency>
+    <groupId>io.lettuce</groupId>
+    <artifactId>lettuce-core</artifactId>
+    <version>6.3.2.RELEASE</version>
+  </dependency>
+
+</dependencies>
+```
+
+다음 예제는 어떻게 새로운 Lettuce connection factory를 생성하는지 보여줍니다.
+
+```java
+@Configuration
+class AppConfig {
+  @Bean
+  public LettuceConnectionFactory redisConnectionFactory() {
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379));
+  }
+}
+```
+
+또한 몇가지 Lettuce 관련 변경할 수 있는 connection parameter 가 있습니다.
+기본적으로 LettuceConnectionFactory에 의해 생성된 모든 LettuceConnection 인스턴스들은 모든 non-blocking과 non-transactional 작동들에 대하여 thread-safe 한 natvie connection을 공유 합니다.
+매번 전용 connection을 사용하려면 shareNativeConnection을 false로 설정합니다.
+LettuceConnectionFactory는 또한 pooling blocking, transactional connections 또는 sharedNativeConnection이 false로 설정을 되는 경우 LettucePool을 사용할 수 있도록 구성 될수 있습니다.
+
+다음 예제는 LettuceClientConfigurationBuilder를 이용하여 SSL, timeout 같은 더 정교한 설정을 보여준다.
+
+```java
+@Bean
+public LettuceConnectionFactory lettuceConnectionFactory() {
+
+  LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+    .useSsl().and()
+    .commandTimeout(Duration.ofSeconds(2))
+    .shutdownTimeout(Duration.ZERO)
+    .build();
+
+  return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379), clientConfig);
+}
+```
+

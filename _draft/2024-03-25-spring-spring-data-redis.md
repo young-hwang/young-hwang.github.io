@@ -61,7 +61,7 @@ Redis는 여러 구성요소를 제공합니다.
 
 ## Example Repository
 
-Github에 있는 [spring-data-redis-examples]()의 다양한 예제는 download 가능하며 어떻게 라이브러리가 작동하는지 느낄수 있도록 도와준다. 
+Github에 있는 [spring-data-redis-examples]()의 다양한 예제는 download 가능하며 어떻게 라이브러리가 작동하는지 느낄수 있도록 도와준다.
 
 ## Hello World
 
@@ -215,6 +215,182 @@ public LettuceConnectionFactory lettuceConnectionFactory() {
 }
 ```
 
+더 상세한 configuration 변경을 위해서는 LettuceClientConfiguration을 참조합니다.
+
+Lettuce는 Netty의 native transport와 통합되어 Unix domain sockets을 사용하여 Redis와 통신합니다.
+runtime 환경에 맞는 native transport dependencies를 포함하여야 합니다.
+다음 예제는 /var/run/redis.sock에서 Unix domain socket을 위한 Lettuce Connection factory를 어떻게 생성하는지 보여줍니다.
+
+```java
+@Configuration
+class AppConfig {
+  @Bean
+  public LettuceConnectionFactory redisConnectionFactory() {
+    return new LettuceConnectionFactory(new RedisSocketConfiguration("/var/run/redis.sock"));
+  }
+}
+```
+
+> **Note:** Netty는 현재 OS-native transport를 위하여 epoll(Linux)와 kqueue(BSD/macOS) 인터페이스를 지원합니다.
+
+## Configuring the Jedis Connector
+
+Jedis는 org.springframework.data.redis.connection.jedis package를 통하여 Spring Data Redis가 지원하는 오픈소스 connector이다.
+
+```xml 
+<!-- pom.xml 파일의 dependencies 항목으로 아래의 내용을 추가합니다. -->
+<dependencies>
+
+    <!-- other dependency elements omitted -->
+
+    <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>5.0.2</version>
+    </dependency>
+
+</dependencies>
+```
+
+가장 간단히 살펴볼 jedis 설정 방법은 다음과 같습니다.
+
+```java
+@Configuration
+class AppConfig {
+
+  @Bean
+  public JedisConnectionFactory redisConnectionFactory() {
+    return new JedisConnectionFactory();
+  }
+}
+```
+
+그러나 production 사용을 위해서는 다음 예제와 같이 host나 password 같은 설정 변경을 할 수 있습니다.
+
+```java
+@Configuration
+class RedisConfiguration {
+
+  @Bean
+  public JedisConnectionFactory redisConnectionFactory() {
+
+    RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("server", 6379);
+    return new JedisConnectionFactory(config);
+  }
+}
+```
+
+# Connection Modes
+
+Redis는 다양한 setup을 통하여 작동 가능합니다.
+각각의 작동 모드에는 다음 섹션에 설명된 특별한 구성이 필요합니다.
+
+## Redis Standalone
+
+가장 쉬운 방법은 single Redis server를 Redis Standalone 모드로 사용하는 것입니다.
+
+LettuceClientConfiguration이나 JedisConnectionFactory를 다음 예제와 같이 구성합니다.
+
+```java
+@Configuration
+class RedisStandaloneConfiguration {
+  /**
+  * Lettuce
+  */
+  @Bean
+  public RedisConnectionFactory lettuceConnectionFactory() {
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration("server", 6379));
+  }
+
+  /**
+  * Jedis
+  */
+  @Bean
+  public RedisConnectionFactory jedisConnectionFactory() {
+    return new JedisConnectionFactory(new RedisStandaloneConfiguration("server", 6379));
+  }
+}
+```
+
+## Write to Master, Read from Replica
+
+Redis Master/Replica 구성(자동 failover가 없음, 자동 failover는 [Sentinel](https://docs.spring.io/spring-data/redis/reference/redis/connection-modes.html#redis:sentinel) 참조)은 더 많은 node에 데이터를 안전하게 저장하는 것만은 아닙니다.
+또한 Lettuce를 사용하여 master에 쓰기를 푸시하고 있는 동안에 replica로부터 데이터를 읽을 수 있습니다.
+read/write 전략을 다음 예제에서 보여주는 것처럼 LettuceClientConfiguration을 이용하여 사용 할 수 있습니다.
+
+```java
+@Configuration
+public class WriteToMasterReadFromReplicaConfiguration {
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+                .readFrom(ReadFrom.REPLICA_PREFERRED)
+                .build();
+        RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration("server", 6379);
+        return new LettuceConnectionFactory(serverConfig, clientConfig);
+    }
+}
+```
+
+> **Tip:** INFO 명령어(예를 들어 AWS를 사용할 때)를 통해 non-public address의 enviroment reporting을 위하여 RedisStandaloneConfiguration을 대신하여 RedisStaticMasterReplicaConfiguration 을 사용한다. 
+> RedisStaticMasterReplicaConfiguration은 개별 서버간의 Pub/Sub message 전달이 누락되기 때문에 Pub/Sub 지원하지 않습니다.
+
+## Redis Sentinel
+
+고가용성 Redis 처리를 위하여 Spring Data Redis는 다음 예제와 같이 RedisSentinelConfiguration을 사용하여 Redis Sentinel을 지원합니다.
+
+```java
+/**
+ * Lettuce
+ */
+@Bean
+public RedisConnectionFactory lettuceConnectionFactory() {
+  RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
+  .master("mymaster")
+  .sentinel("127.0.0.1", 26379)
+  .sentinel("127.0.0.1", 26380);
+  return new LettuceConnectionFactory(sentinelConfig);
+}
+
+/**
+ * Jedis
+ */
+@Bean
+public RedisConnectionFactory jedisConnectionFactory() {
+  RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
+  .master("mymaster")
+  .sentinel("127.0.0.1", 26379)
+  .sentinel("127.0.0.1", 26380);
+  return new JedisConnectionFactory(sentinelConfig);
+}
+```
+
+> **Tip:** RedisSentinelConfiguration은 PropertySource의 다음 properties에 의해 정의되어 질 수 있습니다.
+> - spring.redis.sentinel.master: master node의 이름
+> - spring.redis.sentinel.nodes: host:port 쌍의 comma-separated list
+> - spring.redis.sentinel.username: Redis Sentinel에 인증하기 위한 username(Redis 6 필요)
+> - spring.redis.sentinel.password: Redis Sentinel에 인증하기 위한 password
+
+때때로 Sentinel들 중 하나는 직접적인 상호작용이 필요합니다.
+RedisConnectionFactory.getSentinelConnection()이나 RedisConnection.getSentinelCommands()를 사용하여 첫번째 활성화된 Sentinel 구성에 액세스할 수 있도록 합니다.
+
+## Redis Cluster
+
+Cluster 지원은 non-clustered 통신 처럼 동일한 구성 요소를 기반으로 합니다.
+RedisConnection에서 확장되어진 RedisClusterConnection은 Redis Clsuter와의 통신을 제어하고 Spring DAO exception 계층으로 errors를 변환 합니다.
+RedisClusterConnection 인스턴스는 RedisConnectionFactory에 의해 생성되어지며 다음 예제는 RedisClusterConfiguration을 사용하여 구성되어 지는지 보여줍니다.
+
+```java
+@Component
+@ConfigurationProperties(prefix = "spring.redis.cluster")
+public class ClusterConfigurationProperties {
+
+    /*
+     * spring.redis.cluster.nodes[0] = 127.0.0.1:7379
+     * spring.redis.cluster.nodes[1] = 127.0.0.1:7380
+     * ...
+     */
+    List<String> nodes;
 # RedisTemplate
 
 대부분의 사용자들은 RedisTemplate과 org.springframework.data.redis.core 같은 상응하는 패키지 혹은 reactive 기반의 ReactiveRedisTemplate 사용하는 것을 좋아합니다.
@@ -375,6 +551,42 @@ SpringData는 사용자 타입과 raw 데이터 타입 사이의 전환이 org.s
 
 그러나 Spring OXM 지원을 통한 Object/XML 맵핑을 위해서는 OxmSerializer 사용하거나 JSON 포맷의 데이터 저장을 위하여 Jackson2JsonRedisSerializer나 GenericToStringSerializer를 사용할 수 있습니다.
 
+    /**
+     * Get initial collection of known cluster nodes in format {@code host:port}.
+     *
+     * @return
+     */
+    public List<String> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<String> nodes) {
+        this.nodes = nodes;
+    }
+}
+
+@Configuration
+public class AppConfig {
+
+    /**
+     * Type safe representation of application.properties
+     */
+    @Autowired ClusterConfigurationProperties clusterProperties;
+
+    public @Bean RedisConnectionFactory connectionFactory() {
+
+        return new LettuceConnectionFactory(
+            new RedisClusterConfiguration(clusterProperties.getNodes()));
+    }
+}
+```
+
+> **Tip:** RedisClusterConfiguration은 PropertySource의 다음 properties에 의해 정의되어 질 수 있습니다.
+> - spring.redis.cluster.nodes: host:port 쌍의 comma-separated list
+> - spring.redis.cluster.max-redirects: 클러스터 노드를 찾기 위한 최대 리디렉션 수
+
+> **Note:** 초기화 구성은 드라이버 라이브러리를 클러스터 노드의 초기 세트로 전달합니다.
+> live cluster 재구성으로 인한 변경은 기본 드라이버에만 유지되며 구성에 다시 기록되지 않습니다.
 storage format은 오직 value에 의해서만 제한되지 않습니다.
 key, value, hash에 어떠한 제한이 없이 사용되어 집니다.
 

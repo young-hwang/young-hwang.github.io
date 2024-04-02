@@ -22,7 +22,7 @@ Redis project의 홈페이지를 인용해보면 다음과 같다.
 > 이 모든 데이터 유형은 push/pop, add/remove, 서버측 union, intersection, 집합간의 차이 등의 atomic 작업으로 조작됩니다.
 > Redis는 다양한 종료의 정렬 방법을 지원합니다.
 
-Spring Data Redis는 쉬운 설정과 spring application으로 부터 redis 접근을 제공합니다.
+Spring Data Redis는 쉬운 설정과 spring application으로 부터 Redis 접근을 제공합니다.
 store와 상호작용을 위하여 low-level과 high-level 추상화를 제공하여 사용자가 인프라 문제에 걱정하지 않도록 합니다.
 
 Spring Data는 Redis의 다양한 특징들을 지원합니다.
@@ -144,7 +144,7 @@ RedisConnectionFactory를 사용하는 가장 쉬운 방법은 IoC Container를 
 Connection API에서 기본 library 가 지원하지 않는 method가 실행 될 때 UnsupportedOperationException이 발생합니다.
 다음 개요에서는 개별 Redis connectors에서 지원되는 기능에 대해 설명합니다.
 
-Table 1. Feature Availability across Redis Connectors
+*Table 1. Feature Availability across Redis Connectors*
 
 | Supported Feature          | Lettuce                                                                                      | Jedis                                                                                        |
 |----------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
@@ -391,6 +391,44 @@ public class ClusterConfigurationProperties {
      * ...
      */
     List<String> nodes;
+    
+    /**
+     * Get initial collection of known cluster nodes in format {@code host:port}.
+     *
+     * @return
+     */
+    public List<String> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<String> nodes) {
+        this.nodes = nodes;
+    }
+}
+
+@Configuration
+public class AppConfig {
+
+    /**
+     * Type safe representation of application.properties
+     */
+    @Autowired ClusterConfigurationProperties clusterProperties;
+
+    public @Bean RedisConnectionFactory connectionFactory() {
+
+        return new LettuceConnectionFactory(
+            new RedisClusterConfiguration(clusterProperties.getNodes()));
+    }
+}
+```
+
+> **Tip:** RedisClusterConfiguration은 PropertySource의 다음 properties에 의해 정의되어 질 수 있습니다.
+> - spring.redis.cluster.nodes: host:port 쌍의 comma-separated list
+> - spring.redis.cluster.max-redirects: 클러스터 노드를 찾기 위한 최대 리디렉션 수
+
+> **Note:** 초기화 구성은 드라이버 라이브러리를 클러스터 노드의 초기 세트로 전달합니다.
+> live cluster 재구성으로 인한 변경은 기본 드라이버에만 유지되며 구성에 다시 기록되지 않습니다.
+
 # RedisTemplate
 
 대부분의 사용자들은 RedisTemplate과 org.springframework.data.redis.core 같은 상응하는 패키지 혹은 reactive 기반의 ReactiveRedisTemplate 사용하는 것을 좋아합니다.
@@ -551,42 +589,6 @@ SpringData는 사용자 타입과 raw 데이터 타입 사이의 전환이 org.s
 
 그러나 Spring OXM 지원을 통한 Object/XML 맵핑을 위해서는 OxmSerializer 사용하거나 JSON 포맷의 데이터 저장을 위하여 Jackson2JsonRedisSerializer나 GenericToStringSerializer를 사용할 수 있습니다.
 
-    /**
-     * Get initial collection of known cluster nodes in format {@code host:port}.
-     *
-     * @return
-     */
-    public List<String> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<String> nodes) {
-        this.nodes = nodes;
-    }
-}
-
-@Configuration
-public class AppConfig {
-
-    /**
-     * Type safe representation of application.properties
-     */
-    @Autowired ClusterConfigurationProperties clusterProperties;
-
-    public @Bean RedisConnectionFactory connectionFactory() {
-
-        return new LettuceConnectionFactory(
-            new RedisClusterConfiguration(clusterProperties.getNodes()));
-    }
-}
-```
-
-> **Tip:** RedisClusterConfiguration은 PropertySource의 다음 properties에 의해 정의되어 질 수 있습니다.
-> - spring.redis.cluster.nodes: host:port 쌍의 comma-separated list
-> - spring.redis.cluster.max-redirects: 클러스터 노드를 찾기 위한 최대 리디렉션 수
-
-> **Note:** 초기화 구성은 드라이버 라이브러리를 클러스터 노드의 초기 세트로 전달합니다.
-> live cluster 재구성으로 인한 변경은 기본 드라이버에만 유지되며 구성에 다시 기록되지 않습니다.
 storage format은 오직 value에 의해서만 제한되지 않습니다.
 key, value, hash에 어떠한 제한이 없이 사용되어 집니다.
 
@@ -611,4 +613,182 @@ Redis를 지원 구현으르 사용하려면 RedisCacheManager를 다음 예제�
 public RedisCacheManager cacheManger(RedisConnectionFactory connectionFactory) {
   return RedisCacheManager.create(connectionFactory);
 }
+```
+
+RedisCacheManager 동작은 RedisCacheManagerBuilder를 이용하여 구성되어질 수 있으며 transaction 동작과 미리 정의된 caches같은 기본 RedisCacheConfiguration을 설정할 수 있습니다.
+
+```java
+RedisCacheManager cacheManager = RedisCacheManager.builder(connectionFactory)
+    .cacheDefaults(RedisCacheConfiguration.defaultCacheConfig())
+    .transactionAware()
+    .withInitialCacheConfigurations(Collections.singletonMap("predefined",
+        RedisCacheConfiguration.defaultCacheConfig().disableCachingNullValues()))
+    .build();
+```
+
+앞서 예제에서 보았듯이 RedisCacheManager는 cache 별로 사용자 정의 구성을 허용합니다.
+
+RedisCache의 동작은 RedisCacheConfiguration에 의해 정의된 RedisCacheManager로 만들어진다.
+key 유효기간, 접두어, binary 저장 포멧을 변환하기 위한 RedisSerializer 구현들의 구성을 다음 예제어서 보여줍니다.
+
+```java
+RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+    .entryTtl(Duration.ofSeconds(1))
+    .disableCachingNullValues();
+```
+
+RedisCacheManager는 binary 값을 읽고 쓰기 위하여 기본적으로 잠금이 없는 RedisCacheWriter 입니다.
+잠금이 없는 캐싱은 처리량을 향상 시킨다.
+항목 잠금이 없다면 Cache putIfAbsent와 clean 동작을 위한 여러 non-atomic 명령어들이 Redis로 전송되어 중복 처리가 초례될수 있습니다.
+잠금 대상은 명확한 lock key와 key의 존재 재확인을 통해 중복된 명령어를 보호하며 추가적인 요청들이나 잠재적으로 명령어 대기 시간을 초례합니다.
+
+잠금은 cache entry 마다 적용되지 않고 cache level에서 적용된다.
+
+다음과 같이 locking 행위를 선택할 수 있습니다.
+
+```java
+RedisCacheManager cacheManager = RedisCacheManager
+  .build(RedisCacheWriter.lockingRedisCacheWriter(connectionFactory))
+  .cacheDefaults(RedisCacheConfiguration.defaultCacheConfig())
+  ...
+```
+
+기본적으로 캐시 대상을 위한 어떠한 key는 실제 캐시명 앞에 두개 콜론(::)의 접두사를 가집니다.
+이러한 동작은 계산된 접두사로 고정적으로 변경되어 집니다.
+
+다음 예제는 어떻게 고정적인 접두사가 설정되는지 보여줍니다.
+
+```java
+// static key prefix
+RedisCacheConfiguration.defaultCacheConfig().prefixCacheNameWith("(͡° ᴥ ͡°)");
+
+다음 예제는 계산된 접두사 설정을 보여줍니다.
+
+// computed key prefix
+RedisCacheConfiguration.defaultCacheConfig().computePrefixWith(cacheName -> "¯\_(ツ)_/¯" + cacheName);
+```
+
+캐시 구현은 기본적으로 KEYS와 DEL 명령어를 사용하여 캐시를 삭제합니다.
+KEYS는 거대한 keyspaces에서 성능 이슈의 원인이 될 수 있습니다.
+그래서 기본 RedisCacheWriter는 SCAN 기반 배처 전략으로 교체된 BatchStrategy로 생성되어 질 수 있습니다.
+SCAN 전략은 과도한 Redis 명령어 실행시간을 피하기 위해 배치 크기를 요구합니다.
+
+```java
+RedisCacheManager cacheManager = RedisCacheManager
+  .build(RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory, BatchStategy.scan(100)))
+  .cacheDefaults(RedisCacheConfiguration.defaultCacheConfig())
+  ...
+```
+
+> **Note:** KEYS 배치 전략은 모든 드라이버와 Redis 작동 모드(Standalone, Cluster)에서 완벽히 지원되어 집니다.
+> SCAN 은 Lettuce 드라이버 사용 시 완전히 지원 됩니다. 
+> Jedis에서 SCAN은 오직 non-clustered 모드에서만 지원 됩니다.
+
+RedisCacheManager를 위한 기본 설정 리스트는 다음과 같습니다.
+
+*Table 1. RedisCacheManager defaults*
+
+|Setting | Value                                        |
+|--------|----------------------------------------------|
+|CacheWriter | Non-locking, KEYS batch strategy             |
+|Cache Configuration | RedisCacheConfiguration#defaultConfiguration |
+|Initial Caches | None                                         |
+|Transaction Aware | No                                           |
+
+RedisCacheConfiguration을 위한 기본 설정 리스트는 다음과 같습니다.
+
+*Table 2. RedisCacheConfiguration defaults*
+
+|Setting | Value                                                              |
+|--------|--------------------------------------------------------------------|
+|Key Expiration | None                                                               |
+|Cache null | Yes                                                                |
+| Prefix Keys | Yes                                                                |
+| Default Prefix | The actual cache name                                              |
+| Key Serializer | StringRedisSerializer                                              |
+| Value Serializer | JdkSerializationRedisSerializer                                    |
+| Conversion Service | DefaultFormattingConversionService with default cache key converts |
+
+> **Note:** RedisCache는 기본적으로 통계가 불가능합니다.
+> RedisCacheManagerBuilder.enableStatistics()를 사용하여 수집된 데이터의 스냅샷을 반환하는 RedisCache#getStatistics()를 통해 local hits와 misses를 수집합니다.  
+
+## Redis Cache Expiration
+
+time-to-idle(TTI)의 구현은 time-to-live(TTL)의 변형 정의와 행동 다른 데이터 저장소를 건너 항상
+
+일반적으로:
+- time-to-live(TTL) 만료: TTL은 오직 데이터 접근 시 생성, 업데이트에 의해 set이나 reset 되어 집니다.
+  만약 entry가 TTL 시간 만료전 생성을 포함하여 쓰여졌다면 entry의 timeout은 해당 TTL 만료 timeout은 설정된 지속시간으로 재설정 될 것입니다.
+  예를들어 만약 TTL 만료 timeout이 5분으로 설정되었다면 timeout은 entry 생성 시 5분으로 설정되어 지고 5분 동안의 만료 전에 entry가 업데이트되어지면 5분으로 재설정 될 것입니다.
+  만약 5분동안 비록 entry가 몇차례 읽혀거나 5분 마다 읽혀진다 하더라도 업데이트가 발생하지 않으면 entry는 여전히 만료될 것입니다.
+  TTL 만료 정책을 선언할 때 entry를 보호하기 위해서는 entry가 반드시 쓰여져야 합니다.
+- time-to-idle(TTI) 만료: TTI는 entry를 읽거나 entry가 업데이트 될 때마다 재설정 되어지며 TTL 만료 정책을 효과적으로 확장합니다.
+
+> **Note:** 어떠한 데이터 저장소는 TTL 설정이 되면 entry에 어떤 타입의 데이터 접근 행위(읽기, 쓰기 등) 일어나든 관계없이 entry가 만료된다.
+> 설정된 TTL 만료시간 이후 entry는 관계없이 데이터 저장소로 부터 제거되어진다.
+> 제거 행위(예를 들어 destroy, invalidate, overflow-to-disk(영구 저장소를 위한) 등)는 데이터 저장소의 스펙을 따른다.
+
+## Time-To-Live(TTL) Expiration
+
+Spring Data Redis의 Cache 구현은 cache entries에 time-to-live(TTL) 만료 정책을 지원합니다.
+사용자는 고정된 Duration을 이용하여 TTL 만료 정책 시간을 구성하거나 동적으로 새로운 RedisCacheWriter.TtlFucntion 인터페이스를 구현하여 각 cache entry에 Druration을 계산합니다. 
+
+> **Tip:** RedisCacheWriter.TtlFunction 인터페이스는 Spring Data Redis 3.2.0에서 소개 되었다.
+
+만약 모든 cache entries이 지속시간을 설정한 이후 만료되어야 하는 경우 다음과 같이 고정된 기간으로 TTL 만료 시간을 간단히 구성하면 됩니다.
+
+```java
+RedisCacheConfiguration fiveMinuteTtlExpirationDefaults = RedisCacheConfiguration.defaultCacheConfig()
+  .entryTtl(Duration.ofMinutes(5));
+```
+
+그러나 만약 TTL 만료 시간이 cache entry에 다양하다면 RedisCacheWriter.TtlFucntion 인터페이스를 사용자 지정 구현하여 반드시 제공해야 합니다.
+
+```java
+enum MyCustomTtlFunction implements TtlFunction {
+  INSTANCE;
+
+  @Override
+  public Duration getTtl(Object key, @Nullable Object value) {
+    // entry key나 value에 기반하여 TTL 만료 시간을 계산합니다.
+  }
+}
+```
+> **Note:** 내부적으로 고정된 duration TTL 만료 정책도 제공된 Duration을 반한하는 TtlFunction 구현으로 랩핑됩니다. 
+ 
+*Global fixed Duration TTL expiration timeout*
+
+```java
+RedisCacheManager cacheManager = RedidsCacheManager.builder(redisConnectionFactory)
+  .cacheDefaults(fiveMinuteTtlExpirationDefaults)
+  .build();
+```
+
+또는 대안으로:
+
+*Global, dynamically computed per-cache entry Duration TTL expiration timeout*
+
+```java
+RedisCacheConfiguration defaults = RedisCacheConfiguration.defaultCacheConfig()
+  .entryTtl(MyCustomTtlFunction.INSTANCE);
+  
+RedisCacheManager cacheManager = RedisCacheManger.builder(redisConnectionFactory)
+  .cacheDefaults(defaults)
+  .build();
+```
+
+물론, 전역과 캐시별 구성 사용을 함께 결합 할 수 있습니다.
+
+*Global fixed Duration TTL expiration timeout*
+
+```java
+RedisCacheConfiguration predefined = RedisCacheConfiguration.defaultCacheConfig()
+  .entryTtl(MyCustomTtlFunction.INSTANCE);
+
+Map<String, RedisCacheConfiguration> initialCaches = Collections.singletonMap("predefined", predefined);
+  
+RedisCacheManager cacheManager = RedisCacheManger.builder(redisConnectionFactory)
+  .cacheDefaults(fiveMinuteTtlExpirationDefaults)
+  .withInitialCacheConfigurations(initialCaches)
+  .build();
 ```

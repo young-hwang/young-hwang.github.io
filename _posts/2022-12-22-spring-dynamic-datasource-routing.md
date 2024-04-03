@@ -19,13 +19,13 @@ toc_sticky: true
 하지만 요청이 들어올 때마다 데이터베이스를 동적으로 선택하거나 데이터 소스가 추가되는 경우도 있습니다.
 즉 Master/Slave의 DB 분기 처리라던지 Replication DB 처럼 여러 DB를 그때 그때 선택하는 경우가 될 것입니다.
 
-이럴경우 사용이 가능한 방법이 'AbstractRoutingDatasource'를 이용한 'Dynamic Datasource Routing' 입니다.
+이럴경우 사용이 가능한 방법이 "AbstractRoutingDatasource"를 이용한 "Dynamic Datasource Routing"입니다.
 
 # AbstractRoutingDatasource 란?
 
-'AbstractRoutingDatasource'는 spring 2.0.1 부터 추가 되었으며 spring-jdbc 프로젝트에 포함되어 있습니다.
-'DataSource'를 구현한 구현체인데요. 
-'javax.sql.DataSource' 인터페이스로 정의가 되어 있습니다.
+"AbstractRoutingDatasource"는 spring 2.0.1 부터 추가 되었으며 spring-jdbc 프로젝트에 포함되어 있습니다.
+"DataSource"를 구현한 구현체인데요. 
+"javax.sql.DataSource" 인터페이스로 정의가 되어 있습니다.
 이 인터페이스는 데이터 베이스와의 연결을 설정하고 얻는데 사용됩니다.
 
 ```mermaid!
@@ -34,9 +34,9 @@ classDiagram
     AbstractDataSource <|-- AbstractRoutingDataSource
 ```
 
-'AbstractRoutingDataSource'의 가장 중요한 특징은 개발자가 'determineCurrentLookupKey()'라는 추상 메소드를 구현하여 
+"AbstractRoutingDataSource"의 가장 중요한 특징은 개발자가 "determineCurrentLookupKey()"라는 추상 메소드를 구현하여 
 현재 스레드의 컨텍스트에서 사용될 데이터 베이스를 결정한다는 것입니다.
-'AbstractRoutingDataSource'에는 여러 메소드들이 있지만 주요한 메소드를 살펴 보겠습니다.
+"AbstractRoutingDataSource"에는 여러 메소드들이 있지만 주요한 메소드를 살펴 보겠습니다.
 
 ```java
 package org.springframework.jdbc.datasource.lookup;

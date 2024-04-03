@@ -22,7 +22,7 @@ JDBC Connection 설정을 위해 의례적으로 사용을 해오던 구문입�
 
 # JDBC Driver는 어떻게 객체가 만들어지는가?
 
-아래의 코드는 com.mysql.jdbc.Driver의 소스코드입니다.
+아래의 코드는 "com.mysql.jdbc.Driver"의 소스코드입니다.
 
 ```java
 public class Driver extends com.mysql.cj.jdbc.Driver {
@@ -37,8 +37,8 @@ public class Driver extends com.mysql.cj.jdbc.Driver {
 }
 ```
 
-해당 클래스에서는 특별한 내용이 없이 com.mysql.cj.jdbc.Driver를 상속하여 클래스가 구성 되어 있습니다.
-com.mysql.cj.jdbc.Driver 클래스 또한 확인이 필요해 보입니다.
+해당 클래스에서는 특별한 내용이 없이 "com.mysql.cj.jdbc.Driver"를 상속하여 클래스가 구성 되어 있습니다.
+"com.mysql.cj.jdbc.Driver" 클래스 또한 확인이 필요해 보입니다.
 
 ```java
 public class Driver extends NonRegisteringDriver implements java.sql.Driver {
@@ -57,9 +57,9 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 }
 ```
 
-클래스를 살표 보면 **'static { }'** 으로 되어 있는 구문이 보입니다.
+클래스를 살표 보면 **"static { }"** 으로 되어 있는 구문이 보입니다.
 여기서 아래에서 Driver 객체를 생성하여 DriverManger에 등록하는 부분입니다.
-그렇다면 이 **'static {}'** 절은 과연 어떻게 실행이 되는 것일까요? 
+그렇다면 이 **"static {}"** 절은 과연 어떻게 실행이 되는 것일까요? 
 이를 알기 위해서는 static initializer block이 어떠한 것인지 정리가 필요합니다.
 
 ---
@@ -71,7 +71,7 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 런타임에 정적 블록 의 정적 변수 를 초기화 할 수 있기 때문에 Java 정적 이니셜 라이저 블록 이라고도 합니다. 클래스는 정적 블록을 얼마든지 가질 수 있으며 JVM은 작성한 순서대로이를 실행합니다. 프로그램의 정적 블록은 항상 정적 메서드 , 비 정적 메서드 , 기본 메서드 또는 인스턴스 블록 보다 먼저 실행 됩니다. 
 클래스 로딩시 몇 가지 작업을 수행하고 싶다면 정적 블록을 사용해야합니다.
 
-인용부분을 보면 정적 블록은 *"클래스가 메모리에 로드 될 때 항상 실행 된다."*고 되어있다. 즉 우리가 *'class.forName'*으로 *'com.mysql.jdbc.Driver'* 를 호출 했을 때 클래스가 메모리에 로드 되면서 실행이 된것이다. 그 외에도 어떻게 실행이 되는지 몇가지 테스트를 진행해 보았습니다.
+인용부분을 보면 정적 블록은 *"클래스가 메모리에 로드 될 때 항상 실행 된다."*고 되어있다. 즉 우리가 *"class.forName"*으로 *"com.mysql.jdbc.Driver"* 를 호출 했을 때 클래스가 메모리에 로드 되면서 실행이 된것이다. 그 외에도 어떻게 실행이 되는지 몇가지 테스트를 진행해 보았습니다.
 
 ---
 

@@ -231,7 +231,7 @@ Child 8466 started and finished
 
 $ node app.js 를 실행하게 되면 먼저 OS프로세스가 생성이 된다.
 
-처음 const cluster = require('cluster') 실행 시 cluster는 isMaster는 true가 반환된어 masterProcess()가 실행된다.  여기서는 cpu 수에 따라 cluster.fork()를 실행하여 새로운 자식 프로세스(Worker)를 생성한다.
+처음 "const cluster = require('cluster')" 실행 시 cluster는 isMaster는 true가 반환된어 masterProcess()가 실행된다.  여기서는 cpu 수에 따라 cluster.fork()를 실행하여 새로운 자식 프로세스(Worker)를 생성한다.
 fork() 명령어를 실행하는 경우 결국 마스터 프로세스와 동일한 작업을 수행한다.
 cluster 모듈을 가져와  if 명령문을 실행 한다. 다만 fork() 된 프로세스의 경우 isMaster의 값이 false 이므로 childProcess 함수를 실행하고 종료한다.
 

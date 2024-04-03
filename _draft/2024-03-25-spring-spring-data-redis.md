@@ -12,6 +12,12 @@ toc: true
 toc_sticky: true
 ---
 
+> 해당 문서는 [Spring Data Redis 3.2.4](https://docs.spring.io/spring-data/redis/reference/) 문서를 참조하여 작성되었습니다.
+> 
+> 전문 번역자가 아니기에 오역이나 의역이 있을 수 있습니다.
+> 
+> 첫번째로 [Redis](https://docs.spring.io/spring-data/redis/reference/redis.html) 부분에 대한 내용입니다.
+ 
 # Redis
 
 Spring Data가 지원하는 key-value 저장소 중 하나인 Redis에 대해 알아보자.
@@ -792,3 +798,124 @@ RedisCacheManager cacheManager = RedisCacheManger.builder(redisConnectionFactory
   .withInitialCacheConfigurations(initialCaches)
   .build();
 ```
+
+## Time-To-Idle(TTI) Expiration
+
+Redis 자체는 실제로는 time-to-idle(TTI) 만료 정책을 지원하지 않습니다.
+그럼에도 불구하고 Spring Data Redis의 Cache 구현을 사용하여 time-to-idle(TTI) 만료 정책 처럼 동작하게 할 수 있습니다.
+
+Spring Data Redis의 캐시 구현의 TTI의 설정은 opt-in으로 명시적으로 선되어야 합니다.
+추가로 앞서 Reids Cache 만료 정책에서 보았던 고정된 duration 이나 사용자 정의 TtlFunction 인터페이스 구현 중 하나를 사용하여 TTL 구성을 반드시 제공하여야 합니다.
+
+예를 들면:
+
+```java
+@Configuration
+@EnableCaching
+class RedisConfiguration {
+  @Bean
+  RedisConnectionFactory redisConnectionFactory() {
+    ...
+  }
+  
+  @Bean
+  RedisCacheManger cacheManager(RedisConnectionFactory connectionFactory) {
+    RedisCacheConfiguration defaults = RedisCacheConfiguration.defaultCacheConfig()
+      .entryTtl(Duration.ofMinutes(5))
+      .enableTimeToIdle();
+      
+    return RedisCacheManager.builder(connectionFactory)
+      .cacheDefaults(defaults)
+      .build();
+  }
+}
+```
+
+왜냐하면 Redis 서버들은 TTI의 올바른 개념을 구현하지 않았기에 TTI는 오직 만료 정책을 허용하는 Redis 명령어들을 활용하여 달성할 수 있습니다.
+Redis에서 "만료 정책"은 기술적으로 time-to-live(TTL) 만료 정책입니다.
+그러나 키 값을 읽을 때 TTL 만료를 전달할 수 있으므로 현재 Spring Data Redis의 `Cache.get(key)` 작업의 경우처럼 TTL 만료 시간 제한을 효과적으로 재설정할 수 있습니다.
+
+`RedisCache.get(key)`는 Redis `GETEX` 명령을 호출하여 구현되었습니다.
+
+> **Warning** 
+> 
+> Redis `GETEX` 명령은 Redis version `6.2.0` 이후에서 사용 가능합니다.
+> 그러므로 만약 Redis `6.2.0` 이후 버전을 사용하지 않는다면 Spring Data Redis의 TTI 만료 정책을 사용이 불가능합니다.
+> 만약 호환되지 않는 Redis(Server) Version에서 TTI 활성화 시 명령어는 exception을 발생 시킵니다.
+> Redis server version이 맞고 `GETEX` 명령어를 지원하는지 확인하는 시도가 이루어 지지 않았습니다.
+
+> **Waring**
+> 
+> Spring Data Redis 애플리케이션에서 time-to-idle(TTI) 만료정책과 유사한 동작을 달성하려면 하나의 entry가 일관되게 모든 읽기와 쓰기에 (TTL) 만료 정책이 액세스되어야 합니다. 
+> 이 규칙에는 예외가 없습니다.
+> Spring Data Redis 애플리케이션 전체에서 data 접근 패턴이 혼합되거나 다르면(예를들면 RedisTempalte을 사용하여 캐시 동작을 가능한 실행하거나 또는 특별히 Srping Data Repository CRUD 조작을 사용할 때) entry 접근 시 entry에 만약 TTL 만료 정책이 설정된 경우 만료 정책으로 부터 반드시 보호 되지 않을 것입니다.
+> 예를 들어 entry를 TTL 만료 정책과 함께 `@Cacheable` 서비스 메소드를 호출 중(즉 만료정책 옵션과 함께 SET) 캐시에 "put" 하고 나중에 만료 정책 시간 초과전에 Spring Data Redis Repository를 사용하여 읽었다.(만료 옵션 없이 GET 사용)
+> 간단히 특정 만료 옵션 없는 `GET`은 해당 entry의 TTL 만료 정책 timeout을 재설정 하지 않을 것입니다.
+> 따라서 entry는 다음 데이터 접근 동작 전에 비록 이것이 읽혀졌더라도 만료 될 것 입니다.
+> 이것은 Redis server에서 강제되어지지 않으므로 cache의 내부 및 외부에서 time-to-idle 만료 정책 구성시 entry에 지속적으로 액세스하는 것이 애플리케이션의 책임이다. 
+
+# Redis Cluster
+
+Redis Cluster를 사용하기 위해서는 Redis Server version 3.0 이상이 필요합니다.
+더 많은 정보를 보려면 [Cluster Tutorial](https://redis.io/topics/cluster-tutorial/)을 참조하세요.
+
+> **Note**
+> 
+> Redis Repository를 Redis Cluster에서 사용할 때 Cluster에서 어떻게 [Redis Repositories](https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/cluster.html)를 실행시키는지 알고있어야 합니다.
+
+## Working With Redis Cluster Connection
+
+Redis Cluster는 single-node Redis나 Sentinel-monitored master-replica 환경과 다르게 작동합니다.
+왜냐면 자동 샤딩이 전체 nodes에 분산된 16384개의 slot의 하나를 키로 맵핑하기 때문입니다.
+따라서 2개 이상의 키가 포함된 명령어들은 교차 슬롯 오류를 방지하기 위해 모든 키를 정확히 동일한 슬롯에 할당해야 합니다.
+Single cluster node는 전용 key set 만을 제공합니다.
+하나의 특정 서버에 대해 실행된 명령어들은 서버에서 제공하는 키에 대해 결과를 반환합니다.
+간단한 예로 `KEYS` 명령어를 고려한다.
+클러스터 환경에서 하나의 서버가 실행되어 질때 오직 request가 전달되어진 node에서 제공되는 keys를 반환하고 cluster내의 모든 key가 반드시 반환되는 것은 이니다.
+그래서 클러스터 환경에서 모든키를 가지기 위해서는 알려진 모든 마스터 노드로 부터 keys를 읽어야 합니다.
+
+해당 슬롯 서비스 노드에 대한 특정 키의 리다이렉션은 드라이버 라이브러리에 의해 제어되지만 노드 전체에서 정보를 수집하거나 클러스터의 모든 노드에 명령어를 전달하는 것과 같은 상위 수준 기능은 `RedisClusterConnection`에서 처리합니다.
+이전의 키 선택 예제를 보면 `keys(pattern)` 메소드는 클러스터 내의 모든 마스터 노드에서 선별하고 `KEYS` 명령어가 모드 마스터 노드에서 결과를 선택하고 키의 세트를 계산하여 반환하는 동안 가상으로 동작한다.
+단일 노드 RedisClusterConnection의 키 요청은 이러한 메소드들을 위하여 제공되어진다.
+
+`RedisClusterNode`는 RedisClusterConnection.clusterGetNodes를 통해서 얻거나 host, port나 node id를 사용하여 구성되어 질 수 있다.
+
+다음 예제는 명령어 셋이 전체 클러스터에서 실행되는 것을 보여준다.
+
+*Example 1. Sample of Running Commands Across the Cluster
+
+```bash
+redis-cli@127.0.0.1:7379 > cluster nodes
+
+6b38bb... 127.0.0.1:7379 master - 0 0 25 connected 0-5460                 <-- 1
+7bb78c... 127.0.0.1:7380 master - 0 1449730618304 2 connected 5461-20242  <-- 2
+164888... 127.0.0.1:7381 master - 0 1449730618304 3 connected 10923-20243 <-- 3
+b8b5ee... 127.0.0.1:7382 slave 6b38bb... 0 1449730618304 25 connected     <-- 4
+```
+
+```java
+RedisClusterConnection connection = connectionFactory.getClusterConnnection();  <-- 1
+
+connection.set("thing1", value);                                                <-- 2
+connection.set("thing2", value);                                                <-- 3
+
+connection.keys("*");                                                           <-- 4
+
+connection.keys(NODE_7379, "*");                                                <-- 5
+connection.keys(NODE_7380, "*");                                                <-- 6
+connection.keys(NODE_7381, "*");                                                <-- 7
+connection.keys(NODE_7382, "*");                                                <-- 8 
+```
+
+1. Master node serving slots 0 to 5460 replicated to replica at 7382
+2. Master node serving slots 5461 to 10922
+3. Master node serving slots 10923 to 16383
+4. Replica node holding replicants of the master at 7379
+5. Request routed to node at 7381 serving slot 12182
+6. Request routed to node at 7379 serving slot 5061
+7. Request routed to nodes at 7379, 7380, 7381 → [thing1, thing2]
+8. Request routed to node at 7379 → [thing2]
+9. Request routed to node at 7380 → []
+10. Request routed to node at 7381 → [thing1]
+11. Request routed to node at 7382 → [thing2]
+ 

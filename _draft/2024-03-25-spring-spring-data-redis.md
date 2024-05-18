@@ -243,6 +243,8 @@ class AppConfig {
 
 Jedis는 org.springframework.data.redis.connection.jedis package를 통하여 Spring Data Redis가 지원하는 오픈소스 connector이다.
 
+*pom.xml 파일의 dependencies 항목으로 아래의 내용을 추가합니다.*
+
 ```xml 
 <!-- pom.xml 파일의 dependencies 항목으로 아래의 내용을 추가합니다. -->
 <dependencies>
@@ -415,6 +417,7 @@ public class ClusterConfigurationProperties {
 @Configuration
 public class AppConfig {
 
+```java
     /**
      * Type safe representation of application.properties
      */

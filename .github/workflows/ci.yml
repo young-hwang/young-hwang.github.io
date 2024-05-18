@@ -27,6 +27,8 @@ jobs:
         bundler-cache: false
     - name: Bundle Install
       run: bundle install
+    - name: sass Uninstall
+      run: gem uninstall sass-embedded
     - name: Install Jekyll ${{ matrix.jekyll-version }}
       run: gem install jekyll -v ${{ matrix.jekyll-version }}
     - name: Init Search

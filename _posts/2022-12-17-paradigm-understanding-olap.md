@@ -1,18 +1,15 @@
 ---
-title: "OLAP의 이해"
-last_modified_at: 2022-12-17T00:00:00-00:00
-categories:
-    - paradigm
-tags:
-    - olap
-toc: true
-toc_sticky: true
+layout: post
+title: OLAP 의 이해
+subtitle:
+categories: paradigm
+tags: [olap]
 ---
 
 온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.
 ![Screenshot 2022-12-09 at 12.12.06 AM.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211365&authkey=%21AP_bJJaM2voBRyg&width=1364&height=270)
 
-# OLAP의 여러 의미(The different meanings of OLAP)
+## OLAP의 여러 의미(The different meanings of OLAP)
 
 ![Untitled](https://onedrive.live.com/embed?resid=884E6FE11C46974%211368&authkey=%21AF5qk8_Gx8_IK54&width=552&height=504)
 
@@ -35,9 +32,9 @@ toc_sticky: true
 
   컴파일러와 저장소 및 액세스 방법을 포함해야 하는 전체 OLAP 제품은 빠른 데이터 액세스 및 계산에 최적화되어 있으며 DSS(Decision Support System) 파생 데이터 설명 모델링에 사용됩니다.
 
-# OLAP가 유용한 경우(Where OLAP Is Useful)
+## OLAP가 유용한 경우(Where OLAP Is Useful)
 
-## 일반 정보의 올바른 처리(Desired Attributes of General Information Processing)
+### 일반 정보의 올바른 처리(Desired Attributes of General Information Processing)
 
 - 모든 비즈니스 활동 (및 그 문제에 대한 다른 의도적 인 활동)의 초석은 정보 처리이다.
 - 데이터 수집, 저장, 전송, 조작 및 검색(컴퓨터의 도움 유무에 관계없이)이 포함된다.
@@ -46,7 +43,7 @@ toc_sticky: true
   예를 들어, 소비자 소매 동향에 대한 정보가 부족하면 소매업체에 대한 구매 및 할당 결정이 잘못되어 과잉 재고가 있는 항목에 대한 비용이 많이 드는 가격 인하가 발생하고 재고가 부족한 항목에 대한 수익 창출 기회를 잃게 된다. 따라서 소매업체는 정확한 제품 수요 예측을 높이 평가하는 경향이 있습니다.
 - 따라서 **OLAP는 존재하고 시의적절하며 정확하고 이해할 수 있는 정보를 제공해야 한다.**
 
-# 1-4 Transaction 과 Decision Support Processing의 차이(The Distinction between Transaction and Decision Support Processing)
+## 1-4 Transaction 과 Decision Support Processing의 차이(The Distinction between Transaction and Decision Support Processing)
 
 - 분석을 기반으로 한 의사 결정 지향
 
@@ -130,7 +127,7 @@ ABDOP 서버는 분석 계산을 수행해야 합니다.
       올바른 OLAP 도구 및 기술은 설명의 정확성을 보장하는 가장 좋은 방법 이다.
 
 
-# OLAP의 기능 요구 사항
+## OLAP의 기능 요구 사항
 
 - 사용자 요구사항
   User Challenge
@@ -186,13 +183,13 @@ ABDOP 서버는 분석 계산을 수행해야 합니다.
       다중 사용자 지원이 필수 요구 사항은 아니지만 OLAP 서버의 실질적인 다중 사용자 지원 요구 사항으로 고려 대상이 된다. 기업은 협업 작업 환경이다. 규모 축소 및 분산화의 결과 의사 결정을 위한 분석 데이터에 대한 읽기/쓰기 액세스 권한이 필요한 직원의 수가 상대적으로 증가하고 있다. 쓰기 저장 기능이 없는 각 사용자에 대해 별도의 캐시를 기반으로 하는 다중 사용자 읽기가 있을 수 있다. 그리고 처리 및 데이터가 클라이언트와 서버 간에 분산되고, 서버가 서버에서 데이터를 처리해야 하는 시기와 클라이언트에서 처리해야 하는 시기를 알 수 있을 만큼 지능적이며, 서버가 다중 사용자 캐시를 제공하는 다중 사용자 읽기/쓰기가 있을 수 있습니다.
 
 
-# 3. N 차원의 이해
+## 3. N 차원의 이해
 
 하이퍼큐브(Hypercube) 또는 3차원 이상의 큐브라는 개념은 스프레드시트가 워크시트를 사용하고 데이터베이스에서 테이블을 사용하는 것과 같은 방식으로 하이퍼큐브를 사용하는 다차원 소프트웨어를 이해하는 데 필수적이다.
 
 하이퍼큐브는 일반적으로 선, 평면 및 큐브와 같은 저차원 표면에 대한 설명 다음에 도입됩니다.
 
-# 저차원 데이터 셋(Lower-Dimensional Data Set)
+## 저차원 데이터 셋(Lower-Dimensional Data Set)
 
 ![Untitled3](https://onedrive.live.com/embed?resid=884E6FE11C46974%211355&authkey=%21AA2bPfj3NbLXo-Y&width=936&height=532)
 
@@ -238,7 +235,7 @@ variable(변수)는 우리가 측정하는 항목이다.
 
 ![Untitled7](https://onedrive.live.com/embed?resid=884E6FE11C46974%211360&authkey=%21ACekwb0J1Yzyx1g&width=786&height=470)
 
-# 3 차원을 넘어서
+## 3 차원을 넘어서
 
 ![Untitled8](https://onedrive.live.com/embed?resid=884E6FE11C46974%211369&authkey=%21AHYCzHCa9skxPuU&width=510&height=258)
 
@@ -268,7 +265,7 @@ variable(변수)는 우리가 측정하는 항목이다.
 
 변수, 시간, 제품에 수직인 상점 체인을 추가하게 되는것은 논리적으로는 합당하지만 실제 물리적 공간에는 x, y, z로 이루어진 3차원에서는 3차원 이상을 나타낼 수 없다. 이것을 상상으로 이해하는 것도 쉬지 않다.
 
-# Multidimensional Type Structures (MTSs)
+## Multidimensional Type Structures (MTSs)
 
 다차원 유형 구조
 
@@ -286,7 +283,7 @@ variable(변수)는 우리가 측정하는 항목이다.
 
 MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습니다. 큐브에 상점 차원을 추가하려고 시도했을 때를 기억하십니까? 굉장히 복잡해 보였다. 그러나 MTS는 그렇지 않습니다. 아주 쉽게 할 수 있다. 그림 3.14와 같이 stores라는 네 번째 줄 세그먼트를 추가하기만 하면 된다. MTS는 이벤트에서 추출된 데이터 요소의 수와 해당 논리적 구성을 표시합니다. 탐색할 수 있는 모든 차원과 모든 차원에서 얼마나 멀리 갈 수 있는지 보여줍니다. MTS는 하이퍼큐브 내부 및 하이퍼큐브 간의 계층 구조 및 데이터 흐름에 대한 정보도 표시할 수 있다. 큐브보다 더 많은 구조 정보를 표시하며 임의의 수의 차원에 대해 표시할 수 있습니다.
 
-# 컴퓨터 화면에서 하이퍼큐브 표현
+## 컴퓨터 화면에서 하이퍼큐브 표현
 
 큐브를 이용한 다차원의 표현엔 한계가 있으면 MTS 또한 차원의 조합을 표현 한것일 뿐 실제 데이터를 보기엔 한계가 있습니다. 여기에서 3번째 장애물인 ***여러 논리적 차원을 물리적 (화면) 2차원에 매핑해야 하는 문제가 나타난다.***
 
@@ -334,7 +331,7 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
 다차원 그리드는 결국 대부분의 차원이 열로 표시되는 그리드의 특별한 경우일 뿐이다.
 
-# 분석적 관점
+## 분석적 관점
 
 다차원 데이터를 분석을 위해 염두해 두어야 할 몇가지 법칙이 있다.
 
@@ -352,13 +349,13 @@ MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습�
 
 - 무엇을 볼 것인지, 무엇을 비교 할 것인지 판단하여 표시 방법을 결정한다.
 
-# LC 모델 소개(Location Contents)
+## LC 모델 소개(Location Contents)
 
 LC 모델은 공용 OLAP 제품/모델의 상위 집합으로 LC 모델을 통해 OLAP 제품/모델을 모방 할 수 있다.
 
 수학과 논리에 기반을 두고 있으며 이는 견고한 모델 정의를 제공한다. LC 모델은 완전한 언어가 포함되어 있으며 이를 통해 계층 구조, 다중 큐브, 차원 계산 및 견고한 OLAP 분석을 하게 된다.
 
-# OLAP 내의 혼란
+## OLAP 내의 혼란
 
 서로 다른 접근 방식, 가정 및 암시적 모델을 반영하는 OLAP 도구 간에는 많은 실질적인 차이점이 있다.
 
@@ -402,7 +399,7 @@ LC 모델은 공용 OLAP 제품/모델의 상위 집합으로 LC 모델을 통�
 
   - *모든 것을 단일 큐브로 채우기: 하이퍼큐브*
 
-# 이상적인 모델의 속성
+## 이상적인 모델의 속성
 
 다차원 모델을 정의하고 조작하거나 작업하기 위해 보단 일반 적인 기본 요소 집합이 필요하다.
 
@@ -422,7 +419,7 @@ LC 모델은 공용 OLAP 제품/모델의 상위 집합으로 LC 모델을 통�
 - 효율성
 - 분석적 관심
 
-# LC Model 개요
+## LC Model 개요
 
 - 기능적 접근 방식
 - Super Symmetry

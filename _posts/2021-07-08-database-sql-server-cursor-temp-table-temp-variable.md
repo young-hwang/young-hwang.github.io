@@ -1,13 +1,9 @@
 ---
-title: "커서, 임시 테이블, 테이블 변수란"
-last_modified_at: 2021-07-08T16:20:02-05:00
-categories:
-  - database
-tags:
-  - sql-server
-  - table variable
-toc: true
-toc_sticky: true
+layout: post
+title: 커서, 임시 테이블, 테이블 변수란
+subtitle:
+categories: database
+tags: [sql-server, table variable]
 ---
 
 데이터 처리는 대부분 집합 단위로 이루어지기도 하지만 행 단위로 처리하기도 합니다.
@@ -60,9 +56,9 @@ toc_sticky: true
   </tr>
 </table>
 
-# 사용 예제
+## 사용 예제
 
-## 커서(Cursor)
+### 커서(Cursor)
 
 ```sql
 DECLARE @col1 int, @col2 nvarchar(50),
@@ -86,7 +82,7 @@ CLOSE vendor_cursor;
 DEALLOCATE vendor_cursor;
 ```
 
-## 임시 테이블(Temp Table)
+### 임시 테이블(Temp Table)
 
 ```sql
 DECLARE @rowCount
@@ -115,7 +111,7 @@ END
 DROP TABLE #testTable
 ```
 
-## 테이블 변수(Table Variables)
+### 테이블 변수(Table Variables)
 
 ```sql
 DECLARE @i int

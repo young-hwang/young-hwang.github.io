@@ -1,17 +1,9 @@
 ---
-title: "Java 17 Features"
-last_modified_at: 2024-03-01T00:00:00-00:00
-categories:
-- java
-tags:
-- java
-- java 17
-- JDK 17
-- switch
-- sealed
-- SplittableRandom 
-toc: true
-toc_sticky: true
+layout: post
+title: Java 17 Features
+subtitle:
+categories: java
+tags: [java, java 17, JDK 17, switch, sealed, SplittableRandom]
 ---
 
 Spring Boot 3.0 출시 이후 Java 17 버전이 필수가 되었습니다.
@@ -20,7 +12,7 @@ Spring Boot 3.0 출시 이후 Java 17 버전이 필수가 되었습니다.
 Java 17은 Java 의 LTS(Long Term Support) 버전으로 2026년까지 지원이 되며, 개발자 생상성과 프로그램 효율성을 향상시키는 것을 목표로 몇가지 새로운 기능이 추가되었습니다.
 이번 포스팅에서는 Java 17의 기능 중 일부를 효과적으로 사용하는 방법을 이해하는 데 도움이 되는 코드 예제와 함께 살펴보겠습니다.
 
-# 1. Pattern matching For switch statements
+## 1. Pattern matching For switch statements
 
 Java 17에서는 개발자가 패턴 일치와 관련된 스위치 문의 코드를 단순화할 수 있도록 'Pattern matching for switch' 기능이 추가되었습니다.
 이 기능은 switch 문의 여러 조건을 간결하게 표현할 수 있도록 도와줍니다.
@@ -30,7 +22,7 @@ Java 17에서는 개발자가 패턴 일치와 관련된 스위치 문의 코드
 
 새로운 기능을 통해 개발자는 패턴을 사용하여 모든 유형의 개체 값과 일치시킬 수 있습니다.
 
-## Traditional switch statement
+### Traditional switch statement
 
 ```java
 public static String getDayOfWeek(int dayNum) {
@@ -64,7 +56,7 @@ public static String getDayOfWeek(int dayNum) {
 }
 ```
 
-## Java 12 switch Statement
+### Java 12 switch Statement
 
 Java 12 에서는 아래와 같이 switch 문을 사용하여 간결하게 표현할 수 있습니다.
 case 문은 이제 새로운 화살표 연산자(->)를 사용하여 패턴과 결과 표현식을 지정합니다. 
@@ -85,7 +77,7 @@ public static String getDayOfWeek(int dayNum) {
 }
 ```
 
-## Java 17 switch Statement
+### Java 17 switch Statement
 
 Java 17의 새로운 기능을 사용하면 상수 패턴을 사용하는 것 외에도 개발자가 변수 패턴과 유형 패턴을 사용할 수 있습니다.
 변수 패턴을 사용하면 특정 값과 일치하여 변수에 할당할 수 있습니다.
@@ -161,7 +153,7 @@ public class Employee {
 }
 ```
 
-# 2. Pattern matching For instanceof
+## 2. Pattern matching For instanceof
 
 Java 17에서는 유형 확인에 필요한 코드를 단순화하는 데 도움이 되는 간단한 패턴 일치 방법인 'instanceof' 패턴 일치 기능이 추가되었습니다.
 'Pattern matching'을 사용하여 성고하면 검사된 객체의 값을 새 변수로 할당할 수 있습니다.
@@ -170,7 +162,7 @@ Java 17에서는 유형 확인에 필요한 코드를 단순화하는 데 도움
 
 다음은 'instaceof'의 'pattern matching'을 사용하여 코드를 단순화하는 예입니다.
 
-## Traditional instanceof
+### Traditional instanceof
 
 ```java
 if (obj instanceof String) {
@@ -179,7 +171,7 @@ if (obj instanceof String) {
 }
 ```
 
-## Java 17 instanceof
+### Java 17 instanceof
 
 ```java
 if (obj instanceof String s) {
@@ -190,7 +182,7 @@ if (obj instanceof String s) {
 이전 방식에서는 메소드를 사용하기 전에 객체를 String 유형으로 casting 해야 했습니다.
 하지만 새로운 방식에서는 instanceof 키워드를 사용하여 객체를 String 유형으로 casting 할 필요가 없습니다.
 
-# 3. Sealed Classes & Interfaces
+## 3. Sealed Classes & Interfaces
 
 Sealed 클래스 및 인터페이스는 특정 클래스 또는 인터페이스를 확장하거나 구현하는 클래스 또는 인터페이스를 제한하는 기능입니다.
 
@@ -242,7 +234,7 @@ public sealed interface Shape permits Circle, Square, Triangle
 
 Sealed 클래스는 유형 안전성 향상, 코드 가독성 향상, 결합 감소 등 여러 가지 이점을 제공합니다.
 
-# 4. Enhanced Pseudo-Random Number Generators
+## 4. Enhanced Pseudo-Random Number Generators
 
 'Enhanced Pseudo-Random Number Generators'는 JDK 17에서 제공됩니다.
 Java 애플리케이션에서 난수를 생성하는 데 사용할 수 있는 추가적인 PRNG(의사 난수 생성기)를 제공합니다.
@@ -281,7 +273,7 @@ SplittableRandom newRandom = random.split();
 예제에서는 SplittableRandom 클래스의 새 인스턴스를 만든 다음 이를 분할하여 독립적인 난수 시퀀스를 생성하는 새 인스턴스를 만듭니다.
 두 인스턴스를 별도의 스레드에서 사용하여 경합이 적은 난수를 생성할 수 있습니다.
 
-# 5. Restore Always-Strict Floating-Point Semantics
+## 5. Restore Always-Strict Floating-Point Semantics
 
 Java 17에서는 'Restore Always-Strict Floating-Point Semantics' 기능이 추가되었습니다.
 이 기능은 Java 애플리케이션에서 부동 소수점 연산의 일관성과 신뢰성을 향상시키는 것을 목표로 합니다.
@@ -305,7 +297,7 @@ Java 17 이전에는 부동 소수점 연산에서 발생할 수 있는 반올�
 이는 다양한 플랫폼과 아키텍처 전반에 걸쳐 보다 일관된 동작을 가능하게 하며, 이는 정밀도가 중요한 과학 및 금융 애플리케이션에서 특히 중요할 수 있습니다.
 이 기능으로 인해 일부 부동 소수점 연산의 성능이 약간 저하될 수 있다는 점은 주목할 가치가 있지만 이는 일반적으로 부동 소수점 연산의 일관성과 신뢰성 향상에 대한 대가로 받아들여질 수 있습니다.
 
-# 6. Strong Encapsulation for JDK Internals
+## 6. Strong Encapsulation for JDK Internals
 
 Java 17에서는 'Strong Encapsulation for JDK Internals' 기능이 추가되었습니다.
 이는 API 캡슐화를 더욱 향상시키는 것을 목표로 합니다.
@@ -353,7 +345,7 @@ public class MyClass {
 이 업데이트된 예에서는 sun.misc.Unsafe 클래스 대신 ByteBuffer 클래스를 사용하여 메모리를 할당합니다.
 그런 다음 ByteBuffer를 sun.nio.ch.DirectBuffer로 캐스팅하고 해당 address() 메소드를 사용하여 메모리 주소를 가져옵니다.
 
-# 7. New macOS Rendering Pipeline
+## 7. New macOS Rendering Pipeline
 
 Java 17의 'New macOS Rendering Pipeline' 기능은 macOS에서 Java 애플리케이션의 그래픽 렌더링 성능을 향상시키는 것을 목표로 합니다.
 이 파이프 라인은 macOS의 그래픽 하드웨어에 대한 낮은 수준의 액세스를 제공하는 Apple Metal API를 사용하여 더 빠르고 부드러운 그래픽 렌더링을 제공합니다.
@@ -395,7 +387,7 @@ Java 17 이전에는 이 코드가 OpenGL 렌더링 파이프라인을 사용하
 새로운 Metal 파이프라인은 복잡한 그래픽이나 애니메이션을 사용하는 애플리케이션에서 특히 눈에 띄게 나타납니다.
 이전 OpenGL 파이프라인에 비해 상당한 성능 향상을 제공할 수 있기 때문입니다.
 
-# 8. Deprecate the Applet API for Removal
+## 8. Deprecate the Applet API for Removal
 
 Java 17의 'Deprecate the Applet for Removal' 기능에는 Applet API를 사용 중단으로 표시하는 작업이 포함됩니다.
 이는 더 이상 사용이 권장되지 않으며 향후 Java 버전에서 제거될 수 있음을 의미합니다.

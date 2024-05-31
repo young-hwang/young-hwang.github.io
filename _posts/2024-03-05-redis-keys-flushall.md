@@ -1,13 +1,9 @@
 ---
-title: "KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유"
-last_modified_at: 2024-03-05T00:00:00-00:00
-categories:
-- redis
-tags:
-- redis
-- keys
-toc: true
-toc_sticky: true
+layout: post
+title: KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유
+subtitle:
+categories: redis
+tags: [redis]
 ---
 
 Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있습니다.
@@ -18,7 +14,7 @@ Redis는 싱글 스레드이기 때문에, 태생적으로 하나의 명령이 �
 
 이번 글에서는 `KEYS`와 `FLUSHALL` 명령어가 왜 장애의 원인될 수 있는지 알아보겠습니다.
 
-# 서버에서 KEYS 명령를 쓰지 말자
+## 서버에서 KEYS 명령를 쓰지 말자
 
 `KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 명령어입니다.
 예를 들어, `KEYS *`는 모든 키를 찾아주고, `KEYS user:*`는 `user:`로 시작하는 모든 키를 찾아줍니다.
@@ -45,13 +41,13 @@ redis 127.0.0.1:6379> keys user:*
 
 [Redis 매뉴얼](https://redis.io/commands/keys/)에서도 다음과 같이 해당 명령은 실제 제품에서는 쓰지말라고 권고하고 있습니다.
 
-> Warning: consider KEYS as a command that should only be used in production environments with extreme care. 
-> It may ruin performance when it is executed against large databases. 
-> This command is intended for debugging and special operations, such as changing your keyspace layout. 
-> Don't use KEYS in your regular application code. 
+> Warning: consider KEYS as a command that should only be used in production environments with extreme care.
+> It may ruin performance when it is executed against large databases.
+> This command is intended for debugging and special operations, such as changing your keyspace layout.
+> Don't use KEYS in your regular application code.
 > If you're looking for a way to find keys in a subset of your keyspace, consider using SCAN or sets.
- 
-왜 그렇다면 `KEYS` 명령어를 사용하면 안된다고 권고 할까요? 
+
+왜 그렇다면 `KEYS` 명령어를 사용하면 안된다고 권고 할까요?
 소스코드를 보면 이해할 수 있습니다.
 
 ```c
@@ -103,12 +99,12 @@ void keysCommand(client *c) {
 이러한 방식으로 동작하기 때문에, 만약 Redis에 수십만개 이상의 키가 존재한다면, 해당 명령어를 실행하는 동안 다른 명령어들이 블로킹되어 성능이 저하될 수 있습니다.
 그렇다면 어떻게 해야 할까요?
 
-## SCAN 명령어를 사용하자
+### SCAN 명령어를 사용하자
 
 `SCAN` 명령어는 `KEYS` 명령어와 비슷하게 동작하지만, 키를 순회하는 방식이 다릅니다.
 SCAN 명령어는 요청을 여러 개의 작은 요청으로 분할하여 처리하므로, 대규모 데이터셋에서도 실시간으로 요청을 처리할 수 있습니다.
 
-또한 Redis 클러스터에서는 KEYS 명령어를 사용할 수 없습니다. 
+또한 Redis 클러스터에서는 KEYS 명령어를 사용할 수 없습니다.
 대신 SCAN 명령어를 사용하여 클러스터 전체에서 키를 검색할 수 있습니다.
 
 ```bash
@@ -118,7 +114,7 @@ SCAN 명령어는 요청을 여러 개의 작은 요청으로 분할하여 처�
   3) "user:2h"
 ```
 
-# 서버에서 FLUSHALL 명령을 쓰지 말자
+## 서버에서 FLUSHALL 명령을 쓰지 말자
 
 모든 데이터를 삭제하는 명령어인 'FLUSHALL/FLUSHDB'라는 명령어가 존재합니다.
 Redis는 db라는 가상의 공간을 분리할 수 있는 개념을 제공하고, select 명령으로 이동할 수 있습니다.

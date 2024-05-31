@@ -1,17 +1,12 @@
 ---
-title: "PM2 Cluster Mode의 이해"
-last_modified_at: 2022-05-12T10:00:00-11:00
-categories:
-- node
-tags:
-- pm2
-- node
-- cluster
-toc: true
-toc_sticky: true
+layout: post
+title: PM2 Cluster Mode의 이해
+subtitle:
+categories: node
+tags: [pm2, node, cluster]
 ---
 
-# PM2 잘 사용한다. 나 빼고
+## PM2 잘 사용한다. 나 빼고
 
 ![Screen Shot 2022-04-20 at 8.41.07.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211321&authkey=%21AFeyDQ4zqhJ0XmY&width=926&height=314)
 
@@ -27,13 +22,13 @@ toc_sticky: true
 - 로그 출력
 - 서버 상태 모니터링
 
-# 클러스터란
+## 클러스터란
 
 여러 대의 [컴퓨터](https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%93%A8%ED%84%B0)들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합을 말한다. 
 클러스터의 구성 요소들은 일반적으로 고속의 [근거리 통신망](https://ko.wikipedia.org/wiki/%EA%B7%BC%EA%B1%B0%EB%A6%AC_%ED%86%B5%EC%8B%A0%EB%A7%9D)으로 연결된다. 
 서버로 사용되는 [노드](https://ko.wikipedia.org/wiki/%EB%85%B8%EB%93%9C)에는 각각의 [운영 체제](https://ko.wikipedia.org/wiki/%EC%9A%B4%EC%98%81_%EC%B2%B4%EC%A0%9C)가 실행된다
 
-# PM2란?
+## PM2란?
 
 “PM2 is a daemon process manager that will help you manage and keep your application online.”
 
@@ -41,14 +36,14 @@ PM2는 애플리케이션을 온라인 상태로 관리하고 유지하는데 �
 
 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)
 
-# PM2 사용하는 이유?
+## PM2 사용하는 이유?
 
 - 클러스터링 제어
 - 런타임 성능 및 리소스 소비에 대한 모니터링
 - 설정을 동적으로 수정하여 성능 향상
 - 충돌하는 경우 앱을 자동으로 다시 시작
 
-# Daemon 이란?
+## Daemon 이란?
 
 ![< D-Bus, unetwork(네트워크매니저), usound(펄스오디오), Avahi가 포함 >](https://onedrive.live.com/embed?resid=884E6FE11C46974%211323&authkey=%21AD2a8TjGzcUkKlI&width=1280&height=586)
 
@@ -60,7 +55,7 @@ PM2는 애플리케이션을 온라인 상태로 관리하고 유지하는데 �
 
 [https://ko.wikipedia.org/wiki/%EB%8D%B0%EB%AA%AC_(%EC%BB%B4%ED%93%A8%ED%8C%85)](https://ko.wikipedia.org/wiki/%EB%8D%B0%EB%AA%AC_(%EC%BB%B4%ED%93%A8%ED%8C%85))
 
-# Daemon Process 살펴 보기
+## Daemon Process 살펴 보기
 
 Vi 를 백그라운드로 실행하기 위하여 ‘&’를 붙이면 PID : 87242, PPID: 86772를 가지게 된다.
 
@@ -73,11 +68,11 @@ PPID가 1이나 다른 데몬 프로세스가 아닐 경우 bash가 종료 되�
 
 ![Untitled](https://onedrive.live.com/embed?resid=884E6FE11C46974%211347&authkey=%21AIUcf2RA0lKlbrc&width=1644&height=814)
 
-# Fork off and die
+## Fork off and die
 
 데몬 프로세스를 생성하는 방법은 일반적으로 자식 프로세스를 fork()하여 생성하고 자식을 분기한 자신을 죽이면서 init이 고아가 된 자식 프로세스를 자기 밑으로 데려가도록하여 생성한다. 이러한 프로세스를 ‘fork off and die’ 라고 한다.
 
-# fork 간단 예제
+## fork 간단 예제
 
 ![Untitled](https://onedrive.live.com/embed?resid=884E6FE11C46974%211346&authkey=%21APQw1YORyesUQjk&width=973&height=744)
 
@@ -86,7 +81,7 @@ fork는 한번 호출하면 두번 리턴한다는 개념으로 기억하자.
 
 그 후 ready queue에 등록 대기중이었던 Child Process가 CPU를 점유하여 실행 된되며 Fork를 호출하고 난 바로 그 다음 진행 시점에서 실행 된다.(Parent Process와 동일한 PCB)
 
-# fork off and die 간단 예제
+## fork off and die 간단 예제
 
 ```c
 #include <stdio.h>
@@ -123,7 +118,7 @@ chdir(“/“) : 디렉토리를 루트로 변경하여 기존 디렉토리 해�
 
 https://forkoffanddie.blogspot.com/
 
-# PM2는 어떻게 app을 실행하는가?
+## PM2는 어떻게 app을 실행하는가?
 
 ```bash
 pm2 start app.js
@@ -151,7 +146,7 @@ pm2.connect(function (err) {
 pm2 start app.js 명령어를 입력하게 되면 app.js 파일을 구동하게 된다.
 간단히 보자면 pm2 API의 pm2.connect와 pm2.start를 순차적으로 실행한 것과 같다.
 
-# God Daemon 생성
+## God Daemon 생성
 
 ![Untitled](https://onedrive.live.com/embed?resid=884E6FE11C46974%211345&authkey=%21AJRnTGSJmeMpWu4&width=1266&height=1394)
 
@@ -167,11 +162,11 @@ Client 객체는 God Daemon이 존재하는지 확인하여 connect 하거나 sp
 
 https://pm2.io/docs/runtime/reference/pm2-programmatic/
 
-# Single Thread, Non-blocking
+## Single Thread, Non-blocking
 
 지금까지 PM2를 이용하여 하나의 앱이 PM2에서 어떻게 실행이 되는지 살펴보았다. 하지만 이 또한 NodeJS의 $ node app.js 를 실행한 것과 같은 Single Thread , Non-blocking 프로세스이다. 즉 하나의 CPU에 있는 하나의 프로세스이다. Node.js가 아주 효율적으로 작동을 하긴 하지만 증가하는 작업 부하를 처리하기엔 하나의 프로세스는 부족해 보이는 것도 사실이다. 기본적으로 멀티 코어 시스템이 대부분인 상황에서 나머지 CPU를 낭비하는 것과 마찬가지이다.
 
-# Node.js Cluster Module 소개
+## Node.js Cluster Module 소개
 
 > Clusters of Node.js processes can be used to run multiple instances of Node.js that can distribute workloads among their application threads.
 The cluster module allows easy creation of child processes that all share server ports.
@@ -183,7 +178,7 @@ Node.js의 클러스터는 애플리케이션 스레드 간에 워크로드를 �
 Node.js에서는 모든 CPU를 사용하는 프로그램을 만드는데 도움이 되는 기능과 속성을 포함시켜 Custer 모듈을 제공하고 있다. Cluster 모듈이 CPU 사용을 최대화하기 위하여 사용하는 메커니즘은 이전에 소개한 fork 시스템 호출과 유사한 fork 프로세스를 통해 이루어 진다.
 클러스터 모듈을 사용하면 부모/마스터 프로세스가 임의의 수의 자식/작업자 프로세스로 분기 될 수 있고 IPC(Inter-Process Control)  통신을 통해 메시지를 보내 통신할 수 있다. 단 프로세스간 메모리 공유는 없다.
 
-# Cluster Module  예제
+## Cluster Module  예제
 
 ```jsx
 const cluster = require('cluster');
@@ -235,7 +230,7 @@ $ node app.js 를 실행하게 되면 먼저 OS프로세스가 생성이 된다.
 fork() 명령어를 실행하는 경우 결국 마스터 프로세스와 동일한 작업을 수행한다.
 cluster 모듈을 가져와  if 명령문을 실행 한다. 다만 fork() 된 프로세스의 경우 isMaster의 값이 false 이므로 childProcess 함수를 실행하고 종료한다.
 
-# 마스터 및 자식 간 프로세스 통신
+## 마스터 및 자식 간 프로세스 통신
 
 Cluster 모듈을 사용하여 자식 프로세스를 생성하게 되면 IPC(Inter Process Communiation) 라는 내부 통신이 가능하다고 설명하였다. 하나의 PC에서 IPC를 통한 통신 방법으로는  간단히 두가지 정도로 분류가 가능 할 것이다.
 
@@ -250,7 +245,7 @@ Cluster 모듈을 사용하여 자식 프로세스를 생성하게 되면 IPC(In
 Cluster 모드의 경우 서로 다른 프로세스(스레드 아님)이므로 공유 메모리를 이용한 통신 방법은 불가능 하다.
 즉 메세지 전달 방식으로 IPC 통신이 이루어지고 있다.
 
-# 클러스터 IPC 통신 간단 예제
+## 클러스터 IPC 통신 간단 예제
 
 ```jsx
 const cluster = require('cluster');
@@ -318,7 +313,7 @@ masterProcess() 에서 fork() 시 자식 프로세스(Worker)를 참조하는 �
 masterProcess에서는 참조되는 자식 프로세스에 ‘message’ 이벤트를 등록하여 데이터 수신을 처리하고 worker.send() 함수를 호출하여 자식 프로세스들에게 메시지를 전달하고 있습니다.
 childProcess() 함수에서는 fork()된 자식 프로세스이므로 process.send, process.on(’message’)를 사용하여 메시지를 송,수신 하도록 처리하고 있습니다.
 
-# HTTP 서버와 클러스터 모듈 사용
+## HTTP 서버와 클러스터 모듈 사용
 
 Cluster 모듈을 사용하면 멀티코어 CPU 시스템에서 애플리케이션의 성능을 향상 시킬수 있다는 것을 간단히 확인하였습니다. HTTP 서버를 만들 때 클러스터 모듈을 사용한다면 많은 요청에 대하여 성능을 크게 향상 시킬수 있을 것입니다.  기존 예제를 참고하여 HTTP 서버를 구성해 보았다.
 
@@ -388,7 +383,7 @@ The second approach is where the primary process creates the listen socket and s
 
 클러스터 모듈을 사용하면 마스터 프로세스가 요청을 수신하고 모든 자식 프로세스 간에 로드 밸런싱을 수행할 수 있는 것이다.
 
-# PM2를 사용하여야 하는 이유는?
+## PM2를 사용하여야 하는 이유는?
 
 Node.js의 클러스터 모듈을 활용하여 작업자 프로세스를 생성하여 애플리케이션 성능을 향상 시킬수 있다는 것을 알게되었다. 그러나 이 성능 향상을 위해서는 이를 관리하기 위한 복잡한 문제들을 애플리케이션 내에서 처리가 되어야 한다. 예를 들면 아래와 같은 문제들이다.
 
@@ -400,7 +395,7 @@ Node.js의 클러스터 모듈을 활용하여 작업자 프로세스를 생성�
 이러한 문제들을 PM2라는 프로세스 관리자를 통해서 이러한 복잡한 문제들을 넘기고 애플리케이션의 기능에만 집중 할 수 있다.
 PM2의 클러스터 사용에 대한 간단히 설명을 하고 어떻게 애플리케이션을 무중단으로 운영을 하는지 알아 볼 것이다.
 
-# PM2 클러스터 기본 사용 방법
+## PM2 클러스터 기본 사용 방법
 
 ```jsx
 const express = require('express')
@@ -432,7 +427,7 @@ $ pm2 start app.js -i 3
 
 -i 는 생성할 인스턴스 수를 나타내는 데 사용하는 옵션으로 cpu 코어수에 유의하여 지정한다. ‘0’을 입력하는 경우 자동으로 감시하여 생성된다. 현재는 ‘3’을 입력하여 워커 프로세스가 3개 생성 되었으며 Cluster 모드로 실행 된 걸 확인 가능하다.
 
-# PM2 설정 파일을 이용한 실행
+## PM2 설정 파일을 이용한 실행
 
 ```jsx
 module.exports = {
@@ -460,7 +455,7 @@ pm2 start ./ecosystem.config.js
 │ 3   │ app    │ default     │ N/A     │ cluster │ 38132    │ 0s     │ 1    │ online    │ 0%       │ 36.8mb   │ id_young │ disabled │
 ```
 
-# Scale Up, Scale Down
+## Scale Up, Scale Down
 
 ```bash
 Scale Down
@@ -482,7 +477,7 @@ $ pm2 scale app +2
 [PM2] Scaling up application
 ```
 
-# PM2 재가동
+## PM2 재가동
 
 ```bash
 $ pm2 reload app
@@ -494,7 +489,7 @@ $ pm2 reload app
 
 restart 명령어를 사용 시 프로세스를 종료하고 다시 시작하는 것과 달리 reload는 0초 다운타임 재로드를 실행한다.
 
-# PM2를 이용한 서비스 운영을 위한 고려사항
+## PM2를 이용한 서비스 운영을 위한 고려사항
 
 PM2를 이용하여 애플리케이션을 운영할 수 있는 몇 가지 기본 지식을 습득하였다. 이를 활용하여 서비스 서버에 배포하고 PM2로 애플리케이션을 실행하게 되면 사용자에게 서비스를 제공하게 된다.
 
@@ -504,13 +499,13 @@ PM2를 이용하여 애플리케이션을 운영할 수 있는 몇 가지 기본
 
 하지만 우리의 애플리케이션들은 이것 보다 훨씬 복잡할 것이다. 따라서 무중단 서비스를 유지하려면 몇 가지 주의해야 할 사항이 있다. 이를 알아보기 위해 재실행 프로세스가 어떻게 진행되는지 살펴볼 필요가 있다.
 
-# 프로세스 재실행 과정
+## 프로세스 재실행 과정
 
 ![Screen Shot 2022-04-16 at 21.17.52.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211339&authkey=%21ADdNr423knadBlw&width=912&height=712)
 
 PM2 클러스터 모드로 4개의 워커 프로세스인 App을 4개 가동중이라고 가정해 보겠다. 그리고 App의 수정이 발생하여 reload 명령을 사용하여 App 재실행을 하는 경우 어떻게 재실행이 진행되는지 알아보도록하겠다. 먼저 기존 가동중인 프로세스들중 ‘0’번 프로세스를 ‘old_0’프로세스로 이동 시킨 후 새로운 ‘0’번 프로세스를 spawn하게 된다. 이 새로운 프로세스는 요청을 처리할 준비가 되면 마스터 프로세스에 ‘ready’이벤트를 보내고 마스터 프로세스는 더이상 필요 없어진 ‘old_0’프로세스에 ‘SIGINT’ 요청을 보내고 프로세스가 종료가 되길 기다린다. 만약 ‘SIGINT’를 보내고 난 후 일정시간(1600ms)이 지나도 프로세스가 종료되지 않았다면 ‘SIGKILL’ 명령을 보내 프로세스를 강제로 종료한다. 이 일련의 과정을 자식 프로세스의 개수 만큼 반복하면서 프로세스 재실행이 된다.
 
-# 재실행 과정에서 서비스 중단이 발생하는 경우
+## 재실행 과정에서 서비스 중단이 발생하는 경우
 
 앞에서 살펴본 재실행 과정을 보면 정말 완벽히 잘 짜여져 있다고 보이지만 여기엔 함정이 존재하고 있다.
 
@@ -519,13 +514,13 @@ PM2 클러스터 모드로 4개의 워커 프로세스인 App을 4개 가동중�
 
 위 두가지 상황이 재실행 과정 중에 나타날수 있는 문제이다. 어떤 상황에서 위와 같은 문제가 나타나고 이를 어떻게 해결할지 하나씩 설명을 해보겠다.
 
-# 요청 받을 준비가 안되었으나 ‘ready’ 이벤트를 보낸경우
+## 요청 받을 준비가 안되었으나 ‘ready’ 이벤트를 보낸경우
 
 ![Screen Shot 2022-04-16 at 21.15.59.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211337&authkey=%21AAf2E7Rx8R_22D0&width=900&height=710)
 
 새 워커 프로세스가 db connection, 데이터 캐시 등으로  정상 처리를 위해서는 3000ms가 필요하다고 가정해보자. 새 워커 프로세스가 spawn이 되면 ‘ready’ 이벤트를 마스터 프로세스로 보내고 이를 수신한 마스터 프로세스는 old 프로세스에 ‘SIGINT’ 이벤트를 보낼 것이다. SIGINT를 수신한 old 워커 프로세스는 프로세스를 종료하거나 1600ms가 지나서 SIGKILL 이벤트 수신하여 강제로 프로세스를 종료 한다. 하지만 새로운 워커 프로세스는 아직 구동이 완료가 되지 않았으므로 서비스에 장애가 발생한다.
 
-# ready 이벤트 전송 시점 지정(Graceful Start)
+## ready 이벤트 전송 시점 지정(Graceful Start)
 
 ![Screen Shot 2022-04-16 at 21.16.25.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211338&authkey=%21AD765rE8jW14vAA&width=1164&height=898)
 
@@ -560,13 +555,13 @@ server.listen(port, async () => {
 })
 ```
 
-# 프로세스 처리 중 중단되는 경우
+## 프로세스 처리 중 중단되는 경우
 
 ![Screen Shot 2022-04-16 at 11.25.04.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211336&authkey=%21AOvrA2aVw_A3Jp8&width=1474&height=1004)
 
 reload 명령 실행 시 기존 0번 프로세스인 Old App은 프로세스가 종료 되지 전까지 계속해서 사용자 요청을 받는다. 만약 SIGINT 시그널이 전달된 상태에서 사용자 요청을 받았고 이를 수행하는데 2000ms가 필요하다고 가정해 보자. PM2 SIGINT 시그널을 전달 한 후 1600ms가 되어도 프로세스가 종료 되지 않으면 SIGKILL 시그널을 보내게 되고 Old App은 SIGKILL 시그널을 받을 시 강제 종료하게 된다. 사용자의 요청을 처리 중이던 Old App은 강제 종료되어 클라이언트와의 연결이 끊어지고 이는 서비스 중단으로 나타난다.
 
-# SIGINT 이벤트 프로세스 종료 (Graceful Stop)
+## SIGINT 이벤트 프로세스 종료 (Graceful Stop)
 
 PM2의 프로세스가 정상 종료를 하기위해서는 아래의 5단계에 따라 앱을 종료하여야 합니다.
 
@@ -653,7 +648,7 @@ _old_2|app  | Database connection disconnected
 
 현재 app 3개가 클러스터모드로 동작중인 상황에서 reload 명령을 실행하면 기존 프로세스가 _old_# 형태로 이동 처리 되는걸 볼수 있다. 그리고 0, 1 프로세스가 먼저 재실행이 되고 완료가 된 후 2번 프로세스가 재실행 되는 것 또한 확인 가능하다.
 
-# Keep-Alive 사용 시 프로세스 종료
+## Keep-Alive 사용 시 프로세스 종료
 
 ![Screen Shot 2022-04-17 at 20.57.10.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211334&authkey=%21ANBTiMM0ilXmeqY&width=1264&height=860)
 
@@ -697,7 +692,7 @@ process.on('SIGINT', () => {   // PM2가 보낸 SIGINT SIGNAL 수신
 })
 ```
 
-# WebApi 클러스터 모드 적용 해보기
+## WebApi 클러스터 모드 적용 해보기
 
 WebAPI 프로젝트를 로컬에서 클러스터 모드로 적용을 진행해 보기로 하였다. 
 적용을 위해 확인을 하던중 처음 앱이 로드 될 시 아래와 같은 코드가 보였다. 

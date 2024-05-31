@@ -1,16 +1,12 @@
 ---
-title: "System Tables and Views"
-last_modified_at: 2016-08-18T16:20:02-05:00
-categories:
-  - database
-tags:
-  - oracle database
-  - system schema
-toc: true
-toc_sticky: true
+layout: post
+title: System Tables and Views
+subtitle: 
+categories: database
+tags: [oracle database, system schema]
 ---
 
-# System Prefix 설명
+## System Prefix 설명
 
 | Type  | Description                               |
 |:----- |:----------------------------------------- |
@@ -21,7 +17,7 @@ toc_sticky: true
 | V$_   | DB의 성능분석/통계 정보를 제공 X$_ 테이블에 대한 뷰 정보       |
 | GV$_  | ?                                         |
 
-# ALL Prefix
+## ALL Prefix
 
 | Name               | Description                            | Synonym              |
 |:------------------ |:-------------------------------------- |:-------------------- |
@@ -57,7 +53,7 @@ toc_sticky: true
 | ALL_USERS          | 모든 사용자에 관한 정보                          | DBA_USERS, USER_URES |
 | ALL_VIEWS          | 데이터베이스에 생성된 모든 뷰 정보                    |                      |
 
-# DBA Prefix
+## DBA Prefix
 
 | Name                         | Description                                                    | Synonym                             |
 |:---------------------------- |:-------------------------------------------------------------- |:----------------------------------- |
@@ -144,7 +140,7 @@ toc_sticky: true
 | DBA_OBJECT_TABLES            | 데이터베이스 내의 모든 객체 테이블에 대한 정보                                     |                                     |
 | DBA_OBJECT_SIZE              | PL/SQL 블럭의 크기에 대한 정보                                           |                                     |
 
-# USER Prefix
+## USER Prefix
 
 | Name                   | Description                                    | Synonym              |
 |:---------------------- |:---------------------------------------------- |:-------------------- |
@@ -201,7 +197,7 @@ toc_sticky: true
 | USER_USTATS            | USER의 OBJECT와 관련된 통계자료 정보                      |                      |
 | USER_VIEWS             | 데이터베이스에 생성되어 있는 모든 뷰에 대한 정보                    |                      |
 
-# V$ Prefix
+## V$ Prefix
 
 | Name                         | Description                                                          | Synonym                |
 |:---------------------------- |:-------------------------------------------------------------------- |:---------------------- |
@@ -328,7 +324,7 @@ toc_sticky: true
 | V$UNDOSTAT                   | UNDO SEGMENT에 관한 정보                                                  |                        |
 | V$VERSION                    | VERSION에 관한 정보                                                       |                        |
 
-# X$ Prefix
+## X$ Prefix
 
 | Name    | Description                     | Synonym |
 |:------- |:------------------------------- |:------- |
@@ -336,7 +332,7 @@ toc_sticky: true
 | X$BH    | Buffer Hash                     |         |
 | X$KCBSW | kernel cache, buffer statistics |         |
 
-# Auditing Views
+## Auditing Views
 
 | Name                          | Description                                                                        | Synonym            |
 |:----------------------------- |:---------------------------------------------------------------------------------- |:------------------ |

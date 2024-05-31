@@ -1,13 +1,9 @@
 ---
-title: "Spring MVC에서 exception handling 하기-01"
-last_modified_at: 2023-04-07T16:20:02-05:00
-categories:
-  - spring
-tags:
-  - spring
-  - exception
-toc: true
-toc_sticky: true
+layout: post
+title: Spring MVC에서 exception handling 하기-01
+subtitle:
+categories: spring
+tags: [spring, exception]
 ---
 
 스프링을 사용하여 예외 처리를 구현하는 방법에 대하여 정리한다.
@@ -18,7 +14,7 @@ Spring 5에서는 REST API에 기본적인 오류 처리를 위한 빠른 방법
 이들은 모두 한 가지 공통점을 가지고 있는데, **관심사의 분리**를 매우 잘 따르고 있다는 것이다.
 일반적으로 어떤 종류의 장애가 발생했음을 나타내기 위해 예외를 적용할 수 있으며, 이 예외는 다음 중 하나를 통해 처리하게 된다.
 
-# Controller Level에서 @ExceptionHandler
+## Controller Level에서 @ExceptionHandler
 
 에러를 처리할 방법은 정의하고 @ExceptionHandler 어노테이션을 이용한다.
 해당 방법은 @Controller 레벨에서 처리하는 방법이다.
@@ -42,18 +38,18 @@ public class GreetingController{
 
 다음으로 전역적인 문제와 컨트롤러와 같은 기존 아티팩트에 대한 변경을하지 않는 다른 방법에 대해 살펴보겠다.
 
-# handlerExceptionResolver를 이용한 방법
+## handlerExceptionResolver를 이용한 방법
 
 HandlerExceptionResolver를 정의하는 방법도 있다.
 이를 통해 응용 프로그램에서 발생하는 모든 예외를 해결할 수 있으며 REST API에 동일한 예외 처리 메커니즘을 구현할 수 있다.
 Spring에서는 3가지의 HandlerExceptionResolver가 기본적으로 빈으로 등록된다.
 
-## ExceptionHandlerExceptionResolver
+### ExceptionHandlerExceptionResolver
 
 Spring 3.1에서 도입 되었다.
 이는 앞서 제시한 @ExceptionHandler 메커니즘의 작동 방식을 구성하는 핵심 구성 요소이다.
 
-## DefaultHandlerExceptionResolver
+### DefaultHandlerExceptionResolver
 
 Spring 3.0에 도입 되었다.
 
@@ -64,13 +60,13 @@ REST API의 경우 상태 코드가 클라이언트에 제공하기에 충분하
 이는 ModelAndView를 통해 뷰 해상도와 렌더링 오류 콘텐츠를 구성하면 해결할 수 있지만 솔루션이 최적이 아닌 것은 분명하다.
 그렇기 때문에 Spring 3.2에서 더 나은 옵션을 추가했다.
 
-## ResponseStatusExceptionResolver
+### ResponseStatusExceptionResolver
 
 Spring 3.0에 도입 되었다.
 
 주요 업무는 사용자 지정 예외에서 사용 가능한 @ResponseStatus 주석을 사용하고 이러한 예외를 HTTP 상태 코드에 매핑한다.
 
-# HandlerExceptionResolver들이 어떻게 Bean으로 등록되는가?
+## HandlerExceptionResolver들이 어떻게 Bean으로 등록되는가?
 
 그렇다면 어떻게 HandlerExceptionResolver 들이 빈으로 등록이 되는지 살펴 보겠다.
 Spring MVC의 자동 설정인 WebMvcAutoConfiguration을 먼저 살표보자.
@@ -183,7 +179,7 @@ public class WebMvcConfigurationSupport implements ApplicationContextAware, Serv
 14. DefaultHandlerExceptionResolver 생성를 생성 한다.
 15. HandlerExceptionResolverComposite 객체에 composite 패턴을 이용하여 빈으로 등록한다.
 
-```mermaid!
+```mermaid
 classDiagram
     WebMvcConfigurationSupport <-- DelegatingWebMvcConfiguration
     DelegatingWebMvcConfiguration <-- EnableWebMvcConfiguration
@@ -191,12 +187,12 @@ classDiagram
 
 이러한 일련의 과정을 통하여 handlerExceptoinResolver 객체들이 빈으로 등록되게 된다.
 
-# handlerExceptoinResolver들은 어떻게 동작하는가?
+## handlerExceptoinResolver들은 어떻게 동작하는가?
 
 hanlderExceptionResolver가 빈으로 등록이 완료되었고 애플리케이션이 실행될 때 어떻게 실행이 되는지 살펴보도록 하겠다.
 MVC를 기준으로 살펴보기에 DispatcherServlet에서의 동작을 확인한다.
 
-```mermaid!
+```mermaid
 classDiagram
     HttpServlet <-- HttpServletBean
     HttpServletBean <-- FrameworkServlet
@@ -325,7 +321,7 @@ public class DispatcherServlet extends FrameworkServlet {
 
 이렇게 DispatchServlet에서 HandlerExceptionResolver 들이 주입되는것도 확인하였다.
 
-# 마무리
+## 마무리
 
 지금까지 스프링에서 사용하는 HandlerExceptionResolever의 간단히 종류와 역할에 대해서 살펴보았다.
 또한 이러한 Resolver들이 어떻게 Bean으로 등록이 되고 DispatchServlet에 어떻게 주입이 되는지 까지도 보았다.

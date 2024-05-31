@@ -1,18 +1,12 @@
 ---
-title: "K-DEVCON 발표 - 웹 페이지 성능 측정 지표"
-last_modified_at: 2023-12-03T00:00:00-00:00
-categories:
-  - web
-tags:
-  - web
-  - web vitals
-  - core web vitals
-  - cwv
-toc: true
-toc_sticky: true
+layout: post
+title: K-DEVCON 발표 - 웹 페이지 성능 측정 지표
+subtitle:
+categories: web
+tags: [web, web vitals, core web vitals, cwv]
 ---
 
-# K-DEVCON 발표
+## K-DEVCON 발표
 
 개인 첫 공개 세미나 연사로 참석하였습니다.
 

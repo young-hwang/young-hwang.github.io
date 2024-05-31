@@ -1,16 +1,12 @@
 ---
-title: "Dynamic Datasource Routing 적용기"
-last_modified_at: 2022-12-22T16:20:02-05:00
-categories:
-  - spring
-tags:
-  - spring
-  - spring data
-toc: true
-toc_sticky: true
+layout: post
+title: Dynamic Datasource Routing 적용기
+subtitle:
+categories: spring
+tags: [spring, spring data]
 ---
 
-# 언제 사용하는가?
+## 언제 사용하는가?
 
 보통 애플리케이션에서는 하나 이상의 데이터베이스를 사용해야 하는 경우가 많습니다. 
 예를 들어, 마스터-슬레이브 데이터베이스 구조를 사용하거나, 
@@ -21,14 +17,14 @@ toc_sticky: true
 
 이럴경우 사용이 가능한 방법이 "AbstractRoutingDatasource"를 이용한 "Dynamic Datasource Routing"입니다.
 
-# AbstractRoutingDatasource 란?
+## AbstractRoutingDatasource 란?
 
 "AbstractRoutingDatasource"는 spring 2.0.1 부터 추가 되었으며 spring-jdbc 프로젝트에 포함되어 있습니다.
 "DataSource"를 구현한 구현체인데요. 
 "javax.sql.DataSource" 인터페이스로 정의가 되어 있습니다.
 이 인터페이스는 데이터 베이스와의 연결을 설정하고 얻는데 사용됩니다.
 
-```mermaid!
+```mermaid
 classDiagram
     DataSource <|-- AbstractDataSource
     AbstractDataSource <|-- AbstractRoutingDataSource
@@ -79,7 +75,7 @@ determineCurrentLookupKey() 메소드는 추상 메소드로 AbstractRoutingData
 그렇다면 determineCurrentLookupKey()를 어떻게 구현을 할 것인가? 
 간단한 사용 사례로는 현재 사용자의 context의 속성으로 사용을 하는 방법이 있습니다.
 
-# AbstractRoutingDataSource 구현 하기
+## AbstractRoutingDataSource 구현 하기
 
 ```java
 
@@ -100,7 +96,7 @@ public class CustomerRoutingDataSource extends AbstractRoutingDataSource {
 AbstractRoutingDatasource를 상속하여 CustomerContextHolder 에서 context 정보를 가져와 다시 
 key를 가져오도록 CustomRoutingDataSource 를 구현하였습니다.
 
-# DataSourceLookupKey Function, ContextHolder 구현
+## DataSourceLookupKey Function, ContextHolder 구현
 
 LookupKey 를 가져오기 위한 Functional Interface를 구현합니다.
 추후 이를 구현하여 key 객체를 구할 수 있도록 합니다.
@@ -145,7 +141,7 @@ public class CustomerDataSourceContextHolder {
 하지만 아직 CustomerRoutingDataSource 에 DataSource 정보는 없는 상태입니다.
 Multiple Data Source 를 가질 수 있도록 해보겠습니다.
 
-# Multiple Data Source 구현
+## Multiple Data Source 구현
 
 먼저 Data Source 의 정보들이 필요합니다. 
 이를 위해 application.yml에 정보를 추가하고 이를 Properties Bean을 등록해 보겠습니다.

@@ -1,17 +1,12 @@
 ---
-title: "HyperLogLog를 이용한 확률적 추론"
-last_modified_at: 2023-04-07T16:20:02-05:00
-categories:
-  - algorithm
-tags:
-  - algorithm
-  - hyperloglog
-  - redis
-toc: true
-toc_sticky: true
+layout: post
+title: HyperLogLog를 이용한 확률적 추론
+subtitle:
+categories: redis
+tags: [algorithm, hyperloglog, redis]
 ---
 
-# 문제점
+## 문제점
 
 서비스를 이용한 이용자 수와 사용자가 앱을 실행한 횟수를 일별 집계하여 조회하고 있었다.
 이를 위하여 분마다 이용자 수와 사용자 수를 DB에 저장하고 이를 조회 시 하루 동안의 이용자 수와 사용자 수에서 중복 되는 키값을 제외 하여 조회 처리를 하고 있었다.
@@ -23,7 +18,7 @@ toc_sticky: true
 ![조회 시 데이터 집계 현황](https://onedrive.live.com/embed?resid=884E6FE11C46974%211316&authkey=%21ALYahgrEMfkio1o&width=310&height=247)
         
 
-# HyperLogLog란
+## HyperLogLog란
 
 HyperLogLog 알고리즘은 Philippe Flajolet, Éric Fusy, Olivier Gandouet, Frédéric Meunier가 2007년에 발표한 논문 "HyperLogLog: the analysis of a near-optimal cardinality estimation algorithm"에서 처음 제안되었다.
 매우 큰 데이터 집합에서 고유한 값의 개수를 추정하기 위해 사용되는 확률적인 알고리즘이다. 
@@ -40,7 +35,7 @@ HyperLogLog 알고리즘은 Philippe Flajolet, Éric Fusy, Olivier Gandouet, Fr�
 - 해당 버킷의 값을 갱신한다.
 - 추정치를 계산하기 위해 각 버킷의 값을 사용한다.
 
-# HyperLogLog in Redis
+## HyperLogLog in Redis
 
 Redis HyperLogLog는 다음과 같은 몇 가지 기본 명령어를 제공한다.
 
@@ -50,7 +45,7 @@ Redis HyperLogLog는 다음과 같은 몇 가지 기본 명령어를 제공한�
 
 이러한 기능을 사용하여 Redis HyperLogLog는 매우 큰 데이터 집합에서 고유한 값의 개수를 추정하는 데 활용한다.
 
-# 어떻게 활용 할 것인가?
+## 어떻게 활용 할 것인가?
 
 조회의 범위가 24시간 미만일 경우 분단위의 이용자수, 실행수가 필요하며 24시간 이상시 30분 단위의 이용자수, 실행수가 필요하였다.
 따라서 HyperLogLog 생성 시 1분 단위와 30분 단위의 집계를 동시에 생성하기로 하였다.

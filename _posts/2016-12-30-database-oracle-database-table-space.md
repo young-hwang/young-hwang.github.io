@@ -1,20 +1,16 @@
 ---
-title: "Oracle 데이터베이스 관리: 테이블스페이스 생성, 확장, 및 관리 방법"
-last_modified_at: 2016-12-30T16:20:02-05:00
-categories:
-- database
-tags:
-- oracle database
-- data block
-toc: true
-toc_sticky: true
+layout: post
+title: Oracle 데이터베이스 관리 - 테이블스페이스 생성, 확장, 및 관리 방법
+subtitle:
+categories: database
+tags: [oracle database, data block]
 ---
 
 Oracle 데이터베이스를 운영하면서 테이블스페이스를 생성하고 관리하는 것은 중요한 작업입니다. 
 테이블스페이스는 데이터를 저장하는 데 사용되는 논리적인 공간을 나타내며, 데이터베이스의 성능과 안정성에 직접적인 영향을 미칩니다. 
 이번 글에서는 Oracle 데이터베이스에서 테이블스페이스를 생성하고 관리하는 방법에 대해 알아보겠습니다.
 
-# 1. 데이터 블록 크기 조회
+## 1. 데이터 블록 크기 조회
 
 Oracle 데이터베이스는 데이터를 저장하는 데 사용되는 데이터 블록의 크기를 설정할 수 있습니다. 
 먼저 데이터 블록 크기를 조회하여 현재 데이터베이스가 사용하는 블록의 크기를 확인합니다.
@@ -24,7 +20,7 @@ Oracle 데이터베이스는 데이터를 저장하는 데 사용되는 데이�
 show parameter db_block_size; 
 ```
 
-# 2. 테이블스페이스 생성
+## 2. 테이블스페이스 생성
 
 새로운 테이블스페이스를 생성하는 것은 데이터베이스의 저장 공간을 확보하는 데 중요합니다. 
 아래의 쿼리를 사용하여 테이블스페이스를 생성할 수 있습니다.
@@ -68,7 +64,7 @@ create tablespace info_data
 > alter tablespace tablespace_name online;
 ```
 
-# 3. 테이블스페이스 확장 및 관리
+## 3. 테이블스페이스 확장 및 관리
 
 테이블스페이스를 생성한 후에는 필요에 따라 확장하거나 관리해야 합니다. 
 아래의 쿼리를 사용하여 테이블스페이스를 확장하거나 관리할 수 있습니다.
@@ -94,7 +90,7 @@ alter tablespace tax2110
   pctincrease 기본이 50%이다
 ```
 
-# 4. 테이블스페이스 자동 확장 설정
+## 4. 테이블스페이스 자동 확장 설정
  
 필요에 따라 테이블스페이스를 자동으로 확장할 수 있도록 설정할 수도 있습니다. 
 아래의 쿼리를 사용하여 테이블스페이스의 자동 확장을 설정할 수 있습니다.
@@ -113,7 +109,7 @@ autoextend on next 10m
 maxsize 100m;
 ```
 
-# 5. 테이블스페이스 삭제
+## 5. 테이블스페이스 삭제
 
 ```sql
 # 테이블스페이스 삭제
@@ -132,7 +128,7 @@ drop tablespace test_tbs including contents and datafiles;
 $ rm kit.dbf    -- Drop한 tablespace명의 Datafile이 kit.dbf일때.
 ```
 
-# 마무리
+## 마무리
 
 테이블스페이스는 Oracle 데이터베이스의 중요한 구성 요소 중 하나이며, 데이터의 저장 및 관리에 중요한 역할을 합니다. 
 이번 글에서는 테이블스페이스의 생성, 확장, 및 관리에 대한 기본적인 작업을 살펴보았습니다. 

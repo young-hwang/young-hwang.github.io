@@ -1,14 +1,10 @@
 ---
-title: "Reflection 이해"
-last_modified_at: 2022-05-11T16:20:02-05:00
-categories:
-  - java
-tags:
-  - java
-  - reflection
-toc: true
-toc_sticky: true
----
+layout: post
+title: Reflection 이해
+subtitle:
+categories: java
+tags: [java, reflection]
+----
 
 일반적으로 클래스를 통해 객체를 생성했다. 
 우리는 코딩할 때 클래스에 명시된 필드와 메소드를 알고 있기 때문에 지금까지 클래스의 메소드 또는 필드를 이용하는데 아무런 불편함이 없었다. 

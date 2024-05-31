@@ -1,13 +1,9 @@
 ---
-title: "mysql에서 max_allowed_packet 설정은 언제 사용하는가?"
-last_modified_at: 2023-04-07T16:20:02-05:00
-categories:
-- database
-tags:
-- mysql
-- max_allowed_packet
-toc: true
-toc_sticky: true
+layout: post
+title: mysql에서 max_allowed_packet 설정은 언제 사용하는가?
+subtitle:
+categories: database
+tags: [mysql, max_allowed_packet]
 ---
 
 max_allowed_packet은 서버에서 읽거나 생성되어지는 MySQL 네트워크 패킷의 최대 사이즈를 의미합니다.
@@ -24,7 +20,7 @@ parameter는 요구사항에 따라 변경할 수 있는 기본값, 최소값, �
 | Minimum Value | 1024 |
 | Maximum Value | 1073741824 |
 
-# 사용 방법
+## 사용 방법
 
 max_allowed_packet의 설정을 변경하는 방법은 여러가지가 있습니다. 
 기본적으로 기본값은 16MB로 설정되어 있습니다.
@@ -46,7 +42,7 @@ max_allowed_packet=32M
 
 이와 같이 설정하면 오류 없이 더큰 쿼리를 전송할 수 있습니다.
 
-# 언제 변경하는가?
+## 언제 변경하는가?
 
 그러면 언제 max_allowed_packet을 변경 하여야 할까요?
 클라이언트 서버가 더 큰 패킷를 받으면 에러가 발생하게 됩니다.

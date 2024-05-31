@@ -1,13 +1,9 @@
 ---
+layout: post
 title: Redis Data Model
-last_modified_at: 2024-02-16T00:00-00:00
-categories:
-- redis
-tags:
-- redis
-- data model
-toc: true
-toc_sticky: true
+subtitle:
+categories: redis
+tags: [redis, data model]
 ---
 
 Redis DB에서 설계 가능한 데이터 모델 유형들과 실제 구현 방법에 대해 정리해 보겠습니다.
@@ -19,7 +15,7 @@ Redis 서버에서 설계할 수 있는 데이터 모델 유형은 크게 5가�
 - Set/Sorted Set-List Data Model
 - HyperLogLogs Data Model
 
-# Hash-Hash Data Model
+## Hash-Hash Data Model
 
 주문 테이블과 운송 테이블은 대표적인 Hash-Hash 테이블로 설계될 수 있는 테이블 구조입니다.
 이를 Redis 데이터 모델 표기법(Notation)으로 표현하면 다음과 같습니다.
@@ -52,7 +48,7 @@ classDiagram
 > hgetall translate:201809123
 ```
 
-# Hash-List Data Model
+## Hash-List Data Model
 
 주문 테이블과 주문 상세 테이블은 대표적인 Hash-List 테이블로 설계될 수 있는 테이블 구조입니다.
 이를 Redis 데이터 모델 표기법(Notation)으로 표현하면 다음과 같습니다.
@@ -86,7 +82,7 @@ classDiagram
 > lrange order_detail:201809123 0 -1
 ```
 
-# List-List Data Model
+## List-List Data Model
 
 제품 테이블과 카테고리 테이블은 대표적인 List-List 테이블로 설계될 수 있는 테이블 구조입니다.
 이 데이터 구조는 관계형 데이터베이스에는 존재하지 않는 N:M 관계 구조로 표현할 수 있습니다.
@@ -116,7 +112,7 @@ classDiagram
 > lrange category:c1000 0 -1
 ```
 
-# Set/Sorted Set-List Data Model
+## Set/Sorted Set-List Data Model
 
 일반적으로 관계형 DB는 하나의 테이블과 관계되는 상대 테이블을 식별키(Priamry Key)와 외부키(Foreign Key)로 표현할 수 있으며 이를 통해 데이터 무결성을 보장할 수 있는 데이터 구조로 설계할 수 있습니다.
 그런데 하나의 테이블과 관계되는 상대 테이블이 자기 자신이 될 수도 있는 데이터 구조를 계층 구조(Tree Structure) 테이블이라고 표현합니다.

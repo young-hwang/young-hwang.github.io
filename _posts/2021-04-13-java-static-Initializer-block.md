@@ -1,13 +1,9 @@
 ---
-title: "Initializer Block(초기화 블럭) 의 이해"
-last_modified_at: 2016-03-09T16:20:02-05:00
-categories:
-  - java
-tags:
-  - java
-  - initializer block
-toc: true
-toc_sticky: true
+layout: post
+title: Initializer Block(초기화 블럭) 의 이해
+subtitle:
+categories: java
+tags: [java, initializer block]
 ---
 
 ```java
@@ -20,7 +16,7 @@ JDBC Connection 설정을 위해 의례적으로 사용을 해오던 구문입�
 
 ---
 
-# JDBC Driver는 어떻게 객체가 만들어지는가?
+## JDBC Driver는 어떻게 객체가 만들어지는가?
 
 아래의 코드는 "com.mysql.jdbc.Driver"의 소스코드입니다.
 
@@ -75,11 +71,11 @@ public class Driver extends NonRegisteringDriver implements java.sql.Driver {
 
 ---
 
-# Static Initializer Block(정적 초기화 블럭) Test
+## Static Initializer Block(정적 초기화 블럭) Test
 
 Static Initializer Block(정적 초기화 블럭)의 정확한 동작을 확인해 보기 위하여 여러 테스트를 시도해 보았습니다.
 
-## class.forName()을 이용한 작동 확인
+### class.forName()을 이용한 작동 확인
 
 ```java
 package io.ggammu.study.java;
@@ -114,7 +110,7 @@ Static Block
 class.forName() 호출 시 Item 클래스가 메모리에 올라오면서 Static Block이 정상적으로 실행됩니다.
 Item 객체는 생성하지 않았으므로 Item Constructor는 호출 되지 않았습니다.
 
-## Static Method 호출 시 Static Block 동작 테스트
+### Static Method 호출 시 Static Block 동작 테스트
 
 ```java
 package io.ggammu.study.java;
@@ -154,7 +150,7 @@ Static Method
 해당 클래스의 Static 멤버(메소드, 변수) 호출 시 Static Block이 호출 됩니다.
 객체를 생성하지 않아도 Static Block은 항상 실행이 되는 것을 확인 할 수 있습니다.
 
-## Main Method와 Static Block의 실행 순서
+### Main Method와 Static Block의 실행 순서
 
 ```java
 package io.ggammu.study.java;
@@ -192,7 +188,7 @@ Main Method
 정적이기 때문에 클래스의 객체 생성에 의존하지 않기 때문입니다.
 main 메소드는 항상 클래스가 완전히로드 된 후에 실행됩니다.
 
-## Instance Block, Constructor와의 관계 확인
+### Instance Block, Constructor와의 관계 확인
 
 ```java
 package io.ggammu.study.java;
@@ -245,7 +241,7 @@ Static Method에 의해 Static Block이 실행 됨을 확인하였고 Instance B
 
 ---
 
-# 활용 대상 및 예제
+## 활용 대상 및 예제
 
 
 - 정적 변수의 초기화가 다른 작업에 의존하는 경우

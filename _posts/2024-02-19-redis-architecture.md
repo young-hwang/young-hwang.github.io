@@ -1,16 +1,12 @@
 ---
+layout: post
 title: Redis Architecture
-last_modified_at: 2024-02-19T00:00-00:00
-categories:
-- redis
-tags:
-- redis
-- architecture
-toc: true
-toc_sticky: true
+subtitle: 
+categories: redis
+tags: [redis, architecture]
 ---
 
-# Redis Architecture
+## Redis Architecture
 
 아래의 그림은 Redis 서버의 기본 아키텍처(Redis Standalone Architecture) 구조이며 3가지 영역으로 구성되어 있습니다.
 
@@ -249,7 +245,7 @@ $ ps -eLF | grep redis
 $ strace -p 16310
 ```
 
-# System 사양
+## System 사양
 
 |          내용           |       최소 사양       |                 권장 사양                 |
 |:---------------------:|:-----------------:|:-------------------------------------:|

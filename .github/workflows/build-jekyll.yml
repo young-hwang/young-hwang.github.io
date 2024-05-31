@@ -14,6 +14,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Setup Ruby 3.0
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+
       - name: Checkout repository
         uses: actions/checkout@v3
 

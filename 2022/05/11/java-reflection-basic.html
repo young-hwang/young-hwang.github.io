@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<hr>
+<p>layout: post
+title: Reflection 이해
+subtitle:
+categories: java
+tags: [java, reflection]
+—-</p>
+
+<p>일반적으로 클래스를 통해 객체를 생성했다. 
+우리는 코딩할 때 클래스에 명시된 필드와 메소드를 알고 있기 때문에 지금까지 클래스의 메소드 또는 필드를 이용하는데 아무런 불편함이 없었다. 
+이전 시간에 객체를 생성할 때 클래스의 메타데이터를 먼저 읽는 것을 이해했다. 이 메타데이터에는 클래스의 필드, 메소드 등의 정보를 담고 있다. 
+이런 메타데이터를 통해 해당 클래스의 객체를 생성할 수 있다. 
+이렇게 한 번 설명해보겠다. 
+오류가 있을 수 있으니 잘못된점이 있다면 지적해주시면 정말 감사할 것이다.</p>
+
+<p>타조, 앵무새, 비행기, 사자, 뻐꾸기, 말 이렇게 6가지 클래스가 있다고 하자.</p>
+
+<p>이 중 fly() 함수가 있는 클래스는 타조, 앵무새, 비행기, 뻐꾸기다.</p>
+
+<p>새(abstract class) - 앵무새, 타조, 뻐꾸기    -&gt; 앵무새, 타조, 뻐꾸기는 모두 새를 상속받았다.</p>
+
+<p>새는 fly()라는 메소드가를 갖는다.</p>
+
+<p>비행기는 새를 상속받지 않았지만 fly()라는 메소드가 있다.</p>
+
+<p>6개의 객체 중 아무나 뽑아 fly() 메소드를 실행하려 한다. 기존 생각은 새를 상속 받은 클래스면 fly()를 호출하도록 하고, 또 instanceof()로 비행기 객체면 fly()를 호출하면 될 것이다. 이렇게 해도 문제가 없어보이지만, 이 숫자가 매우 많다면 어떻게 될까??</p>
+
+<p>리플렉션을 이용하면 fly()메소드가 있는지 확인하여 메소드를 호출할지 안할지 결정할 수 있다.</p>
+
+<ul>
+  <li>리플렉션 기법 1 : 런타임 중에 객체를 이용해서 객체의 정보를 조사할 수 있다.</li>
+  <li>리플렉션 기법 2 : 런타임 중에 프로그램의 상태나 기능을 동적으로 조작할 수 있다.</li>
+  <li>리플레션 기법 3 : 동적이며 유연한 프로그래밍이 가능하기 때문에 프레임워크에서 주로 사용된다.</li>
+</ul>
+
+<p>리플렉션을 통해서 얻을 수 있는 정보</p>
+
+<ul>
+  <li>클래스 이름</li>
+  <li>클래스의 제어자(예: public, private, static)</li>
+  <li>패키지의 정보(예: java.lang.System)</li>
+  <li>클래스의 부모 클래스(Class 클래스형을 갖는 객체를 받을 수 있다.)</li>
+  <li>클래스의 생성자(Constructor 클래스형을 갖는 객체를 받을 수 있다.)</li>
+  <li>클래스의 메소드(Method 클래스형을 갖는 객체를 받을 수 있다.)</li>
+  <li>클래스의 변수(Field 클래스형을 갖는 객체를 받을 수 있다.)</li>
+  <li>클래스의 Annotation(Annotation은 주석의 일종으로 Annotation 클래스형을 갖는 객체를 받을 수 있다.)</li>
+</ul>
+
+<p>아래의 코드는 뒤에 사용될 리플렉션 예제를 위한 모델 객체다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WorkerValue</span> <span class="o">{</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">POSITION_MANAGER</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+	  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">POSITION_ASSISTANT</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">POSITION_EMPLOYEE</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span> 
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span> 
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">position</span><span class="o">;</span> 
+
+    <span class="kd">public</span> <span class="nf">WorkerValue</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="n">name</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> 
+        <span class="n">position</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span> 
+    <span class="o">}</span> 
+
+    <span class="kd">public</span> <span class="nf">WorkerValue</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span> 
+        <span class="k">this</span><span class="o">.</span><span class="na">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">;</span> 
+    <span class="o">}</span> 
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span> 
+    <span class="o">}</span> 
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span> 
+    <span class="o">}</span> 
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPosition</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="k">return</span> <span class="n">position</span><span class="o">;</span> 
+    <span class="o">}</span> 
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPosition</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="k">this</span><span class="o">.</span><span class="na">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">;</span> 
+    <span class="o">}</span> 
+ 
+    <span class="nd">@Override</span> 
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="nc">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">();</span> 
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"WokerValue [name="</span><span class="o">);</span> 
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">name</span><span class="o">);</span> 
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">", position="</span><span class="o">);</span> 
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">position</span><span class="o">);</span> 
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"]"</span><span class="o">);</span> 
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> 
+    <span class="o">}</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 대상 객체에서 제공하는 getClass() 메소드 이용 </span>
+<span class="c1">// 사용법 : Class [객체 이름 = [대상 객체.getClass(); </span>
+<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">();</span> 
+<span class="nc">WorkerValue</span> <span class="n">workerValue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WorkerValue</span><span class="o">();</span> 
+<span class="nc">Class</span> <span class="n">class1</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span> 
+<span class="nc">Class</span> <span class="n">class2</span> <span class="o">=</span> <span class="n">workerValue</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span> 
+
+<span class="c1">// 2. 대상 클래스를 이용하여 Class 객체를 받아오는 방법 </span>
+<span class="c1">// 사용법 : Class [객체 이름] = [대상 객체].class; </span>
+<span class="nc">Class</span> <span class="n">class3</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">class</span><span class="o">;</span> 
+<span class="nc">Class</span> <span class="n">class4</span> <span class="o">=</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">class</span><span class="o">;</span> 
+
+<span class="c1">// 3.대상 클래스의 이름을 이용하여 Class 객체를 받아오는 방법 </span>
+<span class="c1">// 사용법 : Class [객체 이름] = Class.forName([String 패키지명을 포함한 클래스 이름]) </span>
+<span class="nc">Class</span> <span class="n">class5</span> <span class="o">=</span> <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"java.lang.String"</span><span class="o">);</span> 
+<span class="nc">Class</span> <span class="n">class6</span> <span class="o">=</span> <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"com.abc.WorkerValue"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>리플렉션을 하기 위해서는 클래스 정보를 얻을 수 있는 java.lang.Class 클래스가 필요하다. 우선 Class 객체를 생성하는 방법에 대해 살펴보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 대상 객체에서 제공하는 getClass() 메소드 이용</span>
+<span class="c1">// 사용법 : Class [객체 이름 = [대상 객체.getClass();</span>
+<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">();</span>
+<span class="nc">WorkerValue</span> <span class="n">workerValue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WorkerValue</span><span class="o">();</span>
+<span class="nc">Class</span> <span class="n">class1</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+<span class="nc">Class</span> <span class="n">class2</span> <span class="o">=</span> <span class="n">workerValue</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+
+<span class="c1">// 2. 대상 클래스를 이용하여 Class 객체를 받아오는 방법</span>
+<span class="c1">// 사용법 : Class [객체 이름] = [대상 객체].class;</span>
+<span class="nc">Class</span> <span class="n">class3</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+<span class="nc">Class</span> <span class="n">class4</span> <span class="o">=</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+
+<span class="c1">// 3.대상 클래스의 이름을 이용하여 Class 객체를 받아오는 방법</span>
+<span class="c1">// 사용법 : Class [객체 이름] = Class.forName([String 패키지명을 포함한 클래스 이름])</span>
+<span class="nc">Class</span> <span class="n">class5</span> <span class="o">=</span> <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"java.lang.String"</span><span class="o">);</span>
+<span class="nc">Class</span> <span class="n">class6</span> <span class="o">=</span> <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"com.abc.WorkerValue"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>위 코드 결과는 아래와 같다. 해시 코드는 매번 실행할 때마다 다를 수 있으나, 그 값은 항상 같다. HashCode가 같으면 같은 객체다.</p>
+
+<p>HashCode = class1 : 1639705018</p>
+
+<p>HashCode = class2 : 1639705018</p>
+
+<p>HashCode = class3 : 1639705018</p>
+
+<p>HashCode = null : 0</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReflectionSample1</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">WorkerValue</span> <span class="n">workerValue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WorkerValue</span><span class="o">(</span><span class="s">"Moonti"</span><span class="o">,</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">POSITION_MANAGER</span><span class="o">);</span>
+		<span class="nc">Class</span> <span class="n">class1</span> <span class="o">=</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+		<span class="nc">Class</span> <span class="n">class2</span> <span class="o">=</span> <span class="n">workerValue</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+		<span class="nc">Class</span> <span class="n">class3</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">class3</span> <span class="o">=</span> <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"WorkerValue"</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">ClassNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HashCode = class1 : "</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">identityHashCode</span><span class="o">(</span><span class="n">class1</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HashCode = class2 : "</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">identityHashCode</span><span class="o">(</span><span class="n">class2</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HashCode = class3 : "</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">identityHashCode</span><span class="o">(</span><span class="n">class3</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"HashCode = null : "</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">identityHashCode</span><span class="o">(</span><span class="kc">null</span><span class="o">));</span>		
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위 코드를 이용하여 간단하게 WorkerVlaue 클래스의 생성자, 메소드, 필드를 확인할 수 있다. 실행 결과는 아래와 같다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span> <span class="nc">Constructor</span><span class="o">----------------------------</span>
+
+<span class="kd">public</span> <span class="nf">WorkerValue</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span><span class="o">,</span><span class="kt">int</span><span class="o">)</span>
+
+<span class="kd">public</span> <span class="nf">WorkerValue</span><span class="o">()</span>
+
+<span class="o">-</span> <span class="nc">Method</span><span class="o">-------------------------------</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span><span class="o">[])</span>
+
+<span class="kd">public</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span>
+
+<span class="kd">public</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span><span class="o">)</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">test</span><span class="o">()</span>
+
+<span class="kd">public</span> <span class="kt">int</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">getPosition</span><span class="o">()</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">setPosition</span><span class="o">(</span><span class="kt">int</span><span class="o">)</span>
+
+<span class="o">-</span> <span class="nc">Field</span><span class="o">----------------------------</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">POSITION_MANAGER</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">POSITION_ASSISTANT</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nc">WorkerValue</span><span class="o">.</span><span class="na">POSITION_EMPLOYEE</span>
+</code></pre></div></div>
+
+<p>Class 클래스에는 Annotion이나 제네릭과 같은 정보를 확인할 수 있는 메소드들도 있다. 리플렉션은 단순히 해당 클래스에 어떤 메소드, 필드가 있냐에 그치지 않고 반환받은 Method, Field 또는 Constructor 객체를 사용하여 동적으로 실행ㅎ는 프로그래밍을 할 수 있다.</p>
+</body></html>

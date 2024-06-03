@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Oracle 점검을 위한 유용한 SQL 쿼리문 모음 | Young’s Logs</title>
+<meta name="generator" content="Jekyll v4.3.3">
+<meta property="og:title" content="Oracle 점검을 위한 유용한 SQL 쿼리문 모음">
+<meta name="author" content="Young Hwang">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 특히 데이터베이스의 성능과 안정성을 유지하기 위해서는 사적 점검이 빠질 수 없다 생각됩니다. Oracle 데이터베이스를 일상적으로 점검하는 데 유용한 SQL 쿼리문을 소개하겠습니다.">
+<meta property="og:description" content="Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 특히 데이터베이스의 성능과 안정성을 유지하기 위해서는 사적 점검이 빠질 수 없다 생각됩니다. Oracle 데이터베이스를 일상적으로 점검하는 데 유용한 SQL 쿼리문을 소개하겠습니다.">
+<link rel="canonical" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html">
+<meta property="og:url" content="/database/2016/11/09/database-oracle-database-monitoring-queries.html">
+<meta property="og:site_name" content="Young’s Logs">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-11-09T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Oracle 점검을 위한 유용한 SQL 쿼리문 모음">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Young Hwang"},"dateModified":"2016-11-09T00:00:00+00:00","datePublished":"2016-11-09T00:00:00+00:00","description":"Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 특히 데이터베이스의 성능과 안정성을 유지하기 위해서는 사적 점검이 빠질 수 없다 생각됩니다. Oracle 데이터베이스를 일상적으로 점검하는 데 유용한 SQL 쿼리문을 소개하겠습니다.","headline":"Oracle 점검을 위한 유용한 SQL 쿼리문 모음","mainEntityOfPage":{"@type":"WebPage","@id":"/database/2016/11/09/database-oracle-database-monitoring-queries.html"},"url":"/database/2016/11/09/database-oracle-database-monitoring-queries.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Young's Logs">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Young's Logs" src="" onerror="this.style.display='none'">
+  Young's Logs
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<div class="page-link" style="display: inline;">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<div class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</div>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Oracle 점검을 위한 유용한 SQL 쿼리문 모음</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2016-11-09T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Nov 09, 2016
+    </time>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 15 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/tags.html#oracle%20database">#oracle database</a><a class="post-tag" href="/tags.html#tablespace">#tablespace</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 
+특히 데이터베이스의 성능과 안정성을 유지하기 위해서는 사적 점검이 빠질 수 없다 생각됩니다.
+Oracle 데이터베이스를 일상적으로 점검하는 데 유용한 SQL 쿼리문을 소개하겠습니다.</p>
+
+<h2 id="1-테이블스페이스별-용량-확인">1. 테이블스페이스별 용량 확인</h2>
+
+<p>테이블스페이스는 데이터베이스의 저장 공간을 관리하는 데 중요한 역할을 합니다. 
+이 쿼리는 각 테이블스페이스의 전체 용량과 사용된 용량을 확인하여 용량 사용률을 파악할 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">테이블스페이스별</span> <span class="err">용량</span> <span class="err">확인</span> <span class="err">쿼리문</span><span class="p">(</span><span class="n">MB</span> <span class="err">단위</span><span class="p">)</span>
+<span class="k">select</span>   <span class="n">substr</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">tablespace_name</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span> <span class="n">tablespace</span><span class="p">,</span>
+         <span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">total1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="nv">"TotalMB"</span><span class="p">,</span>
+         <span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">total1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">sum1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="nv">"UsedMB"</span><span class="p">,</span>
+         <span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">sum1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="nv">"FreeMB"</span><span class="p">,</span>
+         <span class="n">round</span><span class="p">((</span><span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">total1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">sum1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">round</span><span class="p">(</span><span class="k">sum</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">total1</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="nv">"Used%"</span>
+<span class="k">from</span>
+         <span class="p">(</span><span class="k">select</span>   <span class="n">tablespace_name</span><span class="p">,</span><span class="mi">0</span> <span class="n">total1</span><span class="p">,</span><span class="k">sum</span><span class="p">(</span><span class="n">bytes</span><span class="p">)</span> <span class="n">sum1</span><span class="p">,</span><span class="k">max</span><span class="p">(</span><span class="n">bytes</span><span class="p">)</span> <span class="n">MAXB</span><span class="p">,</span><span class="k">count</span><span class="p">(</span><span class="n">bytes</span><span class="p">)</span> <span class="n">cnt</span>
+          <span class="k">from</span>     <span class="n">dba_free_space</span>
+          <span class="k">group</span> <span class="k">by</span> <span class="n">tablespace_name</span>
+          <span class="k">union</span>
+          <span class="k">select</span>   <span class="n">tablespace_name</span><span class="p">,</span><span class="k">sum</span><span class="p">(</span><span class="n">bytes</span><span class="p">)</span> <span class="n">total1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+          <span class="k">from</span>     <span class="n">dba_data_files</span>
+          <span class="k">group</span> <span class="k">by</span> <span class="n">tablespace_name</span><span class="p">)</span> <span class="n">a</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">a</span><span class="p">.</span><span class="n">tablespace_name</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">tablespace</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="2-테이블스페이스별-현황-확인">2. 테이블스페이스별 현황 확인</h2>
+
+<p>이 쿼리는 각 테이블스페이스의 파일별 사용 용량과 여유 공간을 확인할 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">테이블스페이스별</span> <span class="err">현황</span> <span class="err">확인</span> <span class="err">쿼리문</span><span class="p">(</span><span class="n">MB</span> <span class="err">단위</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">TABLESPACE_NAME</span><span class="p">,</span> <span class="n">FILE_NAME</span><span class="p">,</span> <span class="n">BYTES</span><span class="o">/</span><span class="mi">1024</span> <span class="k">AS</span> <span class="n">MBytes</span><span class="p">,</span> <span class="k">RESULT</span><span class="o">/</span><span class="mi">1024</span> <span class="k">AS</span> <span class="n">USE_MBytes</span> <span class="k">FROM</span>
+  <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="n">E</span><span class="p">.</span><span class="n">TABLESPACE_NAME</span><span class="p">,</span><span class="n">E</span><span class="p">.</span><span class="n">FILE_NAME</span><span class="p">,</span><span class="n">E</span><span class="p">.</span><span class="n">BYTES</span><span class="p">,</span> <span class="p">(</span><span class="n">E</span><span class="p">.</span><span class="n">BYTES</span><span class="o">-</span><span class="k">SUM</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">BYTES</span><span class="p">))</span> <span class="k">RESULT</span>
+  <span class="k">FROM</span> <span class="n">DBA_DATA_FILES</span> <span class="n">E</span><span class="p">,</span> <span class="n">DBA_FREE_SPACE</span> <span class="n">F</span>
+  <span class="k">WHERE</span> <span class="n">E</span><span class="p">.</span><span class="n">FILE_ID</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">FILE_ID</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">E</span><span class="p">.</span><span class="n">TABLESPACE_NAME</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">FILE_NAME</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">BYTES</span>
+  <span class="p">)</span> <span class="n">A</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span>  <span class="err">테이블스페이스별</span><span class="p">,</span> <span class="err">파일별</span> <span class="err">현황</span> <span class="err">확인</span> <span class="err">쿼리문</span><span class="p">(</span><span class="err">바이트</span> <span class="err">단위</span><span class="p">)</span>
+  <span class="k">SELECT</span>    <span class="n">A</span><span class="p">.</span><span class="n">TABLESPACE_NAME</span> <span class="nv">"테이블스페이스명"</span><span class="p">,</span>
+          <span class="n">A</span><span class="p">.</span><span class="n">FILE_NAME</span> <span class="nv">"파일경로"</span><span class="p">,</span>
+           <span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">BYTES</span> <span class="o">-</span> <span class="n">B</span><span class="p">.</span><span class="k">FREE</span><span class="p">)</span>    <span class="nv">"사용공간"</span><span class="p">,</span>
+            <span class="n">B</span><span class="p">.</span><span class="k">FREE</span>                 <span class="nv">"여유 공간"</span><span class="p">,</span>
+            <span class="n">A</span><span class="p">.</span><span class="n">BYTES</span>                <span class="nv">"총크기"</span><span class="p">,</span>
+            <span class="n">TO_CHAR</span><span class="p">(</span> <span class="p">(</span><span class="n">B</span><span class="p">.</span><span class="k">FREE</span> <span class="o">/</span> <span class="n">A</span><span class="p">.</span><span class="n">BYTES</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="p">,</span> <span class="s1">'999.99'</span><span class="p">)</span><span class="o">||</span><span class="s1">'%'</span> <span class="nv">"여유공간"</span>
+      <span class="k">FROM</span>
+       <span class="p">(</span>
+         <span class="k">SELECT</span> <span class="n">FILE_ID</span><span class="p">,</span>
+                <span class="n">TABLESPACE_NAME</span><span class="p">,</span>
+                <span class="n">FILE_NAME</span><span class="p">,</span>
+                <span class="n">SUBSTR</span><span class="p">(</span><span class="n">FILE_NAME</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span> <span class="n">FILE_NM</span><span class="p">,</span>
+                <span class="k">SUM</span><span class="p">(</span><span class="n">BYTES</span><span class="p">)</span> <span class="n">BYTES</span>
+           <span class="k">FROM</span> <span class="n">DBA_DATA_FILES</span>
+         <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">FILE_ID</span><span class="p">,</span><span class="n">TABLESPACE_NAME</span><span class="p">,</span><span class="n">FILE_NAME</span><span class="p">,</span><span class="n">SUBSTR</span><span class="p">(</span><span class="n">FILE_NAME</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+       <span class="p">)</span> <span class="n">A</span><span class="p">,</span>
+       <span class="p">(</span>
+         <span class="k">SELECT</span> <span class="n">TABLESPACE_NAME</span><span class="p">,</span>
+                <span class="n">FILE_ID</span><span class="p">,</span>
+                <span class="k">SUM</span><span class="p">(</span><span class="n">NVL</span><span class="p">(</span><span class="n">BYTES</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="k">FREE</span>
+           <span class="k">FROM</span> <span class="n">DBA_FREE_SPACE</span>
+        <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">TABLESPACE_NAME</span><span class="p">,</span><span class="n">FILE_ID</span>
+       <span class="p">)</span> <span class="n">B</span>
+      <span class="k">WHERE</span> <span class="n">A</span><span class="p">.</span><span class="n">TABLESPACE_NAME</span><span class="o">=</span><span class="n">B</span><span class="p">.</span><span class="n">TABLESPACE_NAME</span>
+         <span class="k">AND</span> <span class="n">A</span><span class="p">.</span><span class="n">FILE_ID</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="n">FILE_ID</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="3-테이블-용량-조회">3. 테이블 용량 조회</h2>
+
+<p>이 쿼리는 각 테이블과 인덱스의 용량을 조회하여 용량이 큰 객체를 확인할 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">테이블</span> <span class="err">용량</span> <span class="err">조회</span>
+<span class="k">SELECT</span>  <span class="k">OWNER</span><span class="p">,</span> <span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">TP</span><span class="p">,</span> <span class="n">TRUNC</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">BYTES</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">)</span> <span class="n">MB</span>
+  <span class="k">FROM</span>  <span class="p">(</span>
+          <span class="k">SELECT</span>  <span class="n">SEGMENT_NAME</span> <span class="k">TABLE_NAME</span><span class="p">,</span> <span class="s1">'TABLE'</span> <span class="k">AS</span> <span class="n">TP</span><span class="p">,</span> <span class="k">OWNER</span><span class="p">,</span> <span class="n">BYTES</span>
+            <span class="k">FROM</span>  <span class="n">DBA_SEGMENTS</span>
+           <span class="k">WHERE</span>  <span class="n">SEGMENT_TYPE</span> <span class="k">IN</span>  <span class="p">(</span><span class="s1">'TABLE'</span><span class="p">,</span><span class="s1">'TABLE PARTITION'</span><span class="p">)</span>
+          <span class="k">UNION</span> <span class="k">ALL</span>
+          <span class="k">SELECT</span>  <span class="n">I</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="s1">'INDEX'</span> <span class="k">AS</span> <span class="n">TP</span><span class="p">,</span> <span class="n">I</span><span class="p">.</span><span class="k">OWNER</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">BYTES</span>
+            <span class="k">FROM</span>  <span class="n">DBA_INDEXES</span> <span class="n">I</span><span class="p">,</span> <span class="n">DBA_SEGMENTS</span> <span class="n">S</span>
+           <span class="k">WHERE</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_NAME</span> <span class="o">=</span> <span class="n">I</span><span class="p">.</span><span class="n">INDEX_NAME</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="k">OWNER</span> <span class="o">=</span> <span class="n">I</span><span class="p">.</span><span class="k">OWNER</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_TYPE</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'INDEX'</span><span class="p">,</span><span class="s1">'INDEX PARTITION'</span><span class="p">)</span>
+          <span class="k">UNION</span> <span class="k">ALL</span>
+          <span class="k">SELECT</span>  <span class="n">L</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="s1">'LOB'</span> <span class="k">AS</span> <span class="n">TP</span><span class="p">,</span> <span class="n">L</span><span class="p">.</span><span class="k">OWNER</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">BYTES</span>
+            <span class="k">FROM</span>  <span class="n">DBA_LOBS</span> <span class="n">L</span><span class="p">,</span> <span class="n">DBA_SEGMENTS</span> <span class="n">S</span>
+           <span class="k">WHERE</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_NAME</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="n">SEGMENT_NAME</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="k">OWNER</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="k">OWNER</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_TYPE</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'LOBSEGMENT'</span><span class="p">,</span><span class="s1">'LOB PARTITION'</span><span class="p">)</span>
+            <span class="k">UNION</span> <span class="k">ALL</span>
+          <span class="k">SELECT</span>  <span class="n">L</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="s1">'LOB_INDEX'</span> <span class="k">AS</span> <span class="n">TP</span><span class="p">,</span> <span class="n">L</span><span class="p">.</span><span class="k">OWNER</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">BYTES</span>
+            <span class="k">FROM</span>  <span class="n">DBA_LOBS</span> <span class="n">L</span><span class="p">,</span> <span class="n">DBA_SEGMENTS</span> <span class="n">S</span>
+           <span class="k">WHERE</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_NAME</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="n">INDEX_NAME</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="k">OWNER</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="k">OWNER</span>
+             <span class="k">AND</span>  <span class="n">S</span><span class="p">.</span><span class="n">SEGMENT_TYPE</span> <span class="o">=</span> <span class="s1">'LOBINDEX'</span>
+        <span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">TP</span><span class="p">,</span> <span class="k">OWNER</span>
+<span class="k">HAVING</span> <span class="k">SUM</span><span class="p">(</span><span class="n">BYTES</span><span class="p">)</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span> <span class="o">&gt;</span> <span class="mi">10</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">SUM</span><span class="p">(</span><span class="n">BYTES</span><span class="p">)</span> <span class="k">DESC</span><span class="p">,</span> <span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">TP</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="4-가동중인-쿼리-확인">4. 가동중인 쿼리 확인</h2>
+
+<p>현재 실행 중인 쿼리를 모니터링하는 것은 데이터베이스의 성능을 파악하고 문제를 조기에 발견하는 데 도움이 됩니다. 
+이 쿼리는 현재 실행 중인 쿼리와 그에 대한 상세 정보를 조회합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  <span class="n">d</span><span class="p">.</span><span class="n">SQL_FULLTEXT</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">sid</span><span class="p">,</span>          <span class="c1">-- SID</span>
+        <span class="n">a</span><span class="p">.</span><span class="nb">serial</span><span class="o">#</span><span class="p">,</span>      <span class="c1">-- 시리얼번호</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">status</span><span class="p">,</span>       <span class="c1">-- 상태정보</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">process</span><span class="p">,</span>      <span class="c1">-- 프로세스정보</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">username</span><span class="p">,</span>     <span class="c1">-- 유저</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">osuser</span><span class="p">,</span>       <span class="c1">-- 접속자의 OS 사용자 정보</span>
+        <span class="n">b</span><span class="p">.</span><span class="n">sql_text</span><span class="p">,</span>     <span class="c1">-- sql</span>
+        <span class="k">c</span><span class="p">.</span><span class="n">program</span><span class="p">,</span>       <span class="c1">-- 접속 프로그램</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">LAST_CALL_ET</span>
+<span class="k">FROM</span>    <span class="n">v</span><span class="err">$</span><span class="k">session</span> <span class="n">a</span><span class="p">,</span>
+        <span class="n">v</span><span class="err">$</span><span class="n">sqlarea</span> <span class="n">b</span><span class="p">,</span>
+        <span class="n">v</span><span class="err">$</span><span class="n">process</span> <span class="k">c</span><span class="p">,</span>
+        <span class="n">v</span><span class="err">$</span><span class="k">sql</span> <span class="n">d</span>
+<span class="k">WHERE</span>   <span class="n">a</span><span class="p">.</span><span class="n">sql_hash_value</span><span class="o">=</span><span class="n">b</span><span class="p">.</span><span class="n">hash_value</span>
+<span class="k">AND</span>     <span class="n">a</span><span class="p">.</span><span class="n">sql_address</span><span class="o">=</span><span class="n">b</span><span class="p">.</span><span class="n">address</span>
+<span class="k">AND</span>     <span class="n">a</span><span class="p">.</span><span class="n">paddr</span><span class="o">=</span><span class="k">c</span><span class="p">.</span><span class="n">addr</span>
+<span class="k">AND</span>     <span class="n">a</span><span class="p">.</span><span class="n">status</span><span class="o">=</span><span class="s1">'ACTIVE'</span>
+<span class="k">AND</span>     <span class="n">d</span><span class="p">.</span><span class="n">ADDRESS</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">SQL_ADDRESS</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">ROWNUM</span> <span class="k">NO</span><span class="p">,</span>
+       <span class="n">PARSING_SCHEMA_NAME</span><span class="p">,</span>
+       <span class="n">to_char</span><span class="p">(</span><span class="n">ELAPSED_TIME</span><span class="o">/</span><span class="p">(</span><span class="mi">1000000</span> <span class="o">*</span> <span class="n">decode</span><span class="p">(</span><span class="n">executions</span><span class="p">,</span><span class="k">null</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">executions</span><span class="p">)),</span><span class="mi">999999</span><span class="p">.</span><span class="mi">9999</span> <span class="p">)</span> <span class="err">평균실행시간</span><span class="p">,</span>
+       <span class="n">executions</span><span class="err">실행횟수</span><span class="p">,</span>
+       <span class="n">SQL_TEXT</span> <span class="err">쿼리</span><span class="p">,</span>
+       <span class="n">SQL_FULLTEXT</span>
+<span class="k">FROM</span> <span class="n">V</span><span class="err">$</span><span class="k">SQL</span>
+<span class="k">WHERE</span> <span class="n">LAST_ACTIVE_TIME</span><span class="o">&gt;</span> <span class="n">SYSDATE</span><span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">24</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+ <span class="c1">-- AND LAST_ACTIVE_TIME BETWEEN to_Date('20111226163000','YYYYMMDDHH24MISS') AND to_Date('20111226170000','YYYYMMDDHH24MISS')</span>
+ <span class="c1">-- AND ELAPSED_TIME &gt;= 1 * 1000000 * decode(executions,null,1,0,1,executions)</span>
+ <span class="k">and</span> <span class="n">PARSING_SCHEMA_NAME</span> <span class="o">=</span> <span class="s1">'ZIPCODE'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="err">평균실행시간</span> <span class="k">DESC</span><span class="p">,</span> <span class="err">실행횟수</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="show-the-bind-variable-for-a-given-sqlid">Show the Bind Variable for a Given SQLID.</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SET</span> <span class="n">PAUSE</span> <span class="k">ON</span>
+<span class="k">SET</span> <span class="n">PAUSE</span> <span class="s1">'Press Return to Continue'</span>
+<span class="k">SET</span> <span class="n">PAGESIZE</span> <span class="mi">60</span>
+<span class="k">SET</span> <span class="n">LINESIZE</span> <span class="mi">300</span>
+
+<span class="k">COLUMN</span> <span class="n">sql_text</span> <span class="n">FORMAT</span> <span class="n">A120</span>
+<span class="k">COLUMN</span> <span class="n">sql_id</span> <span class="n">FORMAT</span> <span class="n">A13</span>
+<span class="k">COLUMN</span> <span class="n">bind_name</span> <span class="n">FORMAT</span> <span class="n">A10</span>
+<span class="k">COLUMN</span> <span class="n">bind_value</span> <span class="n">FORMAT</span> <span class="n">A26</span>
+
+<span class="k">SELECT</span>
+  <span class="n">sql_id</span><span class="p">,</span>
+  <span class="n">t</span><span class="p">.</span><span class="n">sql_text</span> <span class="n">sql_text</span><span class="p">,</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">name</span> <span class="n">bind_name</span><span class="p">,</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">value_string</span> <span class="n">bind_value</span>
+<span class="k">FROM</span>
+  <span class="n">v</span><span class="err">$</span><span class="k">sql</span> <span class="n">t</span>
+<span class="k">JOIN</span>
+  <span class="n">v</span><span class="err">$</span><span class="n">sql_bind_capture</span> <span class="n">b</span>  <span class="k">using</span> <span class="p">(</span><span class="n">sql_id</span><span class="p">)</span>
+<span class="k">WHERE</span>
+  <span class="n">b</span><span class="p">.</span><span class="n">value_string</span> <span class="k">is</span> <span class="k">not</span> <span class="k">null</span>
+<span class="k">AND</span>
+  <span class="n">sql_id</span><span class="o">=</span><span class="s1">'&amp;sqlid'</span>
+</code></pre></div></div>
+
+<h2 id="5-db-락-확인-및-처리">5. DB 락 확인 및 처리</h2>
+
+<p>데이터베이스 락은 다수의 세션이 동시에 데이터에 접근할 때 발생할 수 있는 문제입니다. 
+이 쿼리는 현재 락이 걸린 세션과 관련 객체를 확인하고, 필요한 경우 해당 세션을 종료시키는 데 사용될 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="n">db</span> <span class="k">lock</span> <span class="k">user</span>
+<span class="k">SELECT</span>  <span class="n">s</span><span class="p">.</span><span class="n">SID</span><span class="p">,</span>
+        <span class="n">s</span><span class="p">.</span><span class="nb">SERIAL</span><span class="o">#</span><span class="p">,</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">STATUS</span><span class="p">,</span>
+        <span class="k">do</span><span class="p">.</span><span class="n">object_name</span><span class="p">,</span>
+        <span class="n">decode</span><span class="p">(</span><span class="n">lo</span><span class="p">.</span><span class="n">locked_mode</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'Null'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'Row-S'</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">'Row-x'</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'Share'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'S/Row-X'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'Exclusive'</span><span class="p">,</span><span class="s1">'None'</span><span class="p">)</span> <span class="n">lock_mode</span><span class="p">,</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">MODULE</span><span class="p">,</span>
+        <span class="n">lo</span><span class="p">.</span><span class="n">Object_Id</span><span class="p">,</span>
+        <span class="n">Lo</span><span class="p">.</span><span class="n">Os_User_Name</span>
+        <span class="c1">--ffv.USER_FORM_NAME,</span>
+        <span class="c1">--fl.user_id,</span>
+        <span class="c1">--fu.user_name,</span>
+        <span class="c1">--fu.DESCRIPTION</span>
+<span class="k">FROM</span>    <span class="n">v</span><span class="err">$</span><span class="k">session</span> <span class="n">s</span><span class="p">,</span>
+        <span class="n">v</span><span class="err">$</span><span class="n">process</span> <span class="n">p</span><span class="p">,</span>
+        <span class="n">v</span><span class="err">$</span><span class="n">locked_object</span> <span class="n">lo</span><span class="p">,</span>
+        <span class="n">dba_objects</span> <span class="k">do</span><span class="p">,</span>
+        <span class="n">V</span><span class="err">$</span><span class="n">LOCKED_OBJECT</span> <span class="n">vlo</span>
+<span class="k">WHERE</span>   <span class="n">s</span><span class="p">.</span><span class="n">PADDR</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">ADDR</span><span class="p">(</span><span class="o">+</span><span class="p">)</span>
+<span class="k">AND</span>     <span class="n">lo</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">sid</span>
+<span class="k">AND</span>     <span class="n">lo</span><span class="p">.</span><span class="n">OBJECT_ID</span> <span class="o">=</span> <span class="k">do</span><span class="p">.</span><span class="n">object_id</span>
+<span class="k">AND</span>     <span class="n">lo</span><span class="p">.</span><span class="n">OBJECT_ID</span> <span class="o">=</span> <span class="n">vlo</span><span class="p">.</span><span class="n">OBJECT_ID</span>
+<span class="c1">--AND   do.object_name = 'CSS_OM_LINE_EXTRA'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">s</span><span class="p">.</span><span class="n">MODULE</span><span class="p">;</span>
+
+<span class="c1">-- 형식</span>
+<span class="k">alter</span> <span class="k">system</span> <span class="n">kill</span> <span class="k">session</span> <span class="s1">'sid, serial#'</span>
+<span class="n">sid</span> <span class="p">:</span> <span class="n">session_id</span>
+<span class="nb">serial</span><span class="o">#</span> <span class="p">:</span> <span class="n">serial_no</span> <span class="err">을</span> <span class="err">의미한다</span><span class="p">.</span><span class="o">*/</span>
+<span class="k">alter</span> <span class="k">system</span> <span class="n">kill</span> <span class="k">session</span> <span class="s1">'534, 4481'</span><span class="p">;</span> <span class="c1">-- 세션을 직접적으로 죽이지 않음. 스스로 죽어라고 통보하는 것. 오랫동안 응답을 기다리는 경우 발생</span>
+<span class="k">alter</span> <span class="k">system</span> <span class="n">kill</span> <span class="k">session</span> <span class="s1">'534, 4481'</span> <span class="k">immediate</span><span class="p">;</span> <span class="c1">-- 죽은 것을 확인하지 않고 바로 현재 세션으로 리턴</span>
+
+<span class="c1">-- 세션을 죽이는 다른 방법</span>
+<span class="c1">-- 서버 프로세스를 바로 죽임</span>
+<span class="c1">-- OS에서 프로세스를 죽이는 것과 동일한 효과</span>
+<span class="k">alter</span> <span class="k">system</span> <span class="k">disconnect</span> <span class="k">session</span> <span class="s1">'534, 4481'</span> <span class="n">post_transaction</span><span class="p">;</span>
+<span class="k">alter</span> <span class="k">system</span> <span class="k">disconnect</span> <span class="k">session</span> <span class="s1">'534, 4481'</span> <span class="k">immediate</span><span class="p">;</span>
+
+<span class="c1">-- kill session 으로 처리가 안될 시 서버 프로세스를 Kill 함</span>
+<span class="c1">-- Server Process ID 확인 쿼리</span>
+<span class="k">SELECT</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">SID</span><span class="p">,</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">USERNAME</span><span class="p">,</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">OSUSER</span><span class="p">,</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">PROCESS</span> <span class="n">FG_PID</span><span class="p">,</span><span class="n">VP</span><span class="p">.</span><span class="n">SPID</span> <span class="n">BG_PID</span>
+<span class="k">FROM</span>
+    <span class="n">V</span><span class="err">$</span><span class="k">SESSION</span> <span class="n">VS</span><span class="p">,</span> <span class="n">V</span><span class="err">$</span><span class="n">PROCESS</span> <span class="n">VP</span>
+<span class="k">WHERE</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">PADDR</span> <span class="o">=</span> <span class="n">VP</span><span class="p">.</span><span class="n">ADDR</span>
+<span class="k">ORDER</span> <span class="n">RY</span>
+    <span class="n">VS</span><span class="p">.</span><span class="n">OSUSER</span><span class="p">;</span>
+<span class="p">;</span>
+
+<span class="c1">-- kill -9 XXXXX</span>
+<span class="k">commit</span> <span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="instance-service-상태-확인">Instance Service 상태 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">INSATNCE_NAME</span><span class="p">,</span> <span class="n">STATUS</span> <span class="k">FROM</span> <span class="n">V</span><span class="err">$</span><span class="n">INSTANCE</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="resource-부족-확인">Resource 부족 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">V</span><span class="err">$</span><span class="n">RESOURCE_LIMIT</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="database-backup-확인">Database Backup 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">V</span><span class="err">$</span><span class="n">BACKUP</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="redo-발생량-확인">Redo 발생량 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  <span class="n">TO_CHAR</span><span class="p">(</span><span class="n">FIRST_TIME</span><span class="p">,</span><span class="s1">'YYYY/MM/DD'</span><span class="p">)</span> <span class="nv">"DATE"</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="n">THREAD</span><span class="o">#</span><span class="p">)</span> <span class="nv">"COUNT"</span>
+<span class="k">FROM</span>    <span class="n">V</span><span class="err">$</span><span class="n">LOGHIST</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">TO_CHAR</span><span class="p">(</span><span class="n">FIRST_TIME</span><span class="p">,</span><span class="s1">'YYYY/MM/DD'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TO_CHAR</span><span class="p">(</span><span class="n">FIRST_TIME</span><span class="p">,</span><span class="s1">'YYYY/MM/DD'</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="listener-상태-확인">Listener 상태 확인</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsnrctl status
+</code></pre></div></div>
+
+<h2 id="invalid-object-확인">Invalid Object 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">COLUMN</span> <span class="n">object_name</span> <span class="n">FORMAT</span> <span class="n">A30</span>
+<span class="k">SELECT</span> <span class="k">owner</span><span class="p">,</span>
+       <span class="n">object_type</span><span class="p">,</span>
+       <span class="n">object_name</span><span class="p">,</span>
+       <span class="n">status</span>
+<span class="k">FROM</span>   <span class="n">dba_objects</span>
+<span class="k">WHERE</span>  <span class="n">status</span> <span class="o">=</span> <span class="s1">'INVALID'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">owner</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">object_name</span><span class="p">;</span>
+
+<span class="k">SET</span> <span class="n">SERVEROUTPUT</span> <span class="k">ON</span> <span class="k">SIZE</span> <span class="mi">1000000</span>
+<span class="k">BEGIN</span>
+    <span class="k">FOR</span> <span class="n">cur_rec</span> <span class="k">IN</span>
+    <span class="p">(</span>   <span class="k">SELECT</span>  <span class="k">owner</span><span class="p">,</span>
+                <span class="n">object_name</span><span class="p">,</span>
+                <span class="n">object_type</span><span class="p">,</span>
+                <span class="n">DECODE</span><span class="p">(</span><span class="n">object_type</span><span class="p">,</span> <span class="s1">'PACKAGE'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">'PACKAGE BODY'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">recompile_order</span>
+        <span class="k">FROM</span>    <span class="n">dba_objects</span>
+        <span class="k">WHERE</span>   <span class="n">object_type</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'PACKAGE'</span><span class="p">,</span> <span class="s1">'PACKAGE BODY'</span><span class="p">,</span> <span class="s1">'PROCEDURE'</span><span class="p">,</span> <span class="s1">'FUNCTION'</span><span class="p">,</span> <span class="s1">'TRIGGER'</span><span class="p">)</span>
+        <span class="k">AND</span>     <span class="n">status</span> <span class="o">!=</span> <span class="s1">'VALID'</span>
+        <span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">LOOP</span>
+        <span class="k">BEGIN</span>
+            <span class="n">IF</span> <span class="n">cur_rec</span><span class="p">.</span><span class="n">object_type</span> <span class="o">!=</span> <span class="s1">'PACKAGE BODY'</span> <span class="k">THEN</span>
+                <span class="k">EXECUTE</span> <span class="k">IMMEDIATE</span> <span class="s1">'ALTER '</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="n">object_type</span> <span class="o">||</span>
+                    <span class="s1">' "'</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="k">owner</span> <span class="o">||</span> <span class="s1">'"."'</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="n">object_name</span> <span class="o">||</span> <span class="s1">'" COMPILE'</span><span class="p">;</span>
+            <span class="k">ElSE</span>
+                <span class="k">EXECUTE</span> <span class="k">IMMEDIATE</span> <span class="s1">'ALTER PACKAGE "'</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="k">owner</span> <span class="o">||</span>
+                    <span class="s1">'"."'</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="n">object_name</span> <span class="o">||</span> <span class="s1">'" COMPILE BODY'</span><span class="p">;</span>
+            <span class="k">END</span> <span class="n">IF</span><span class="p">;</span>
+        <span class="n">EXCEPTION</span>
+            <span class="k">WHEN</span> <span class="n">OTHERS</span> <span class="k">THEN</span>
+                <span class="n">DBMS_OUTPUT</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="n">cur_rec</span><span class="p">.</span><span class="n">object_type</span> <span class="o">||</span> <span class="s1">' : '</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="k">owner</span> <span class="o">||</span>
+                    <span class="s1">' : '</span> <span class="o">||</span> <span class="n">cur_rec</span><span class="p">.</span><span class="n">object_name</span><span class="p">);</span>
+        <span class="k">END</span><span class="p">;</span>
+    <span class="k">END</span> <span class="n">LOOP</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
+
+<span class="o">#</span> <span class="n">Invalid</span> <span class="k">Object</span> <span class="err">재컴파일</span>
+<span class="n">sqlplus</span> <span class="nv">"/ AS SYSDBA"</span>
+<span class="o">@</span><span class="n">Oracle_home</span><span class="o">/</span><span class="n">rdbms</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">utlrp</span><span class="p">.</span><span class="k">sql</span>
+</code></pre></div></div>
+
+<h2 id="job-수행-여부-확인">Job 수행 여부 확인</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  <span class="n">JOB</span><span class="p">,</span>
+        <span class="n">SCHEMA_USER</span><span class="p">,</span>
+        <span class="n">LAST_DATE</span><span class="p">,</span>
+        <span class="n">LAST_SEC</span><span class="p">,</span>
+        <span class="n">NEXT_DATE</span><span class="p">,</span>
+        <span class="n">NEXT_SEC</span><span class="p">,</span>
+        <span class="n">WHAT</span>
+<span class="k">FROM</span>    <span class="n">DBA_JOBS</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="trace-확인">Trace 확인</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> <span class="nt">-ltr</span> <span class="nv">$ORACLE_BASE</span>/admin/<span class="s2">"SID"</span>/bdump
+<span class="nb">ls</span> <span class="nt">-ltr</span> <span class="nv">$ORACLE_BASE</span>/admin/<span class="s2">"SID"</span>/udump
+</code></pre></div></div>
+
+<h2 id="마무리">마무리</h2>
+
+<p>Oracle 데이터베이스를 운영하면서 위 쿼리들을 활용하여 일상적인 점검을 수행하면 데이터베이스의 안정성과 성능을 향상시킬 수 있습니다.
+각 쿼리의 결과를 주기적으로 모니터링하고, 문제가 발견되면 적절한 조치를 취하는 것이 중요합니다. 
+이를 통해 데이터베이스 운영 및 유지보수 작업을 효율적으로 수행할 수 있을 것입니다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/database/2016/08/18/database-oracle-database-system-tables-and-views.html" title="System Tables and Views">System Tables and Views</a><a class="next" href="/database/2016/12/30/database-oracle-database-table-space.html" title="Oracle 데이터베이스 관리 - 테이블스페이스 생성, 확장, 및 관리 방법">Oracle 데이터베이스 관리 - 테이블스페이스 생성,...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html" title="Oracle 점검을 위한 유용한 SQL 쿼리문 모음">
+            Oracle 점검을 위한 유용한 SQL 쿼리문 모음<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/redis/2024/02/16/redis-data-model.html" title="Redis Data Model">
+            Redis Data Model<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/javascript/2023/09/09/javascript-vanilla-data-grouping.html" title="vanilla javascript를 이용한 객체 배열 그룹핑">
+            vanilla javascript를 이용한 객체 배열 그룹핑<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/redis/2024/03/05/redis-keys-flushall.html" title="KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유">
+            KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 Young Hwang</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

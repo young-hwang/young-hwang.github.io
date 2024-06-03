@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>OLAP 의 이해 | Young’s Logs</title>
+<meta name="generator" content="Jekyll v4.3.3">
+<meta property="og:title" content="OLAP 의 이해">
+<meta name="author" content="Young Hwang">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.">
+<meta property="og:description" content="온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.">
+<link rel="canonical" href="/paradigm/2022/12/17/paradigm-understanding-olap.html">
+<meta property="og:url" content="/paradigm/2022/12/17/paradigm-understanding-olap.html">
+<meta property="og:site_name" content="Young’s Logs">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-12-17T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="OLAP 의 이해">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Young Hwang"},"dateModified":"2022-12-17T00:00:00+00:00","datePublished":"2022-12-17T00:00:00+00:00","description":"온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.","headline":"OLAP 의 이해","mainEntityOfPage":{"@type":"WebPage","@id":"/paradigm/2022/12/17/paradigm-understanding-olap.html"},"url":"/paradigm/2022/12/17/paradigm-understanding-olap.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Young's Logs">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Young's Logs" src="" onerror="this.style.display='none'">
+  Young's Logs
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<div class="page-link" style="display: inline;">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<div class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</div>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">OLAP 의 이해</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-12-17T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Dec 17, 2022
+    </time>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 21 mins</span>
+  </div>
+<div class="post-tags"><a class="post-tag" href="/tags.html#olap">#olap</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.
+<img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211365&authkey=%21AP_bJJaM2voBRyg&width=1364&height=270" alt="Screenshot 2022-12-09 at 12.12.06 AM.png"></p>
+
+<h2 id="olap의-여러-의미the-different-meanings-of-olap">OLAP의 여러 의미(The different meanings of OLAP)</h2>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211368&authkey=%21AF5qk8_Gx8_IK54&width=552&height=504" alt="Untitled"></p>
+
+<p>그림에서 보이듯 OLAP 용어에는 몇 가지 의미가 있다. 그 이유는 OLAP의 필수 요소가 저장 및 액세스에서 언어 계층에 이르기 까지 여러 기술 계층에서 표현 할 수 있기 때문이다.</p>
+
+<ul>
+  <li>
+    <p>OLAP 사고</p>
+
+    <p>다중 계층 적 차원의 개념 또는 아이디어를 포한다.
+원자 규모에서 은하 규모에 이르는 물질 세계, 마이크로 에이전트에서 거시 경제에 이르는 경제 세계, 대인 관계에서 국제 관계에 이르는 사회 세계 어떤 종류의 공식적인 언어가 없어도 다차원, 다단계 세계의 관점에서 생각할 수 있다</p>
+  </li>
+  <li>
+    <p>OLAP 언어</p>
+
+    <p>DDL(데이터 정의 언어), DML(데이터 조작 언어), DRL(데이터 표현 언어) 및 관련 파서(및 선택적 컴파일러)를 포함한 OLAP 형식 언어는 트랜잭션 또는 의사 결정 지원과 같은 모든 설명 모델링에 사용할 수 있다.</p>
+  </li>
+  <li>
+    <p>OLAP 제품 계층</p>
+
+    <p>일반적으로 관계형 데이터베이스 위에 상주하며 컴파일 출력으로 SQL을 생성합니다. 데이터 저장 및 액세스는 데이터베이스에 의해 처리됩니다.</p>
+  </li>
+  <li>
+    <p>전체 OLAP 제품</p>
+
+    <p>컴파일러와 저장소 및 액세스 방법을 포함해야 하는 전체 OLAP 제품은 빠른 데이터 액세스 및 계산에 최적화되어 있으며 DSS(Decision Support System) 파생 데이터 설명 모델링에 사용됩니다.</p>
+  </li>
+</ul>
+
+<h2 id="olap가-유용한-경우where-olap-is-useful">OLAP가 유용한 경우(Where OLAP Is Useful)</h2>
+
+<h3 id="일반-정보의-올바른-처리desired-attributes-of-general-information-processing">일반 정보의 올바른 처리(Desired Attributes of General Information Processing)</h3>
+
+<ul>
+  <li>모든 비즈니스 활동 (및 그 문제에 대한 다른 의도적 인 활동)의 초석은 정보 처리이다.</li>
+  <li>데이터 수집, 저장, 전송, 조작 및 검색(컴퓨터의 도움 유무에 관계없이)이 포함된다.</li>
+  <li>좋은 정보의 중요성은 올바른 결정과 잘못된 결정의 가치 차이 이다.</li>
+  <li>의사 결정은 해당 정보를 기반으로 한다. 옳고 그른 결정의 차이가 클수록 좋은 정보를 갖는 것의 중요성이 커진다.
+예를 들어, 소비자 소매 동향에 대한 정보가 부족하면 소매업체에 대한 구매 및 할당 결정이 잘못되어 과잉 재고가 있는 항목에 대한 비용이 많이 드는 가격 인하가 발생하고 재고가 부족한 항목에 대한 수익 창출 기회를 잃게 된다. 따라서 소매업체는 정확한 제품 수요 예측을 높이 평가하는 경향이 있습니다.</li>
+  <li>따라서 <strong>OLAP는 존재하고 시의적절하며 정확하고 이해할 수 있는 정보를 제공해야 한다.</strong>
+</li>
+</ul>
+
+<h2 id="1-4-transaction-과-decision-support-processing의-차이the-distinction-between-transaction-and-decision-support-processing">1-4 Transaction 과 Decision Support Processing의 차이(The Distinction between Transaction and Decision Support Processing)</h2>
+
+<ul>
+  <li>
+    <p>분석을 기반으로 한 의사 결정 지향</p>
+
+    <p>구매, 판매, 생산 및 유통은 일상적인 운영 비즈니스 활동이다.
+이러한 비즈니스는 자원 계획, 예산 책정, 전략적 제휴 및 마케팅 이니셔티브는 분석 기반 의사 결정 지향 정보를 생성하고 사용하는 비즈니스 활동의 일반적인 예이다.
+이러한 상위 수준 활동을 통해 생성된 정보는 추세나 비율 또는 집계 계산과 같은 일부 데이터 분석이 활동의 일부로 발생해야 하기 때문에 분석 기반이다.
+정보는 의사 결정에 즉시 유용한 형태이기 때문에 의사 결정 지향적이다.
+어떤 제품이나 고객이 가장 수익성이 높은지, 또는 어떤 매장이 올해 가장 많이 떨어졌는지 아는 것은 어떤 제품의 생산량을 늘려야하는지, 어떤 고객이 특별 프로모션의 대상이되어야하는지와 같은 결정을 내리기 위해 알아야 할 정보이다.</p>
+  </li>
+  <li>
+    <p>분석을 기반으로 하지 않는 의사 결정 지향</p>
+
+    <p>신용 카드 고객이 자신이나 주 거주지가 아닌 다른 주소로 청구서를 보내달라고 요청하는 경우 결정을 내려야 합니다. 회사 정책에 청구서를 고객의 거주지로 보내야한다고 명시되어 있으면 결정은 ‘아니오’이다. 정책 정보는 의사 결정 지향적이었지만 결정과 관련된 분석은 없다.</p>
+  </li>
+  <li>
+    <p>Operational Activities</p>
+
+    <p>보통의 회사의 일상적인 운영 흐름에서 고객은 영업 직원에게 사용 가능한 제품에 대해 질문하고 판매 거래에서 실현되는 제품 구매 결정을 내릴 수 있다. 판매와 병행하여 제품이 생산되고 자재가 구매되며 완제품이 운송 및 재고된다. 지속적으로 생성되는 판매, 생산 및 비용 정보는 운영 목적으로 사용되는 하나 이상의 데이터베이스에 기록되고 관리된다. 고객 질문에 답하고, 판매 트랜잭션을 수행하고, 기타 운영 작업을 수행하기 위해 직원은 이러한 데이터베이스에서 운영 정보를 쿼리한다.</p>
+    <ul>
+      <li>일정한 속도로 발생</li>
+      <li>소량의 정보에 대해 수행</li>
+      <li>직접 입력된 데이터를 이용</li>
+      <li>쿼리 집합을 미리 알 수 있다(고객 정보를 검색하여 이름과 주소를 확인)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Analysis Based Decision Oriented Activities(ABDO)</p>
+
+    <p>Operational Activities와는 달리 관리자와 분석가는 더 높은 수준의 분석을 수행한다.</p>
+
+    <ul>
+      <li>올해 회사에 가장 수익성이 높은 제품은 무엇인가?</li>
+      <li>작년에 가장 수익성이 높았던 제품 그룹과 동일한가?</li>
+      <li>회사는 작년 같은 분기와 비교하여 이번 분기를 어떻게 운영되고 있는가?</li>
+      <li>어떤 유형의 고객이 가장 큰 충성도를 보이는가?</li>
+    </ul>
+
+    <p>이러한 질문은 분석을 기반으로 한 의사 결정 지향적이다. 이러한 활동의 특징은 아래와 같다.</p>
+
+    <ul>
+      <li>활동의 양이 하루 동안 크게 변동 될 수 있다.</li>
+      <li>평균적으로 데이터 기록 보다 읽는 활동이 주주 발생한다.</li>
+      <li>기록이 될 때 일괄 업데이트 경향이 있다.</li>
+      <li>분석 쿼리는 특성을 미리 이해하지 못하는 경우가 많다.</li>
+    </ul>
+
+    <p>예를 들어, 브랜드 관리자는 지역별 브랜드 수익성을 질의함으로써 분석 세션을 시작할 수 있다. 각 수익성 수치는 해당 전체 기간 동안 제품이 판매되는 지역의 모든 장소에 대한 브랜드의 모든 제품 평균을 나타냅니다. 말 그대로 수십만 또는 수백만 개의 데이터가 각 수익성 수치에 유입될 수 있습니다. 수익성 수치가 비정상적으로 보이면 관리자는 수익성이 비정상적인 이유를 찾기 시작할 수 있습니다. 이 구조화되지 않은 탐색 프로세스는 관리자를 데이터베이스의 어느 영역으로든 이동 할 수 있다.</p>
+  </li>
+  <li>
+    <p>Operational Activities 와 Analysis Based Decision Oriented Activities</p>
+  </li>
+</ul>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211351&authkey=%21ABsdFvV1X6KeQhQ&width=468&height=231" alt="Untitled1"></p>
+
+<p>운영과 분석 기반 의사 결정 지향 소프트웨어 활동 간의 이러한 차이로 서로 다른 하드웨어 시스템에서 서로 다른 소프트웨어 제품을 사용한다.</p>
+
+<ul>
+  <li>일반적인 Global 2000 기업은 운영 처리 및 분석 지향 처리에서 최대한 효율적인 소프트웨어가 필요합니다.</li>
+  <li>최대한 효율적인 연산 처리에 필요한 빠른 업데이트와 최대한 효율적인 분석 지향 처리에 필요한 빠른 계산(및 계산 입력에 대한 빠른 액세스에 대한 필요성)에는 인덱싱에 대한 상호 배타적인 접근 방식이 필요합니다.</li>
+  <li>분석 기반 의사 결정 지향 활동은 운영 체제의 성능에 영향을 미치지 않아야 합니다.</li>
+  <li>OLTP(Online Transaction Processing)
+    <ul>
+      <li>주로 대규모 데이터베이스 시스템 위에 구축된 비즈니스 운영에 전념하는 소프트웨어 제품</li>
+      <li>시스템이 더 많은 양의 데이터를 처리</li>
+      <li>단위 시간당 더 많은 트랜잭션을 처리</li>
+      <li>더 많은 수의 동시 사용자를 지원</li>
+    </ul>
+  </li>
+  <li>ABDOP(Analysis Based Decision Oriented Processing)
+    <ul>
+      <li>OLAP 라고 불리는 것은 모두 ABDOP 의 다양한 부문에 맞춰져 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211357&authkey=%21APCjrPfG44SyNt8&width=916&height=720" alt="Untitled2"></p>
+
+<p>원본 데이터에서 최종 사용자 소비까지의 처리 체인을 보여줍니다.
+한쪽 끝에는 데이터 소스에 대한 링크 (아마도 많은 링크)가 있습니다. 이러한 소스에는 트랜잭션 시스템 및/또는 인터넷 또는 기타 구독 서비스와 같은 외부 데이터 피드가 포함될 수 있습니다.
+잠재적으로 여러 데이터 원본이 있으므로 서로 다른 원본에서 오는 정보를 공통 형식으로 통합하고 표준화해야 할 수 있다.
+ABDOP 서버는 분석 계산을 수행해야 합니다.
+최종적으로 사용자에게 도달하면 정보가 정리, 통합, 집계, 확장 및 의사 결정에 즉시 유용한 지점까지 향상되었습니다.
+데이터 업데이트를 통한 데이터 액세스에 최적화된 OLAP 제품은 운영 활동보다는 ABDOP에 중점을 둔다.</p>
+
+<ul>
+  <li>의사 결정(Decision Stages)
+    <ul>
+      <li>
+        <p>목표</p>
+
+        <p>가격을 25% 인하하기로 한 결정을 정당화하려고 한다.</p>
+
+        <p>왜 가격을 25% 떨어뜨리나요? 무엇을 성취하려고합니까?</p>
+
+        <p>목표가 없다면 어떤 결정이든 좋은 결정이 될 수 있다.</p>
+
+        <p>필요하지만 결정을 위한 충분한 근거는 아니다.</p>
+      </li>
+      <li>
+        <p>예측</p>
+
+        <p>목표를 정당화하기 위하여 분석을 기반으로 한 예측이 필요하다.</p>
+
+        <p>올바른 OLAP 도구 및 기술은 설명의 정확성을 보장하는 가장 좋은 방법 이다.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="olap의-기능-요구-사항">OLAP의 기능 요구 사항</h2>
+
+<ul>
+  <li>사용자 요구사항
+User Challenge
+    <ul>
+      <li>핵심 과제
+        <ul>
+          <li>제품, 제품 그룹, 브랜드 등 다양한 수준의 세부 정보</li>
+          <li>제품, 위치, 시간을 포함한 다양한 데이터의 분석 요소</li>
+          <li>결정하고 실행하기 위한 많은 다양한 계산</li>
+        </ul>
+      </li>
+      <li>도전 과제
+        <ul>
+          <li>많은 데이터 - 수천, 수백만 기가바이트로 측정되는 큰 데이터 저장소</li>
+          <li>많은 사용자 - 수백, 수천</li>
+          <li>많은 사이트 - 수백, 수천의 다양한 사이트</li>
+          <li>분산된 의사 결정 - 분석가는 사전 정의된 절차를 따르지 않고 액세스 할 데이터와 분석 방법에 대한 결정을 내린다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Logical 요구 사항
+    <ul>
+      <li>
+        <p>계층적 참조를 통한 풍부한 차원 구조화</p>
+
+        <p>계층적 참조를 통한 풍부한 차원 구조는 OLAP의 필수 요구 사항이다.</p>
+
+        <p>우리가 각각 여러 수준의 데이터, 세부 사항, 현실 또는 추상화를 가진 상호 작용하는 고도로 다차원적인 집합으로 특징  되어지는 세계에 살고 있다는 인식은 근본적인 통찰력입니다.
+복잡성을 효율적으로 모델링하는 OLAP 도구의 기능은 기본이라 할 수 있다.</p>
+      </li>
+      <li>
+        <p>치수 및 계산의 효율적인 사양 **</p>
+
+        <p>분석이 단순히 숫자를 집계하는 것 만을 의미하지 않는다.</p>
+
+        <p>물론 많은 양의 데이터를 정확하게 합산하고 평균화하는 것이 중요하지만 수집해야 할 중요한 정보의 대부분은 시간 및 기타 차원에 따른 비율과 추론 추세를 지능적으로 비교한 결과이다.
+즉, 분석 처리에서 발생하는 쿼리의 상당 부분에는 분석이 포함되어 있습니다.</p>
+
+        <p>예를 들어, 글로벌 전자 제품 회사의 영업 이사라고 가정해 보겠다. 제품범주의 미국의 이익율과 다른 해외 이익율을 높은 것부터 가장 낮은 것 순으로 결과를 보고 싶을 수 있다. 이 쿼리에 답하기 위해 시스템에서 다양한 계산을 수행해야 한다. 수익은 제품별로 계산해야 하며 이익은 파생 된 가치이며 다양한 방법으로 계산할 수 있으므로 이 작업만으로도 쉽지는 않다. 그런 다음 제품 간에 비교할 수 있도록 이익 값을 정규화해야 한다. 그런 다음 정규화된 이익 수준을 제품 범주 수준으로 집계해야 합니다. 이것은 미국과 새로운 해외 시장을 위해 시간이 지남에 따라 이루어져야합니다. 보고 기간 및/또는 기간당 일 수의 차이에 따라 시간 집계를 조정해야 할 수 있다. 그런 다음 각 제품 그룹의 이익 수준을 두 시장 간에 비교해야 하며 마지막으로 이익 수준의 차이를 가장 긍정적인 것부터 가장 부정적인 것까지 정렬해야 합니다. OLAP 시스템에서 이러한 유형의 계산은 정의하기가 간단해야 합니다. 진정한 OLAP 기능을 제공하려면 소프트웨어 도구에 정교한 계산 언어가 포함되어 있어야 한다.</p>
+      </li>
+      <li>
+        <p>유연성</p>
+
+        <p>유연성은 OLAP 기능의 또 다른 중요한 구성 요소입니다. 그것은 다양한 의미를 가지고 있습니다. 유연한 보기, 유연한 정의, 유연한 분석 및 유연한 인터페이스가 있다. 시스템은 이러한 모든 면에서 유연해야 한다.</p>
+
+        <p>보기 유연성은 사용자가 그래프, 행렬 또는 차트의 형태와 행렬과 같은 모든 형태의 정보를 쉽게 볼 수 있음을 의미합니다. 사용자는 정보가 보기 양식에 매핑되는 방법을 선택할 수 있다.</p>
+
+        <p>정의 측면에서 관련 권한을 가진 사람은 누구나 과도한 불이익 없이 설명자 이름, 숫자 형식, 수식 정의, 자동 프로세스 트리거 또는 소스 데이터 위치를 변경할 수 있어야 합니다.</p>
+
+        <p>인터페이스 유연성은 직관적인 인터페이스라고도 하는 보다 일반적인 형태입니다. 모델 정의, 모델 찾기, 수식 사양, 직접 데이터 입력 및 외부 데이터 소스 링크와 같은 다양한 영역에 적용됩니다.</p>
+      </li>
+      <li>
+        <p>구조와 표현의 분리</p>
+
+        <p>그리드와 같은 데이터 뷰(또는 다른 종류의 외부 표현)가 유연한 정도는 대부분 데이터 구조와 표현 간의 분리 정도에 따라 달라진다. 이러한 분리는 데이터를 구조적으로 변경하지 않고도 최종 사용자가 보기를 재구성할 수 있음을 의미한다.</p>
+      </li>
+    </ul>
+  </li>
+  <li>Physical 요구 사항
+    <ul>
+      <li>
+        <p>빠른 액세스</p>
+
+        <p>속도는 OLAP의 중요한 구성 요소이다. OLAP는 임시 분석 쿼리를 지원해야 하며, 그 중 일부는 즉석에서 계산을 수행해야 할 수 있다.  OLAP 시스템의 일반적인 목표는 쿼리 유형이나 데이터베이스 크기에 관계없이 평균 응답 시간을 5초 이하로 제공하는 것이다.</p>
+
+        <p>오늘 날의 과제는 시스템이 네트워크를 통해 분산된 다중 사용자 환경에서 대용량 데이터 세트로 작업하면서 액세스 및 계산 요청에 대해 빠른 응답 시간을 제공하는 것이다. 일부 도구는 모든 집계를 미리 계산하여 이를 제공합니다. 그러나 이로 인해 데이터베이스 폭발이 발생할 수 있다</p>
+      </li>
+      <li>
+        <p>다중 사용자 지원</p>
+
+        <p>다중 사용자 지원이 필수 요구 사항은 아니지만 OLAP 서버의 실질적인 다중 사용자 지원 요구 사항으로 고려 대상이 된다. 기업은 협업 작업 환경이다. 규모 축소 및 분산화의 결과 의사 결정을 위한 분석 데이터에 대한 읽기/쓰기 액세스 권한이 필요한 직원의 수가 상대적으로 증가하고 있다. 쓰기 저장 기능이 없는 각 사용자에 대해 별도의 캐시를 기반으로 하는 다중 사용자 읽기가 있을 수 있다. 그리고 처리 및 데이터가 클라이언트와 서버 간에 분산되고, 서버가 서버에서 데이터를 처리해야 하는 시기와 클라이언트에서 처리해야 하는 시기를 알 수 있을 만큼 지능적이며, 서버가 다중 사용자 캐시를 제공하는 다중 사용자 읽기/쓰기가 있을 수 있습니다.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3-n-차원의-이해">3. N 차원의 이해</h2>
+
+<p>하이퍼큐브(Hypercube) 또는 3차원 이상의 큐브라는 개념은 스프레드시트가 워크시트를 사용하고 데이터베이스에서 테이블을 사용하는 것과 같은 방식으로 하이퍼큐브를 사용하는 다차원 소프트웨어를 이해하는 데 필수적이다.</p>
+
+<p>하이퍼큐브는 일반적으로 선, 평면 및 큐브와 같은 저차원 표면에 대한 설명 다음에 도입됩니다.</p>
+
+<h2 id="저차원-데이터-셋lower-dimensional-data-set">저차원 데이터 셋(Lower-Dimensional Data Set)</h2>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211355&authkey=%21AA2bPfj3NbLXo-Y&width=936&height=532" alt="Untitled3"></p>
+
+<p>그림 3.1은 2차원 그리드에서 월별로 구성된 5개의 판매 및 비용 데이터 열을 보여준다. 월은 행 마다 표현되고 모든 월의 합계가 맨 아래 행에 표시된다. 그리드에는 각 판매 또는 비용 변수에 대해 하나씩 5개의 열이 있다. 데이터 세트에는 행으로 정렬된 월 차원과 열로 정렬된 변수 차원의 두 가지 차원이 있다고 할 수 있다.</p>
+
+<p>“무엇을 측정하거나 추적하고 있습니까?”라고 묻는다면 “판매, 비용 및 마진”이라고 대답 할 것이다.</p>
+
+<p>개별적으로 판매, 비용 및 마진은  variable(변수)를 나타낸다.</p>
+
+<p>variable(변수)는 우리가 측정하는 항목이다.</p>
+
+<p>반대로 월은 데이터를 구성하는 방법을 나타냅니다.</p>
+
+<p>우리는 달을 추적하지 않습니다.</p>
+
+<p>우리는 판매 및 비용 가치를 개별화하기 위해 몇 달을 사용하고 있습니다. 누군가 “어디에서 데이터를 얻고 있습니까?”또는 “얼마나 자주 측정하고 있습니까?”라고 질문하면 “우리는 매월 판매를 추적하고 있습니다.”라고 대답 할 것입니다.</p>
+
+<p>월은 키, 식별자 또는 로케이터 차원의 한 유형입니다.</p>
+
+<p>간단한 데이터 예제에는 one locator dimension과 one variable dimension 의 두 가지 차원이 있습니다.</p>
+
+<p>제품이라는 세 번째 차원을 추가하면 어떻게 될까요?</p>
+
+<p>이것이 큐브입니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211364&authkey=%21ADLCXuiqdZalGQ8&width=680&height=346" alt="Untitled4"></p>
+
+<p>그림 3.2는 제품, 월 및 변수를 나타내는 3 차원 큐브를 보여줍니다.</p>
+
+<p>하지만 이 그림은 <strong>차원 표현의 첫 번째 장애물이라 할 수 있다.</strong></p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211361&authkey=%21AFXWY1QXqebaFKs&width=432&height=296" alt="Untitled5"></p>
+
+<p>3차원 큐브를 표현하였다고 하지만 실제 컴퓨터의 모니터는 2차원으로 3차원 큐브를 시각적 은유 일 뿐이다. 따라서 2차원 컴퓨터 화면으로는 인한 자연적인 한계가 있기에 소프트웨어 개발자는 보고 조작 하기 위한 최적의 방법에 대해 고심하게 되었다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211356&authkey=%21AKuSol4bIPmnMU4&width=732&height=538" alt="Untitled6"></p>
+
+<p>그림 3.5는 그림 3.2에서 시각화 된 3 차원 데이터 세트의 스프레드 시트와 같은 디스플레이를 보여줍니다. 대부분의 디스플레이는 그림 3.1에 표시된 2차원 디스플레이와 동일하게 보입니다.</p>
+
+<p>디스플레이의 왼쪽 상단 부분에 Product: Shoes라는 레이블이 있는 page라는 아이콘이 있는 것을 제외하고는 본질적으로 2차원 그리드입니다. 페이지 아이콘은 소위 페이지 차원이라고 하는 세 번째 크기를 나타냅니다.</p>
+
+<p>변수, 시간 및 제품으로 구성된 3차원 데이터 세트는 <em>행, 열</em> 및 <em>페이지의</em> 세 가지 디스플레이 차원으로 컴퓨터 화면에서 재생됩니다. 그림 3.6과 같이 3차원 데이터 큐브와 해당 큐브의 한 조각을 보여주는 화면 디스플레이를 상상하기만 하면 됩니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211360&authkey=%21ACekwb0J1Yzyx1g&width=786&height=470" alt="Untitled7"></p>
+
+<h2 id="3-차원을-넘어서">3 차원을 넘어서</h2>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211369&authkey=%21AHYCzHCa9skxPuU&width=510&height=258" alt="Untitled8"></p>
+
+<p>월별로 상점 체인별 측정을 추가한다고 가정합니다. 이제 4차원 데이터 세트가 생겼습니다. 그림 3.7은 4차원 큐브의 기술적 이름인 <em>테서랙트 (tesseract</em>)의 사진을 보여줍니다. 4차원 이상의 시각화를 위한 기초로 큐브를 사용하려고 하면 매우 지저분해질 수 있습니다. ㅈ</p>
+
+<ul>
+  <li>데이터 세트에 요소를 하나만 더 추가하면 시각화의 복잡성이 급증하는 이유는 무엇입니까?</li>
+  <li>5차원 또는 6차원 데이터 세트를 나타내려면 어떻게 해야 할까요?</li>
+  <li>질문을 하는 또 다른 방법은 왜 큐브 은유가 최대 3차원 데이터에 대해 잘 작동하지만 4차원을 추가하면 무너지는가?</li>
+</ul>
+
+<p><strong>두 번째 차원의 장애물, 논리적 차원과 물리적 차원의 차이로 나타난다.</strong></p>
+
+<ul>
+  <li>큐브의 특성
+    <ul>
+      <li>
+        <p>모든 차원이 모든 점에서 공존한다.</p>
+
+        <p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211366&authkey=%21AAY2roLCvNyxiPI&width=258&height=184" alt="Untitled9"></p>
+
+        <p>큐브의 한 가지 특성은 모든 차원이 모든 점에서 공존한다는 것이다. 이것은 그림 3.10에 나와 있으며, 3 차원 공간의  모든 점 ($x_n, y_n, z_n$)이 <em>x</em>, <em>y</em> 및 <em>z</em>  값으로 식별되는 방법을 보여줍니다. 큐브의 각 팩트는 각 차원의 값으로 식별됩니다. “공존하는 차원” 특성은 큐브와 데이터 생성 이벤트에서 공유됩니다.</p>
+      </li>
+      <li>
+        <p>공존하는 각 차원이 다른 모든 차원과 독립적이다.</p>
+
+        <p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211359&authkey=%21AMYoPjEGfgk-SYg&width=281&height=206" alt="Untitled10"></p>
+
+        <p>큐브의 또 다른 특성은 공존하는 각 차원이 다른 모든 차원과 독립적이라는 것입니다. 그림 3.11에서 볼 수 있듯이 변경은 모든 차원에서 독립적으로 발생할 수 있습니다. 데이터 생성 이벤트의 관점에서 보면 모든 제품이 언제든지 판매 될 수 있음을 의미합니다. 그리고 언제든지 모든 제품을 판매 할 수 있습니다. 제품, 상점, 시간 및 변수가 서로 독립적이기 때문입니다. 따라서 “독립 차원” 특성은 큐브와 데이터 생성 이벤트에서 연관됩니다.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>그렇다면 상황은 어디에서 문제가 된걸까?</p>
+
+<p>변수, 시간, 제품에 수직인 상점 체인을 추가하게 되는것은 논리적으로는 합당하지만 실제 물리적 공간에는 x, y, z로 이루어진 3차원에서는 3차원 이상을 나타낼 수 없다. 이것을 상상으로 이해하는 것도 쉬지 않다.</p>
+
+<h2 id="multidimensional-type-structures-mtss">Multidimensional Type Structures (MTSs)</h2>
+
+<p>다차원 유형 구조</p>
+
+<p>원하는 수의 이벤트 차원을 나타낼 수 있고 OLAP 메타 데이터를 표현하는 새로운 방법을 소개한다. MTS(다차원 유형 구조)라고 부를 수 있다.</p>
+
+<p>앞서 봤던 3차원 예제를 토대로 표현해 보면 시작할 때 세 개의 선 세그먼트가 있는데, 하나는 시간, 하나는 제품, 다른 하나는 변수에 대한 것입니다. 세 개의 선 세그먼트 각각에서 한 간격의 합집합은 이벤트와 큐브의 요소에 연결됩니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211358&authkey=%21AJw6tEJAIVxTSg0&width=584&height=370" alt="Untitled11"></p>
+
+<p>그림 처럼 12개의 기간, 10개의 제품, 5개의 변수가 있는 경우 12 * 10 * 5 = 600개의 하이퍼큐브 교차점 또는 잠재적 데이터 포인트가 있다. 이러한 의미에서 MTS는 물리적 큐브보다 더 설명적이다. 그러나 MTS는 실제 데이터 요소를 표시하지 않고 차원 구성원의 가능한 조합만 표시한다. 따라서 여기에서는 적어도 모든 데이터 포인트를 암시 할 수있는 큐브보단 표현되는 수가 적다. (실제로 표시 할 수는 없지만). 다시 말하지만, 시각적 비유의 목적은 모델의 구조에 대한 유용한 표현을 제공하는 것입니다. 데이터를 표시하는 것이 디스플레이의 작업입니다.</p>
+
+<ul>
+  <li>4차원 추가</li>
+</ul>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211363&authkey=%21ALATGSPmW0IrOjQ&width=654&height=344" alt="Untitled12"></p>
+
+<p>MTS를 사용하면 모델에 네 번째 차원을 쉽게 추가할 수 있습니다. 큐브에 상점 차원을 추가하려고 시도했을 때를 기억하십니까? 굉장히 복잡해 보였다. 그러나 MTS는 그렇지 않습니다. 아주 쉽게 할 수 있다. 그림 3.14와 같이 stores라는 네 번째 줄 세그먼트를 추가하기만 하면 된다. MTS는 이벤트에서 추출된 데이터 요소의 수와 해당 논리적 구성을 표시합니다. 탐색할 수 있는 모든 차원과 모든 차원에서 얼마나 멀리 갈 수 있는지 보여줍니다. MTS는 하이퍼큐브 내부 및 하이퍼큐브 간의 계층 구조 및 데이터 흐름에 대한 정보도 표시할 수 있다. 큐브보다 더 많은 구조 정보를 표시하며 임의의 수의 차원에 대해 표시할 수 있습니다.</p>
+
+<h2 id="컴퓨터-화면에서-하이퍼큐브-표현">컴퓨터 화면에서 하이퍼큐브 표현</h2>
+
+<p>큐브를 이용한 다차원의 표현엔 한계가 있으면 MTS 또한 차원의 조합을 표현 한것일 뿐 실제 데이터를 보기엔 한계가 있습니다. 여기에서 3번째 장애물인 <strong><em>여러 논리적 차원을 물리적 (화면) 2차원에 매핑해야 하는 문제가 나타난다.</em></strong></p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211356&authkey=%21AKuSol4bIPmnMU4&width=732&height=538" alt="Untitled6"></p>
+
+<p>앞서 본 그림과 같이 3 차원 그리드 스타일 인터페이스의 이미지를 다시 보겠다.</p>
+
+<p>행, 열 및 페이지의 세 가지 표시 차원이 주어졌을 때 어떻게 4개 이상의 논리적 차원을 어떻게 표현할 것입니까?</p>
+
+<p>답은 동일한 디스플레이 차원 내에서 여러 논리적 차원을 결합하는 것이다.</p>
+
+<p>이것을 더 자세히 살펴 보겠다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211362&authkey=%21AKlij7XsGGG4S0Y&width=361&height=208" alt="Untitled13"></p>
+
+<p>각 교차점의 이름이 명시적으로 작성된 변수 별 제품의 2차원 배열을 보여진다.</p>
+
+<p>2차원 그리드의 각 점 또는 교차점이 각 차원의 한 멤버에서 어떻게 형성되는지 확인합니다. 또한 각 차원의 각 멤버가 다른 차원의 각 멤버와 어떻게 결합되는지 확인합니다. 2개의 제품과 3개의 변수는 총 6개의 제품 변수 조합을 만듭니다.</p>
+
+<p>두 차원을 하나의 차원으로 매핑한다는 것은 2차원으로 배열된 교차점의 1차원 버전을 만드는 것을 의미합니다.</p>
+
+<p>일반적인 방법은 한 차원을 다른 차원 내에 중첩하는 것입니다.</p>
+
+<p>예를 들어, 그림 3.16은 원래 그림 3.15에 표시된 2차원 그리드에서 제품 내에 중첩된 변수의 1차원 목록을 만드는 방법을 보여줍니다. 목록이 제품을 스크롤할 때 각 제품에 대한 변수 차원의 모든 멤버를 스크롤하는 방법을 확인합니다. 일반 루프로 생각할 수 있습니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211353&authkey=%21ACLZaBuT0R4U6C8&width=468&height=147" alt="Untitled14"></p>
+
+<p>이것이 변수가 제품 내에 중첩된다는 의미입니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211354&authkey=%21AGfRrHGRUjaufaU&width=468&height=234" alt="Untitled15"></p>
+
+<p>대조적으로, 그림 3.17은 동일한 2 차원 그리드에서 변수 내에 중첩 된 제품의 1 차원 목록을 만드는 방법을 보여줍니다. 두 그림 모두에서 요소의 수 동일하며 차원을 결합해도 데이터가 손실되지 않는다.</p>
+
+<p>차원을 결합하는 방법을 배웠으므로 이제 이전 4차원 예제에 2차원을 추가하여 프로세스를 더 자세히 보겠다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211350&authkey=%21AGJK3dP3M_5YRrU&width=468&height=249" alt="Untitled16"></p>
+
+<p>제품, 시간, 상점, 고객, 변수 및 시나리오로 구성된 6차원 데이터 세트를 보여줍니다.</p>
+
+<p>그림 3.20은 3차원 그리드 디스플레이의 행, 열 또는 페이지 역할에 연결된 그림 3.19의 각 차원을 보여줍니다. 그리드 표시의 행, 열 및 페이지 차원에서 여러 차원이 어떻게 결합되는지 확인합니다. 3차원에서 작동하는 동일한 시각적 디스플레이를 <em>N</em>  차원에서 작동하도록 쉽게 확장할 수 있습니다. 이제부터는 이러한 유형의 디스플레이를 multidimensional grid display(다차원 그리드)라고 합니다.</p>
+
+<p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211352&authkey=%21AOiMl2Ep7E489Bg&width=468&height=361" alt="Untitled17"></p>
+
+<p>페이지로 표시된 차원에서 둘 이상의 멤버를 표시하려는 경우 둘 이상의 멤버를 정렬하는 방법을 선택해야 하며 평면 화면에서 선택할 수 있는 유일한 항목은 행 또는 열 입니다.</p>
+
+<p>다차원 그리드는 결국 대부분의 차원이 열로 표시되는 그리드의 특별한 경우일 뿐이다.</p>
+
+<h2 id="분석적-관점">분석적 관점</h2>
+
+<p>다차원 데이터를 분석을 위해 염두해 두어야 할 몇가지 법칙이 있다.</p>
+
+<ul>
+  <li>
+    <p>페이지의 차원을 유지해야한다.</p>
+
+    <p>화면의 모든 항목이 관련성이 높아진다.</p>
+  </li>
+  <li>
+    <p>행과 열에 걸쳐 차원을 중복하는 경우 행보다 열에 더 많은 차원을 중첩한다.</p>
+
+    <p>일반적으로 가로공간 보다 세로 공간이 더 많기 때문이다.</p>
+
+    <p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211370&authkey=%21APE6M3iseL0ocOs&width=606&height=414" alt="Untitled18"></p>
+
+    <p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211371&authkey=%21AOyWl3jJsJGSOhc&width=432&height=504" alt="Untitled19"></p>
+  </li>
+  <li>
+    <p>무엇을 볼 것인지, 무엇을 비교 할 것인지 판단하여 표시 방법을 결정한다.</p>
+  </li>
+</ul>
+
+<h2 id="lc-모델-소개location-contents">LC 모델 소개(Location Contents)</h2>
+
+<p>LC 모델은 공용 OLAP 제품/모델의 상위 집합으로 LC 모델을 통해 OLAP 제품/모델을 모방 할 수 있다.</p>
+
+<p>수학과 논리에 기반을 두고 있으며 이는 견고한 모델 정의를 제공한다. LC 모델은 완전한 언어가 포함되어 있으며 이를 통해 계층 구조, 다중 큐브, 차원 계산 및 견고한 OLAP 분석을 하게 된다.</p>
+
+<h2 id="olap-내의-혼란">OLAP 내의 혼란</h2>
+
+<p>서로 다른 접근 방식, 가정 및 암시적 모델을 반영하는 OLAP 도구 간에는 많은 실질적인 차이점이 있다.</p>
+
+<ul>
+  <li>같지만 다르게 지칭되는 용어
+    <ul>
+      <li>Dimension, factor, variable</li>
+      <li>Element, position, instance, member</li>
+      <li>Measure, fact, metric, variable, formula</li>
+      <li>Attribute, property, characteristic</li>
+      <li>Level, generation, ancestors, descendents, parent/child, hierarchy</li>
+    </ul>
+  </li>
+  <li>미해결 문제
+    <ul>
+      <li>
+        <p>메타 데이터가 제네릭 or 비제네릭 인지 여부</p>
+
+        <p>모든 메타 데이터는 차원의 관점에서 정의 할 수 있는가? 측정/변수와 차원을 구분하는 근거가 있는가?</p>
+
+        <p>확실한 대답은 없다. 수학의 행렬에서 지침을 찾는다면 모든 구조적 메타 데이터가 일반 차원으로 정의 될 수 있다고 생각 된다. 반면 관계형 모델이나 미적분학을 보면 차원/변수 구분을 지원하는 경향이 있다.</p>
+
+        <p>후자의 경우 변수를 변수 차원의 멤버로 취급한다.</p>
+      </li>
+      <li>
+        <p>계층이 차원의 본질적인 부분인지 여부</p>
+
+        <p>계측 구조는 차원의 본질적 이거나 필요한 부분인가?</p>
+      </li>
+      <li>
+        <p>큐브를 구성하는 요소</p>
+
+        <p>큐브를 정의하는 것은 무엇인가? 모든 데이터가 단일 큐브에 들어갈 수 있는가? 아니면 서로 다른 큐브간에 분할되는 청크 원칙이 있는가?</p>
+      </li>
+      <li>
+        <p>희소 셀을 해석하는 방법</p>
+
+        <p>빈셀은 OLAP 모델에서 무엇을 의미 하는가? 이 것을 처리할 방법이 있는가? 빈셀은 대부분 자동으로 0으로 처리 한다. 하지만 누락된 데이터 인지 의미 없는 데이터인지 값이 0인지를 혼동한다면 계산에 오류가 발생하게 된다. 따라서 이러한 데이터를 명확하게 구분해야 한다.</p>
+      </li>
+      <li>
+        <p>수식이 속하는 위치</p>
+
+        <p>OLAP 모델에서 계산은 어디에 정의해야 하는가? 대부분 일부 차원 기반 계산과 추가 규칙 및 계산 스크립트를 제공한다. 차원 기반 계산과 계산 스크립트의 제공을 해야 될 논리적 근거가 무엇인지? 편의성의 문제라면 사용자의 편의를 위해서인지 개발자의 편의를 위해서인지?</p>
+      </li>
+    </ul>
+  </li>
+  <li>OLAP 모델링에서 이슈별 접근 방식에 대한 비판
+    <ul>
+      <li>
+        <p>모든 차원을 일반 차원으로 처리</p>
+
+        <p><img src="https://onedrive.live.com/embed?resid=884E6FE11C46974%211367&authkey=%21AF8zzDetI9_7eDQ&width=581&height=707" alt="Screenshot 2022-12-17 at 4.03.07 PM.png"></p>
+      </li>
+      <li>
+        <p>차원과 변수를 참조적으로 구별하는 항목: 계열 큐브</p>
+      </li>
+      <li>
+        <p><em>모든 것을 단일 큐브로 채우기: 하이퍼큐브</em></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="이상적인-모델의-속성">이상적인 모델의 속성</h2>
+
+<p>다차원 모델을 정의하고 조작하거나 작업하기 위해 보단 일반 적인 기본 요소 집합이 필요하다.</p>
+
+<p>하이퍼 큐브의 문제점은 큐브의 내용을 구분하기 위한 객관적인 기준을 정해야 한다는 점이다.</p>
+
+<p>이러한 특정 문제를 해결하는 것 외에도 모델을 제안하기 전 이상적인 모델을 작성하기 위한 기분이 필요하다.</p>
+
+<ul>
+  <li>
+    <p>이론적 근거</p>
+
+    <p>모델이 논리와 수학을 기반으로 되는 정도이다. 관계형 모델의 가장 중요한 속성 중 하나이다.</p>
+
+    <p>계층 구조 지원 및 잘 구성된 사실에 대한 기준과 같은 주요 모델 기능은 이론적 지원을 위해 명확하여야 한다.</p>
+
+    <ul>
+      <li>논리적 접근</li>
+      <li>수학적 접근</li>
+    </ul>
+  </li>
+  <li>완전성</li>
+  <li>효율성</li>
+  <li>분석적 관심</li>
+</ul>
+
+<h2 id="lc-model-개요">LC Model 개요</h2>
+
+<ul>
+  <li>기능적 접근 방식</li>
+  <li>Super Symmetry
+    <ul>
+      <li>차원 및 측정값</li>
+      <li>데이터 및 메타 데이터</li>
+      <li>재귀</li>
+    </ul>
+  </li>
+  <li>Type Structures</li>
+  <li>Schema and Models</li>
+</ul>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/2022/05/11/java-reflection-basic.html" title="Java Reflection Basic">Java Reflection Basic</a><a class="next" href="/spring/2022/12/22/spring-dynamic-datasource-routing.html" title="Dynamic Datasource Routing 적용기">Dynamic Datasource Routing 적용기</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/2022/05/11/java-reflection-basic.html" title="Java Reflection Basic">
+            Java Reflection Basic<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html" title="Oracle 점검을 위한 유용한 SQL 쿼리문 모음">
+            Oracle 점검을 위한 유용한 SQL 쿼리문 모음<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/redis/2024/02/19/redis-architecture.html" title="Redis Architecture">
+            Redis Architecture<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/paradigm/2022/12/17/paradigm-understanding-olap.html" title="OLAP 의 이해">
+            OLAP 의 이해<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 Young Hwang</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

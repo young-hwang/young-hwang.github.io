@@ -1,0 +1,3042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home | Young’s Logs</title>
+<meta name="generator" content="Jekyll v4.3.3">
+<meta property="og:title" content="Home">
+<meta name="author" content="Young Hwang">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<link rel="canonical" href="/">
+<meta property="og:url" content="/">
+<meta property="og:site_name" content="Young’s Logs">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Home">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"Young Hwang"},"description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Home","name":"Young’s Logs","url":"/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Young's Logs">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Young's Logs" src="" onerror="this.style.display='none'">
+  Young's Logs
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<div class="page-link" style="display: inline;">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<div class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</div>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/assets/images/banners/home.jpeg)"></div>
+        <img class="img-placeholder" src="/assets/images/banners/home.jpeg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner"><div class="page-banner-default">
+            <h1 class="page-banner-heading">
+              Young's Logs
+            </h1>
+            <h2 class="page-banner-subheading">
+              
+            </h2>
+          </div></div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="articles">
+  
+
+  
+
+
+  
+
+
+
+
+<div class="pagination">
+  <!-- Post list links -->
+  <ul class="post-list z-image-style">
+    <!-- Top list item --><!-- Normal list item -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/redis/2024/03/05/redis-keys-flushall.html">
+      KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Mar 05, 2024</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/redis/2024/03/05/redis-keys-flushall.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/redis/2024/03/05/redis-keys-flushall.html">
+      <p>Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있습니다.
+이들은 모두 Redis가 싱글 스레드라는 것을 잊어 버리거나 모르고 있기 때문에 발생하는 문제입니다.
+
+Redis는 싱글 스레드이기 때문에, 태생적으로 하나의 명령이 오랜 시간을 소모하는 작업에는 적합하지 않습니다.
+그러나 이러한 특성을 이해하지 못하는 경우 장애가 발생하게 됩니다.
+
+이번 글에서는 KEYS와 FLUSHALL 명령어가 왜 장애의 원인될 수 있는지 알아보겠습니다.
+
+서버에서 KEYS 명령를 쓰지 말자
+
+KEYS 명령어는 특정 패턴에 매칭되는 키를 찾아주는 명령어입니다.
+예를 들어, KEYS *는 모든 키를 찾... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags"><a class="post-tag" href="/tags.html#redis">#redis</a></div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/java/2024/03/01/java-java-17-features.html">
+      Java 17 Features<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Mar 01, 2024</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 18 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/java/2024/03/01/java-java-17-features.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/java/2024/03/01/java-java-17-features.html">
+      <p>Spring Boot 3.0 출시 이후 Java 17 버전이 필수가 되었습니다.
+이로 인해 Java 17의 기능에 대한 이해가 중요하게 되었습니다.
+
+Java 17은 Java 의 LTS(Long Term Support) 버전으로 2026년까지 지원이 되며, 개발자 생상성과 프로그램 효율성을 향상시키는 것을 목표로 몇가지 새로운 기능이 추가되었습니다.
+이번 포스팅에서는 Java 17의 기능 중 일부를 효과적으로 사용하는 방법을 이해하는 데 도움이 되는 코드 예제와 함께 살펴보겠습니다.
+
+1. Pattern matching For switch statements
+
+Java 17에서는 개발자가 패턴 일치와 관련된 스위치... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#java">#java</a><a class="post-tag" href="/tags.html#java%2017">#java 17</a><a class="post-tag" href="/tags.html#JDK%2017">#JDK 17</a><a class="post-tag" href="/tags.html#switch">#switch</a><a class="post-tag" href="/tags.html#sealed">#sealed</a><a class="post-tag" href="/tags.html#SplittableRandom">#SplittableRandom</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/redis/2024/02/19/redis-architecture.html">
+      Redis Architecture<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Feb 19, 2024</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/redis/2024/02/19/redis-architecture.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/redis/2024/02/19/redis-architecture.html">
+      <p>Redis Architecture
+
+아래의 그림은 Redis 서버의 기본 아키텍처(Redis Standalone Architecture) 구조이며 3가지 영역으로 구성되어 있습니다.
+
+
+
+
+  Memory 영역
+  File 영역
+  Process 영역
+
+
+
+  Memory 영역
+
+
+
+  
+    Resident Area
+
+    사용자가 Redis 서버에 접속해서 처리하는 모든 데이터가 가장 먼저 저장되는 영역입니다.
+실제 작업이 수행되는 공간이고 WorkingSet 영역이라고 표현합니다.
+  
+  
+    Data Structure
+
+    Redis 서버를 운영하다 보면 발생하는 다양한 정보와 서버 서버 상태를... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#redis">#redis</a><a class="post-tag" href="/tags.html#architecture">#architecture</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/redis/2024/02/16/redis-data-model.html">
+      Redis Data Model<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Feb 16, 2024</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 3 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/redis/2024/02/16/redis-data-model.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/redis/2024/02/16/redis-data-model.html">
+      <p>Redis DB에서 설계 가능한 데이터 모델 유형들과 실제 구현 방법에 대해 정리해 보겠습니다.
+Redis 서버에서 설계할 수 있는 데이터 모델 유형은 크게 5가지가 있습니다.
+
+
+  Hash-Hash Data Model
+  Hash-List Data Model
+  List-List Data Model
+  Set/Sorted Set-List Data Model
+  HyperLogLogs Data Model
+
+
+Hash-Hash Data Model
+
+주문 테이블과 운송 테이블은 대표적인 Hash-Hash 테이블로 설계될 수 있는 테이블 구조입니다.
+이를 Redis 데이터 모델 표기법(Notation)으로 표현하면 다... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#redis">#redis</a><a class="post-tag" href="/tags.html#data%20model">#data model</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/web/2023/12/03/web-page-performance.html">
+      K-DEVCON 발표 - 웹 페이지 성능 측정 지표<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Dec 03, 2023</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 1 min</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/web/2023/12/03/web-page-performance.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/web/2023/12/03/web-page-performance.html">
+      <p>K-DEVCON 발표
+
+개인 첫 공개 세미나 연사로 참석하였습니다.
+
+프론트 성능에 대한 성능 측정 지표에 대한 이야기 였는데 참석해 주신 분들에게 조금이나마 도움이 되었는지 모르겠습니다.
+
+첫 공개 세미나라서 더욱 떨리고 긴장했는데, 다음에도 기회가 된다면 더욱 더 잘 준비해서 발표하고 싶습니다.
+
+발표 자료는 아래 링크를 통해 확인하실 수 있습니다.
+
+
+
+
+ <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#web">#web</a><a class="post-tag" href="/tags.html#web%20vitals">#web vitals</a><a class="post-tag" href="/tags.html#core%20web%20vitals">#core web vitals</a><a class="post-tag" href="/tags.html#cwv">#cwv</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/spring/2023/09/11/spring-exception-handle.html">
+      Spring MVC에서 exception handling 하기-01<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Sep 11, 2023</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/spring/2023/09/11/spring-exception-handle.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/spring/2023/09/11/spring-exception-handle.html">
+      <p>스프링을 사용하여 예외 처리를 구현하는 방법에 대하여 정리한다.
+주요 목표는 클라이언트에 사용되는  HTTP Status Codes에 애플리케이션의 예외를 매핑하는 것이다.
+Spring 3.2 이전에는 Spring MVC 응용 프로그램에서 예외를 처리하기 위한 두 가지 주요 접근 방식으로 HandlerExceptionResolver와 @ExceptionHandler 이 있었다.
+Spring 3.2는 이전 두 솔루션의 한계를 해결하기 위해 새로운 @ControllerAdvice 주석을 도입했다.
+Spring 5에서는 REST API에 기본적인 오류 처리를 위한 빠른 방법인 ResponseStatusException ... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#spring">#spring</a><a class="post-tag" href="/tags.html#exception">#exception</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/javascript/2023/09/09/javascript-vanilla-data-grouping.html">
+      vanilla javascript를 이용한 객체 배열 그룹핑<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Sep 09, 2023</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/javascript/2023/09/09/javascript-vanilla-data-grouping.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/javascript/2023/09/09/javascript-vanilla-data-grouping.html">
+      <p>Javascript에서 객체 배열을 이용하여 특정 속성을 기준으로 그룹핑하고자 하였다.
+반복문을 이용해서도 만들수 있겠으나 javascript 언어만의 특성을 좀더 활용해 보고 싶었다.
+
+Array 객체의 메소드들
+
+Java Stream의 groupingBy 같은 기능이 있을까 싶어 먼저 살펴 보았다.
+하지만 배열을 바로 그룹핑하는 메소드는 존재하지 않아 보인다.
+그래서 직접 구현해 보기로 하였다.
+
+Map&lt;BlogPostType, List&lt;BlogPost&gt;&gt; postsPerType = posts.stream()
+  .collect(groupingBy(BlogPost::getType));
+
+
+... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#javascript">#javascript</a><a class="post-tag" href="/tags.html#grouping">#grouping</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/database/2023/09/01/database-mysql-max-allowed-packet.html">
+      mysql에서 max_allowed_packet 설정은 언제 사용하는가?<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Sep 01, 2023</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 1 min</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/database/2023/09/01/database-mysql-max-allowed-packet.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/database/2023/09/01/database-mysql-max-allowed-packet.html">
+      <p>max_allowed_packet은 서버에서 읽거나 생성되어지는 MySQL 네트워크 패킷의 최대 사이즈를 의미합니다.
+parameter는 요구사항에 따라 변경할 수 있는 기본값, 최소값, 최대값을 제공합니다.
+
+
+  
+    
+      name
+      description
+    
+  
+  
+    
+      Variable
+      max_allowed_packet
+    
+    
+      Configuration
+      Supported
+    
+    
+      Scope
+      session, global
+    
+    
+      Status
+      Dynamic
+    
+   ... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#mysql">#mysql</a><a class="post-tag" href="/tags.html#max_allowed_packet">#max_allowed_packet</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/redis/2023/04/07/redis-hyperloglog.html">
+      HyperLogLog를 이용한 확률적 추론<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Apr 07, 2023</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/redis/2023/04/07/redis-hyperloglog.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/redis/2023/04/07/redis-hyperloglog.html">
+      <p>문제점
+
+서비스를 이용한 이용자 수와 사용자가 앱을 실행한 횟수를 일별 집계하여 조회하고 있었다.
+이를 위하여 분마다 이용자 수와 사용자 수를 DB에 저장하고 이를 조회 시 하루 동안의 이용자 수와 사용자 수에서 중복 되는 키값을 제외 하여 조회 처리를 하고 있었다.
+분마다 데이터를 생성한 이유는 하루의 시간대 별로 이용자 수와 실행 수도 표현이 되어야 하였기 때문이다.
+단순 계산으로도 하루의 이용자 수, 실행 수를 구하기 위해서는 60(분) * 24(시간) = 1440(건)의 데이터를 조회 후 중복 되는 키값을 제거하는 큰 비용이 발생했다.
+또한 이를 5분 단위, 10분 단위로 그룹화 하여 표현 하는 경우도 있어... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#algorithm">#algorithm</a><a class="post-tag" href="/tags.html#hyperloglog">#hyperloglog</a><a class="post-tag" href="/tags.html#redis">#redis</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/spring/2022/12/22/spring-dynamic-datasource-routing.html">
+      Dynamic Datasource Routing 적용기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Dec 22, 2022</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 8 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/spring/2022/12/22/spring-dynamic-datasource-routing.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/spring/2022/12/22/spring-dynamic-datasource-routing.html">
+      <p>언제 사용하는가?
+
+보통 애플리케이션에서는 하나 이상의 데이터베이스를 사용해야 하는 경우가 많습니다. 
+예를 들어, 마스터-슬레이브 데이터베이스 구조를 사용하거나, 
+여러 개의 데이터베이스 서버를 사용하는 등의 상황에서 다중 데이터 소스를 관리해야 합니다.
+
+하지만 요청이 들어올 때마다 데이터베이스를 동적으로 선택하거나 데이터 소스가 추가되는 경우도 있습니다.
+즉 Master/Slave의 DB 분기 처리라던지 Replication DB 처럼 여러 DB를 그때 그때 선택하는 경우가 될 것입니다.
+
+이럴경우 사용이 가능한 방법이 “AbstractRoutingDatasource”를 이용한 “Dynamic Datasour... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#spring">#spring</a><a class="post-tag" href="/tags.html#spring%20data">#spring data</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/paradigm/2022/12/17/paradigm-understanding-olap.html">
+      OLAP 의 이해<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Dec 17, 2022</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 21 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/paradigm/2022/12/17/paradigm-understanding-olap.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/paradigm/2022/12/17/paradigm-understanding-olap.html">
+      <p>온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.
+
+
+OLAP의 여러 의미(The different meanings of OLAP)
+
+
+
+그림에서 보이듯 OLAP 용어에는 몇 가지 의미가 있다. 그 이유는 OLAP의 필수 요소가 저장 및 액세스에서 언어 계층에 이르기 까지 여러 기술 계층에서 표현 할 수 있기 때문이다.
+
+
+  
+    OLAP 사고
+
+    다중 계층 적 차원의 개념 또는 아이디어를 포한다.
+원자 규모에서 은하 규모에 이르는 물질 세계, 마이크로 에이전트에서 거시 경제에 이르는 경제 세계, 대인 관계에서 국제 관계에 이르는 사회 세계 어떤 ... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags"><a class="post-tag" href="/tags.html#olap">#olap</a></div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/2022/05/11/java-reflection-basic.html">
+      Java Reflection Basic<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> May 11, 2022</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 8 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/2022/05/11/java-reflection-basic.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/2022/05/11/java-reflection-basic.html">
+      <p>
+layout: post
+title: Reflection 이해
+subtitle:
+categories: java
+tags: [java, reflection]
+—-
+
+일반적으로 클래스를 통해 객체를 생성했다. 
+우리는 코딩할 때 클래스에 명시된 필드와 메소드를 알고 있기 때문에 지금까지 클래스의 메소드 또는 필드를 이용하는데 아무런 불편함이 없었다. 
+이전 시간에 객체를 생성할 때 클래스의 메타데이터를 먼저 읽는 것을 이해했다. 이 메타데이터에는 클래스의 필드, 메소드 등의 정보를 담고 있다. 
+이런 메타데이터를 통해 해당 클래스의 객체를 생성할 수 있다. 
+이렇게 한 번 설명해보겠다. 
+오류가 있을 수 있으니 잘못된... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags"></div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/node/2022/04/30/node-cluster-mode.html">
+      PM2 Cluster Mode의 이해<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Apr 30, 2022</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 38 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/node/2022/04/30/node-cluster-mode.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/node/2022/04/30/node-cluster-mode.html">
+      <p>PM2 잘 사용한다. 나 빼고
+
+
+
+
+
+
+
+현재 서비스 운영 및 개발 환경에서 PM2를 아주 중요하게 사용하고 있다.
+
+주로 아래의 3가지 기능을 이용하지 않나 생각된다.
+
+
+  애플리케이션 실행
+  로그 출력
+  서버 상태 모니터링
+
+
+클러스터란
+
+여러 대의 컴퓨터들이 연결되어 하나의 시스템처럼 동작하는 컴퓨터들의 집합을 말한다. 
+클러스터의 구성 요소들은 일반적으로 고속의 근거리 통신망으로 연결된다. 
+서버로 사용되는 노드에는 각각의 운영 체제가 실행된다
+
+PM2란?
+
+“PM2 is a daemon process manager that will help you manage and keep your applica... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#pm2">#pm2</a><a class="post-tag" href="/tags.html#node">#node</a><a class="post-tag" href="/tags.html#cluster">#cluster</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/database/2021/07/08/database-sql-server-cursor-temp-table-temp-variable.html">
+      커서, 임시 테이블, 테이블 변수란<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Jul 08, 2021</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 3 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/database/2021/07/08/database-sql-server-cursor-temp-table-temp-variable.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/database/2021/07/08/database-sql-server-cursor-temp-table-temp-variable.html">
+      <p>데이터 처리는 대부분 집합 단위로 이루어지기도 하지만 행 단위로 처리하기도 합니다.
+이러한 행단위의 데이터 처리를 위하여 커서, 임시테이블, 테이블변수가 사용이 되어집니다.
+커서, 임시테이블, 테이블변수의 사용은 최대한 자제하는 것이 속도향상에 기여한다는 걸 반드시 상기 하여야 합니다.
+커서의 경우 부가적인 기능들이 많아서 느린 경향이 있음 따라서 커서를 이용하고자 하는 경우 임시테이블이나 테이블변수를 사용하는 것이 좋습니다.
+
+
+  
+    항목
+    커서
+    임시 테이블
+    테이블 변수
+  
+  
+    데이터 유무
+    
+      임시테이블 데이터는 삭제전역 임시테이블일 경우 데이터 삭제 안함
+ ... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#sql-server">#sql-server</a><a class="post-tag" href="/tags.html#table%20variable">#table variable</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/java/2021/04/13/java-static-Initializer-block.html">
+      Initializer Block(초기화 블럭) 의 이해<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Apr 13, 2021</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/java/2021/04/13/java-static-Initializer-block.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/java/2021/04/13/java-static-Initializer-block.html">
+      <p>Class.forName("com.mysql.jdbc.Driver");
+Connection connection = DriverMagager.getConnection("jdbc:mysql://localhost/XXXX", "USER", "PASSWORD");
+
+
+JDBC Connection 설정을 위해 의례적으로 사용을 해오던 구문입니다.
+문득 Class.forName으로 클래스를 지정해 줬는데 어떻게 DriverManger에서 Connection 객체를 가져오는지 궁금해져서 해당 부분을 좀더 살펴보기로 하였습니다.
+
+
+
+JDBC Driver는 어떻게 객체가 만들어지는가?
+
+아래의 코드는 “com.mysql.jdbc... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#java">#java</a><a class="post-tag" href="/tags.html#initializer%20block">#initializer block</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/database/2016/12/30/database-oracle-database-table-space.html">
+      Oracle 데이터베이스 관리 - 테이블스페이스 생성, 확장, 및 관리 방법<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Dec 30, 2016</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/database/2016/12/30/database-oracle-database-table-space.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/database/2016/12/30/database-oracle-database-table-space.html">
+      <p>Oracle 데이터베이스를 운영하면서 테이블스페이스를 생성하고 관리하는 것은 중요한 작업입니다. 
+테이블스페이스는 데이터를 저장하는 데 사용되는 논리적인 공간을 나타내며, 데이터베이스의 성능과 안정성에 직접적인 영향을 미칩니다. 
+이번 글에서는 Oracle 데이터베이스에서 테이블스페이스를 생성하고 관리하는 방법에 대해 알아보겠습니다.
+
+1. 데이터 블록 크기 조회
+
+Oracle 데이터베이스는 데이터를 저장하는 데 사용되는 데이터 블록의 크기를 설정할 수 있습니다. 
+먼저 데이터 블록 크기를 조회하여 현재 데이터베이스가 사용하는 블록의 크기를 확인합니다.
+
+# 데이터 블록 사이즈 조회
+show parameter db... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#oracle%20database">#oracle database</a><a class="post-tag" href="/tags.html#data%20block">#data block</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html">
+      Oracle 점검을 위한 유용한 SQL 쿼리문 모음<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Nov 09, 2016</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 15 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html">
+      <p>Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 
+특히 데이터베이스의 성능과 안정성을 유지하기 위해서는 사적 점검이 빠질 수 없다 생각됩니다.
+Oracle 데이터베이스를 일상적으로 점검하는 데 유용한 SQL 쿼리문을 소개하겠습니다.
+
+1. 테이블스페이스별 용량 확인
+
+테이블스페이스는 데이터베이스의 저장 공간을 관리하는 데 중요한 역할을 합니다. 
+이 쿼리는 각 테이블스페이스의 전체 용량과 사용된 용량을 확인하여 용량 사용률을 파악할 수 있습니다.
+
+# 테이블스페이스별 용량 확인 쿼리문(MB 단위)
+select   substr(a.tablespace_name,1,30) tablespac... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#oracle%20database">#oracle database</a><a class="post-tag" href="/tags.html#tablespace">#tablespace</a>
+</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="post-item ">
+  <h2 class="post-title">
+    <a class="post-link" href="/database/2016/08/18/database-oracle-database-system-tables-and-views.html">
+      System Tables and Views<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+  </h2>
+  <div class="post-meta">
+    <span class="post-date"><i class="fa fa-calendar"></i> Aug 18, 2016</span><span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 36 mins</span>
+  </div>
+  <div class="post-excerpt">
+<a class="post-image" href="/database/2016/08/18/database-oracle-database-system-tables-and-views.html" style="flex: 0 1 38.2%">
+      <div style="background-image: url(/assets/images/default-image.jpeg); height: 160px"></div>
+    </a><a class="post-text" href="/database/2016/08/18/database-oracle-database-system-tables-and-views.html">
+      <p>System Prefix 설명
+
+
+  
+    
+      Type
+      Description
+    
+  
+  
+    
+      ALL_
+      자신이 생성한 객체와 다른 사용자가 만든 객체 중 자신이 볼 수 있는 정보
+    
+    
+      DBA_
+      DB 전체에 포함되는 모든 객체에 대한 자세한 정보
+    
+    
+      USER_
+      자신이 생성한 모든 객체 정보
+    
+    
+      X$_
+      DB의 성능 분석, 통계 정보를 제공하는 테이블
+    
+    
+      V$_
+      DB의 성능분석/통계 정보를 제공 X$_ 테이블에 대한 뷰 정보
+... <span class="read_more">Read More</span></p>
+    </a>
+  </div>
+  <div class="post-tags">
+<a class="post-tag" href="/tags.html#oracle%20database">#oracle database</a><a class="post-tag" href="/tags.html#system%20schema">#system schema</a>
+</div>
+</li>
+</ul>
+
+  <!-- Pagination links -->
+</div>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="common-list">
+  <ul>
+    <li>
+      <a href="/index.html">
+        All<span>18</span>
+      </a>
+    </li>
+
+    
+      <li>
+        <a href="/categories.html#h-database">
+          database <span>5</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-java">
+          java <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-javascript">
+          javascript <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-node">
+          node <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-paradigm">
+          paradigm <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-redis">
+          redis <span>4</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-spring">
+          spring <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-web">
+          web <span>1</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 Young Hwang</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

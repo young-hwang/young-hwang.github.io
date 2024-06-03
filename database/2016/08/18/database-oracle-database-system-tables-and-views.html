@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>System Tables and Views | Young’s Logs</title>
+<meta name="generator" content="Jekyll v4.3.3">
+<meta property="og:title" content="System Tables and Views">
+<meta name="author" content="Young Hwang">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="System Prefix 설명">
+<meta property="og:description" content="System Prefix 설명">
+<link rel="canonical" href="/database/2016/08/18/database-oracle-database-system-tables-and-views.html">
+<meta property="og:url" content="/database/2016/08/18/database-oracle-database-system-tables-and-views.html">
+<meta property="og:site_name" content="Young’s Logs">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-08-18T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="System Tables and Views">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Young Hwang"},"dateModified":"2016-08-18T00:00:00+00:00","datePublished":"2016-08-18T00:00:00+00:00","description":"System Prefix 설명","headline":"System Tables and Views","mainEntityOfPage":{"@type":"WebPage","@id":"/database/2016/08/18/database-oracle-database-system-tables-and-views.html"},"url":"/database/2016/08/18/database-oracle-database-system-tables-and-views.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Young's Logs">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Young's Logs" src="" onerror="this.style.display='none'">
+  Young's Logs
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<div class="page-link" style="display: inline;">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<div class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</div>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">System Tables and Views</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2016-08-18T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Aug 18, 2016
+    </time>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 36 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/tags.html#oracle%20database">#oracle database</a><a class="post-tag" href="/tags.html#system%20schema">#system schema</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="system-prefix-설명">System Prefix 설명</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ALL_</td>
+      <td style="text-align: left">자신이 생성한 객체와 다른 사용자가 만든 객체 중 자신이 볼 수 있는 정보</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_</td>
+      <td style="text-align: left">DB 전체에 포함되는 모든 객체에 대한 자세한 정보</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_</td>
+      <td style="text-align: left">자신이 생성한 모든 객체 정보</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">X$_</td>
+      <td style="text-align: left">DB의 성능 분석, 통계 정보를 제공하는 테이블</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$_</td>
+      <td style="text-align: left">DB의 성능분석/통계 정보를 제공 X$_ 테이블에 대한 뷰 정보</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GV$_</td>
+      <td style="text-align: left">?</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="all-prefix">ALL Prefix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ALL_ARGUMENTS</td>
+      <td style="text-align: left">프로시져와 함수의 파라미터 및 리턴 타입에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_CATALOG</td>
+      <td style="text-align: left">모든 객체를 참조</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_CLUSTERS</td>
+      <td style="text-align: left">모든 접근 가능한 클러스터 정보</td>
+      <td style="text-align: left">USER_CLUSTERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_COL_COMMENTS</td>
+      <td style="text-align: left">모든 접근 가능한 컬럼의 주석 정보</td>
+      <td style="text-align: left">USER_COL_COMMENTS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_COL_PRIVS</td>
+      <td style="text-align: left">컬럼 레벨의 권한이 부여 되었거나 부여 받은 정보</td>
+      <td style="text-align: left">USER_COL_PRIVS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_COL_PRIVS_MADE</td>
+      <td style="text-align: left">각 사용자의 권한과 사용자 소유의 컬럼 개체 권한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_COL_PRIVS_RECD</td>
+      <td style="text-align: left">사용자 또는 PUBLIC으로 주어진 개체에 대한 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_CONSTRAINTS</td>
+      <td style="text-align: left">USRE가 ACCESS 할 수 있는 CONSTRAINT 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_CONS_COLUMNS</td>
+      <td style="text-align: left">USER가 ACCESS 할 수 있는 컬럼 별 CONSTRAINT 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_DB_LINKS</td>
+      <td style="text-align: left">다른 DB 링크 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_DEF_AUDIT_OPTS</td>
+      <td style="text-align: left">DEFAULT AUDITING OPTION</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_DEPENDENCIES</td>
+      <td style="text-align: left">객체간의 종속성에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_ERRORS</td>
+      <td style="text-align: left">프로시져, 함수, 패키지를 컴파일 할 때 발생한 에러 정보</td>
+      <td style="text-align: left">SHOW ERRORS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_JOBS</td>
+      <td style="text-align: left">DBMS_JOB 패키지로 설정한 작업의 JOB QUEUE 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_IND_COLUMNS</td>
+      <td style="text-align: left">테이블에 정의된 인덱스에 관한 정보</td>
+      <td style="text-align: left">USER_IND_COLUMNS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_INDEXES</td>
+      <td style="text-align: left">테이블에 정의된 인덱스 정보</td>
+      <td style="text-align: left">USR_INDEXES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_OBJECTS</td>
+      <td style="text-align: left">데이터베이스 내의 모든 테이블, 뷰, 동의어, 프로시져등의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_PROCEDURES</td>
+      <td style="text-align: left">생성된 모든 프로시져에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_SNAPSHOTS</td>
+      <td style="text-align: left">생성된 모든 스냅샷에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_SOURCE</td>
+      <td style="text-align: left">로그인 사용자가 만든 프로시져, 함수, 패키지 소스 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_SYNONYMS</td>
+      <td style="text-align: left">테이블, 뷰, 프로시져 등의 모든 동의어 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TAB_COLUMNS</td>
+      <td style="text-align: left">테이블, 뷰, 클러스터들의 컬럼에 대한 설명 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TAB_COMMENTS</td>
+      <td style="text-align: left">접근 가능한 테이블의 주석 정보</td>
+      <td style="text-align: left">USER_TAB_COMMENTS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TAB_PRIVS</td>
+      <td style="text-align: left">테이블에 주어진 권한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TAB_PRIVS_MADE</td>
+      <td style="text-align: left">각 사용자의 권한과 소유 개체 권한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TAB_PRIVS_RECD</td>
+      <td style="text-align: left">사용자 또는 PUBLIC으로 주어진 개체에 대한 개체 권한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TABLES</td>
+      <td style="text-align: left">접근 가능한 테이블 정보</td>
+      <td style="text-align: left">USER_TABLES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TRIGGER_COLS</td>
+      <td style="text-align: left">트리거에서 사용된 테이블 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_TIRGGERS</td>
+      <td style="text-align: left">데이터베이스에 생성된 모든 트리거 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_USERS</td>
+      <td style="text-align: left">모든 사용자에 관한 정보</td>
+      <td style="text-align: left">DBA_USERS, USER_URES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_VIEWS</td>
+      <td style="text-align: left">데이터베이스에 생성된 모든 뷰 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="dba-prefix">DBA Prefix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">DBA_2PC_NEIGHBORS</td>
+      <td style="text-align: left">분산 데이터베이스 옵션이 서버에 설치 된 경우 분산 트랜젝션 실패 시 복구에 참조</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_2PC_PENDING</td>
+      <td style="text-align: left">분산 데이터베이스 옵션이 서버에 설치 된 경우</td>
+      <td style="text-align: left">분산 변경 작업을 하는 동안 트랜젝션 실패 시 실패 내용을 확인</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ANALYZE_OBJECTS</td>
+      <td style="text-align: left">테이블, 인덱스, 클러스터 ANALYZE문에 의해 통계정보를 분석</td>
+      <td style="text-align: left">테이블에 저장</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_EXISTS</td>
+      <td style="text-align: left">데이터베이스에 존재하는 AUDIT을 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_OBJECT</td>
+      <td style="text-align: left">데이터베이스의 OBJECT와 관련된 모든 AUDIT TRAIL 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_SESSION</td>
+      <td style="text-align: left">세션 사용자의 로그온/오프 시간과  I/O 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_STATEMENT</td>
+      <td style="text-align: left">AUDIT TRAIL에 사용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ADVISOR_FINDINGS</td>
+      <td style="text-align: left">자동 데이터베이스 진단 모니터</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_CATALOG</td>
+      <td style="text-align: left">모든 객체를 참조</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_CLU_COLUMNS</td>
+      <td style="text-align: left">클러스터에 의해 만들어진 테이블의 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_CLUSTERS</td>
+      <td style="text-align: left">생성된 클러스터에 대한 모든 종류와 구조에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_COL_COMMENTS</td>
+      <td style="text-align: left">테이블, 뷰 컬럼 주석 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_COL_PRIVS</td>
+      <td style="text-align: left">컬럼레벨의 권한이 부여 되거나 부여 받은 정보</td>
+      <td style="text-align: left">DBA_TAB_PRIVS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_COLL_TYPES</td>
+      <td style="text-align: left">모든 컬렉션 타입에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_CONS_COLUMNS</td>
+      <td style="text-align: left">테이블에 정의된 제약조건의 일부인 열에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_CONSTRAINTS</td>
+      <td style="text-align: left">DB에 정의된 모든 제약조건에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_DATA_FILES</td>
+      <td style="text-align: left">저장되는 데이터(*.dbf)의 위치를 확인</td>
+      <td style="text-align: left">SYSFILES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_DTAPUMP_JOBS</td>
+      <td style="text-align: left">현재 진행중인 DATA PUMP EXPORT에 관한 정보를 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_DB_LINKS</td>
+      <td style="text-align: left">다른 DB 링크 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_DEPENDENCIES</td>
+      <td style="text-align: left">객체간의 종속성에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ERRORS</td>
+      <td style="text-align: left">SQL Plus가 데이터베이스 내의 모든 객체에 대한 show errors</td>
+      <td style="text-align: left">명령의 결과를 리턴</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXP_FILES</td>
+      <td style="text-align: left">EXPORT 파일이름, 사용자, 시간에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXP_OBJECTS</td>
+      <td style="text-align: left">증가분(INCREMENTAL EXPORT)에 의해 저장된 객체 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXP_VERSION</td>
+      <td style="text-align: left">최근의 EXPORT 버전 번호에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXTENTS</td>
+      <td style="text-align: left">세그먼트에 의해 할당되는 EXTENTS에 관한 정보</td>
+      <td style="text-align: left">(각 EXTENTS의 크기와 경로에 대한 정보)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXTERNAL_LOCATIONS</td>
+      <td style="text-align: left">외부 테이블 데이터의 위치 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_EXTERNAL_TABLES</td>
+      <td style="text-align: left">데이터베이스에 만들어진 외부 테이블에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_FEATURE_USAGE_STATISTICS</td>
+      <td style="text-align: left">AWR 영역을 통하여 통계 정보 획득</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_FREE_SPACE</td>
+      <td style="text-align: left">사용 가능한 공간의 크기</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_FREE_SPACE_COLAESCED</td>
+      <td style="text-align: left">사용 가능한 공간을 수집하기 위한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_HIST_SNAPSHOT</td>
+      <td style="text-align: left">작업 로드 스냅샷이 실행된 내역에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_HIST_WR_CONSTROL</td>
+      <td style="text-align: left">작업로드 스냅샷으로 설정된 자동 정리 기간, 보유기간에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_IND_COLUMNS</td>
+      <td style="text-align: left">인덱스에 대한 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_INDEXES</td>
+      <td style="text-align: left">인덕스에 대한 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_JOBS</td>
+      <td style="text-align: left">DB가 실행중인 JOB</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_JOBS_RUNNING</td>
+      <td style="text-align: left">DBMS_JOB 패키지에 의해 현재 실행되고 있는 작업</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_LOBS</td>
+      <td style="text-align: left">데이터베이스 내의 모든 LOB 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_METHOD_PARAMS</td>
+      <td style="text-align: left">객체 타입의 메소드에서 쓰이는 파라미터 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_METHOD_RESULTS</td>
+      <td style="text-align: left">메소드에서 호출자로의 리턴 타입에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OBJ_AUDIT_OPTS</td>
+      <td style="text-align: left">객체 감사(AUDIT) 결과 조회, 권한 감사, 문장 감사 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OBJECTS</td>
+      <td style="text-align: left">모든 테이블, 뷰, 동의서 프로시져등의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OPTSTAT_OPERATIONS</td>
+      <td style="text-align: left">DBMS_STATS 패키지가 실행된 모든 기록 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_PRIV_AUDIT_OPTS</td>
+      <td style="text-align: left">권한 감사(AUDIT) 결과 조회, 문장감사, 객체 감사</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_PROCEDURES</td>
+      <td style="text-align: left">프로시져와 함수에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_PROFILES</td>
+      <td style="text-align: left">프로파일이름과 지원의 제한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_QUEUE_TABLES</td>
+      <td style="text-align: left">메시지 큐와 관련된 데이터 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_RECYCLEBIN</td>
+      <td style="text-align: left">RECYCLEBIN</td>
+      <td style="text-align: left">SHOW RECYCLEBIN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLE_PRIVS</td>
+      <td style="text-align: left">데이터베이스 내의 롤, 사용자 롤 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLES</td>
+      <td style="text-align: left">DBA의 모든 ROLE 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLLBACK_SEGS</td>
+      <td style="text-align: left">UNDO SEGMENTS의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_QUEUE_TABLES</td>
+      <td style="text-align: left">메시지 큐와 관련된 데이터 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_RECYCLEBIN</td>
+      <td style="text-align: left">RECYCLEBIN</td>
+      <td style="text-align: left">SHOW RECYCLEBIN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLE_PRIVS</td>
+      <td style="text-align: left">데이터베이스 내의 롤이나 사용자에 어떤 툴이 허용되어 있는지 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLES</td>
+      <td style="text-align: left">DBA의 모든 롤 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_ROLLBACK_SEGS</td>
+      <td style="text-align: left">UNDO SEGMENTS 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SCHEDULER_JOBS</td>
+      <td style="text-align: left">스케줄된 JOB의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SEGMENTS</td>
+      <td style="text-align: left">테이블스페이스가 저장하고 있는 모든 세그먼트에 대한 정보</td>
+      <td style="text-align: left">V$SORT_SEGMENT, V$SORT_USAGE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SEQUENCES</td>
+      <td style="text-align: left">데이터베이스의 시퀀스에 대한 정보</td>
+      <td style="text-align: left">USER_SEQUENCES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SNAPSHOTS</td>
+      <td style="text-align: left">현재 생성되어 있는 모든 스냅샷 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SOURCE</td>
+      <td style="text-align: left">로그인한 사용자가 만든 프로시져, 함수, 패키지 소스</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_STMT_AUDIT_OPTS</td>
+      <td style="text-align: left">문장감사의 결과 조회, 권한감사, 객체감사</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SYNONYMS</td>
+      <td style="text-align: left">테이블, 뷰, 프로시져 등을 통해 생성한 모든 동의어 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_SYS_PRIVS</td>
+      <td style="text-align: left">ROLE과 UESR에게 부여된 모든 시스템 권한 정보</td>
+      <td style="text-align: left">SESSION_PRIVS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TAB_COLUMNS</td>
+      <td style="text-align: left">테이블, 뷰, 클러스터들의 컬럼에 대한 설명 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TAB_COMMENTS</td>
+      <td style="text-align: left">테이블과 뷰의 주석 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TAB_PRIVS</td>
+      <td style="text-align: left">DB내의 모든 개체 권한 정보</td>
+      <td style="text-align: left">DBA_COL_PRIVS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TAB_STATISTICS</td>
+      <td style="text-align: left">모든 테이블에 대한 통계, 테이블 잠김 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TABLES</td>
+      <td style="text-align: left">데이터베이스 내의 모든 테이블</td>
+      <td style="text-align: left">USER_TABLES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TABLESPACE_GROUPS</td>
+      <td style="text-align: left">테이블 스페이스 그룹에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TABLESPACES</td>
+      <td style="text-align: left">테이블스페이스에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TEMP_FILES</td>
+      <td style="text-align: left">TEMPORARY TABLESPACE에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TRIGGERS</td>
+      <td style="text-align: left">DB의 모든 트리거 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TRIGGER_COLS</td>
+      <td style="text-align: left">트리거에 사용된 테이블 컬럼에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TS_QUOTAS</td>
+      <td style="text-align: left">모든 사용자에 대한 TABLESPACE 할당량 정보</td>
+      <td style="text-align: left">USER_TS_QUOTAS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TYPE_METHODS</td>
+      <td style="text-align: left">객체 타입 내의 메소드에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_TYPES</td>
+      <td style="text-align: left">데이터베이스의 모든 객체 타입에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_UNUSED_COL_TABS</td>
+      <td style="text-align: left">ALTER TABLE … SET UNUSED COLUMN …에 의해 사용하지 않는 컬럼의 표시 DDL 문</td>
+      <td style="text-align: left">USER_UNUSED_COL_TABS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_UPDATABLE_COLUMNS</td>
+      <td style="text-align: left">조인 뷰의 모든 열을 나열하고 이를 통해 데이터가 변경 될 수 있는지를 표시</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_USERS</td>
+      <td style="text-align: left">사용자에 관한 모든 정보(암호관리 포함)</td>
+      <td style="text-align: left">ALL_USERS, USER_USERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_VIEWS</td>
+      <td style="text-align: left">데이터베이스에 생성되어 있는 모든 뷰에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OBJECT_TABLES</td>
+      <td style="text-align: left">데이터베이스 내의 모든 객체 테이블에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OBJECT_SIZE</td>
+      <td style="text-align: left">PL/SQL 블럭의 크기에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="user-prefix">USER Prefix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">USER_ASSOCIATIONS</td>
+      <td style="text-align: left">현재 USER의 OBJET와 관련된 통계자료를 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_OBJECT</td>
+      <td style="text-align: left">현재 USER의 OBJECT와 관련된 모든 AUDITING DATA를 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_TRAIL</td>
+      <td style="text-align: left">사용자에 대한 모든 AUDIT TRAIL 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_SESSION</td>
+      <td style="text-align: left">세션 사용자의 로그온/오프 시간과 I/O 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_STATEMENT</td>
+      <td style="text-align: left">AUDIT TRAIL에 사용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_TRAIL</td>
+      <td style="text-align: left">사용자에 대한 모든 AUDIT TRAIL을 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_CATALOG</td>
+      <td style="text-align: left">사용자가 소유한 테이블에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_CLU_COLUMNS</td>
+      <td style="text-align: left">클러스터에 의해 만들어진 테이블의 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_CLUSTERS</td>
+      <td style="text-align: left">클러스터에 대한 모든 종류와 구조에 대한 정보로 사용자가 접근 가능한 클러스터 정보</td>
+      <td style="text-align: left">ALL_CLUSTERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_COL_COMMENTS</td>
+      <td style="text-align: left">컬럼에 대한 주석 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_COL_PRIVS</td>
+      <td style="text-align: left">컬럼 레벨의 권한 부여 되었거나 또는 부여 받은 내용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_COL_PRIVS_MADE</td>
+      <td style="text-align: left">사용자가 소유한 컬럼의 권한에 대한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_COL_PRIVS_RECD</td>
+      <td style="text-align: left">개체 권한 피부여를 위한 컬럼의 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_CONS_COLUMNS</td>
+      <td style="text-align: left">USER가 가지고 있는 COLUMN에 할당된 제약조건에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_CONSTRAINTS</td>
+      <td style="text-align: left">사용자의 테이블에 지정된 제약조건의 이름 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_DB_LINKS</td>
+      <td style="text-align: left">다른 DB에 링크한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_DEPENDENCIES</td>
+      <td style="text-align: left">객체간의 종속성에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_ERRORS</td>
+      <td style="text-align: left">프로시져, 함수, 패키지를 컴파일 할 때 발생한 에렁 정보</td>
+      <td style="text-align: left">SHOW ERRORS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_EXTENTS</td>
+      <td style="text-align: left">세그먼트에 의해 할당되는 EXTENTS에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_FREE_SPACE</td>
+      <td style="text-align: left">남은 공간에 대한 정보</td>
+      <td style="text-align: left">DBA_FREE_SPACE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_IND_COLUMNS</td>
+      <td style="text-align: left">INDEX명, 테이블명, 컬럼명을 포함한 정보</td>
+      <td style="text-align: left">ALL_IND_COLUMNS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_INDEXES</td>
+      <td style="text-align: left">INDEX의 이름 및 고유한 정보, IND는 USER_INDEXES의 동의어</td>
+      <td style="text-align: left">ALL_INDEXES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_JOBS</td>
+      <td style="text-align: left">사용자가 실행 중인 JOB</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_OBJ_AUDIT_OPTS</td>
+      <td style="text-align: left">USER의 OBJECT AUDITING OPTION 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_OBJECT_SIZE</td>
+      <td style="text-align: left">PL/SQL 블럭의 크기에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_OBJECTS</td>
+      <td style="text-align: left">사용자가 소유한 객체에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_PASSWORD_LIMITS</td>
+      <td style="text-align: left">현재 접속되어 있는 사용자의 암호 제한사항에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_PROCEDURES</td>
+      <td style="text-align: left">사용자가 생성한 프로시져에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_RECYCLEBIN</td>
+      <td style="text-align: left">RECYCLEBIN으로 시노님한 정보</td>
+      <td style="text-align: left">SHOW RECYCLEBIN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_RESOURCE_LIMITS</td>
+      <td style="text-align: left">사용자의 자원 제한상항에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_ROLE_PRIVS</td>
+      <td style="text-align: left">사용자에게 부여된 역할 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SEGMENTS</td>
+      <td style="text-align: left">테이블스페이스가 저장하고 있는 모든 세그먼트에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SEQUENCES</td>
+      <td style="text-align: left">사용자가 설정한 시퀀스의 정보</td>
+      <td style="text-align: left">DBA_SEQUENCES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SNAPSHOTS</td>
+      <td style="text-align: left">생성되어 있는 모든 스냅샷에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SOURCE</td>
+      <td style="text-align: left">사용자가 만든 프로시져, 함수, 패키지의 소스</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SYNONYMS</td>
+      <td style="text-align: left">테이블, 뷰, 프로시져 등을 통해 생성한 모든 동의어 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_SYS_PRIVS</td>
+      <td style="text-align: left">사용자에게 주어진 권한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_COLUMNS</td>
+      <td style="text-align: left">테이블, 뷰, 클러스터 들의 컬럼에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_COMMENTS</td>
+      <td style="text-align: left">테이블에 대한 주석</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_MODIFICATIONS</td>
+      <td style="text-align: left">옵티마이저에 의해 테이블이 분석한  이후에 사용자에게 적용된 모든 변경 내용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_PRIVS</td>
+      <td style="text-align: left">타 사용자에게 접근이 허용된 테이블</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_PRIVS_MADE</td>
+      <td style="text-align: left">사용자가 소유주인 개체 권한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TAB_PRIVS_RECD</td>
+      <td style="text-align: left">개체 권한 피부여자를 위한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TABLES</td>
+      <td style="text-align: left">사용자에게 속한 테이블</td>
+      <td style="text-align: left">DBA_TABLES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TABLESPACES</td>
+      <td style="text-align: left">사용자에게 속한 모든 테이블스페이스</td>
+      <td style="text-align: left">DBA_TABLESPACES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TRIGGER_COLS</td>
+      <td style="text-align: left">트리거에 사용된 테이블 컬럼에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TRIGGERS</td>
+      <td style="text-align: left">테이블에 만들어진 트리거 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_TS_QUOTAS</td>
+      <td style="text-align: left">사용자에 대한 TABLESPACE 할당량에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_UNUSED_COL_TABS</td>
+      <td style="text-align: left">사용하지 않는 컬럼으로 설정된 컬럼 정보</td>
+      <td style="text-align: left">DBA_UNUSED_COL_TABS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_USERS</td>
+      <td style="text-align: left">접속중인 USER가 ACCESS 할 수 있는 USER 정보</td>
+      <td style="text-align: left">DBA_USERS, ALL_USERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_USTATS</td>
+      <td style="text-align: left">USER의 OBJECT와 관련된 통계자료 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_VIEWS</td>
+      <td style="text-align: left">데이터베이스에 생성되어 있는 모든 뷰에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="v-prefix">V$ Prefix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">V$ACCESS</td>
+      <td style="text-align: left">세션에 의해 현재 LOCK 되어 있는 객체에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ACTIVE_SESSION_HISTORY</td>
+      <td style="text-align: left">AWR 메모리 통계 영역에 저장되어져 있는 통계 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ARCHIVE</td>
+      <td style="text-align: left">데이터베이스의 아카이브 파일에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ARCHIVED_LOG</td>
+      <td style="text-align: left">실제로 아카이브 디렉토리로부터 아카이브 파일들의 존재를 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP</td>
+      <td style="text-align: left">데이터 파일의 백업 상태</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_ASYNC_IO</td>
+      <td style="text-align: left">To determine the source of backup or restore bottlenecks</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_DATAFILE</td>
+      <td style="text-align: left">백업된 데이터파일에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_FILES</td>
+      <td style="text-align: left">백업된 데이터파일의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_PIECE</td>
+      <td style="text-align: left">RMAN에서 BACKUP 명령으로 생성한 백업세트의 경로와 파일명</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_REDOLOG</td>
+      <td style="text-align: left">백업된 REDO LOG 파일에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_SET</td>
+      <td style="text-align: left">RMAN에서 BACKUP 명령으로 생성한 백업세트 수와 블록 크기</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_SPFILE</td>
+      <td style="text-align: left">백업된 SPFILE 파일에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BACKUP_SYNC_IO</td>
+      <td style="text-align: left">TO DETERMINE THE SOURCE OF BACKUP OR RESOTRE BOTTLENECKS</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BGPROCESS</td>
+      <td style="text-align: left">백그라운드 프로세스 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BLOCK_CHANGE_TRACKING</td>
+      <td style="text-align: left">ENABLE/DIABLE BLOCK CHANGE TRACKING 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BUFFER_POOL</td>
+      <td style="text-align: left">데이터베이스에 설정된 다중 풀 영역에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$BUFFER_POOL_STATISTICS</td>
+      <td style="text-align: left">데이터베이스에 설정된 다중 풀 영역에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$CACHE</td>
+      <td style="text-align: left">테이블이 버퍼 캐시 영역을 얼마나 필요로 하는지</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$CIRCUIT</td>
+      <td style="text-align: left">MTS환경에서 사용자 프로세스에 의해 사용된 서버 프로세스와 디스패쳐 프로세스에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$CONTROLFILE</td>
+      <td style="text-align: left">컨트롤파일의 위치 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$CORRUPT_XID_LIST</td>
+      <td style="text-align: left">CORRUPT TRANSACTION한 트랜잭션 ID를 보임</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DATABASE</td>
+      <td style="text-align: left">데이터페이스명, 현재 시점의 SYSTEM CHANGE#, DB의 ARCHIVE/NOARCHIVE여부</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DATABASE_BLOCK_CORRUPTION</td>
+      <td style="text-align: left">데이터의 오류 블럭에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DATABASE_INCARNATION</td>
+      <td style="text-align: left">DATABASE INCARNATION에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DATAFILE</td>
+      <td style="text-align: left">데이터파일의 크기, 이름, 상태, BLOCK 크기 등에 대한 정보, 로그 버퍼 영역 분석</td>
+      <td style="text-align: left">V$DBFILE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DATAFILE_HEADER</td>
+      <td style="text-align: left">데이터 파일 HEADER에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DB_CACHE_ADVICE</td>
+      <td style="text-align: left">캐시 메모리 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DB_OBJECT_CACHE</td>
+      <td style="text-align: left">공유 영역의 공유 풀 영역에서 캐시 된 현재 존재하는 객체의 내용과 크기를 분석</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DB_PIPES</td>
+      <td style="text-align: left">DBMS_PIPE 패키지에 의해 전송된 메시지에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DBA_OBJECTS</td>
+      <td style="text-align: left">데이터페이스에 설정된 테이블의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DBFILE</td>
+      <td style="text-align: left">V$DATAFILE의 동적 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DBLINK</td>
+      <td style="text-align: left">현재 생성되어 있는 모든 DATABASE LINK 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DIAG_INFO</td>
+      <td style="text-align: left">DIAGNOSTIC_DEST 매개변수로 지정한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$DISPATCHER</td>
+      <td style="text-align: left">MTS 환경에서 인스턴스를 실행 할 때 사용자 프로세스</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ENABLEDPRIVS</td>
+      <td style="text-align: left">세션에 영향을 미치는 권한에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$EVENT_NAME</td>
+      <td style="text-align: left">WAIT에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FILEMETRIC</td>
+      <td style="text-align: left">FILEMETRIC에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FILEMETRIC_HISTORY</td>
+      <td style="text-align: left">FILEMETRIC에 관한 실행 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FILESTAT</td>
+      <td style="text-align: left">현재 존재하는 데이터 타입의 물리적으로 읽은 횟수에 대한 정보, 서버 튜닝에 유용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FIXED_TABLE</td>
+      <td style="text-align: left">V$로 참조 할 수 있는 모든 동적 테이블</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FIXED_VIEW_DEFINITION</td>
+      <td style="text-align: left">V$뷰가 어떤 X$ 테이블에 의해 사용되는지 알 수 있음</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FLASH_RECOVERY_AREA_USAGE</td>
+      <td style="text-align: left">FLASH RECOVERY AREA SPACE USAGE를 모니터링</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FLASHBACK_DATABASE_LOG</td>
+      <td style="text-align: left">최대한 어느 시점까지 복구가 가능한지를 알려줌</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$FLASHBACK_DATABASE_STAT</td>
+      <td style="text-align: left">FLACHBACK DATABASE PERFORMANCE를 모니터링</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$INSTANCE</td>
+      <td style="text-align: left">현재 INSTANCE 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LATCH</td>
+      <td style="text-align: left">래치 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LATCHHOLDER</td>
+      <td style="text-align: left">프로세스와 래치(LATCH)가 현재 유효한 상태인지 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LATCHNAME</td>
+      <td style="text-align: left">래치 이름 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LIBRARYCACHE</td>
+      <td style="text-align: left">히트율과 RELOAD비율을 분석</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LICENSE</td>
+      <td style="text-align: left">데이터베이스 접속 사용자 수를 참조할 때 사용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LOCK</td>
+      <td style="text-align: left">해당 인스턴스의 LOCK에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LOG</td>
+      <td style="text-align: left">리두로그 그룹, 로그 시스 번호, 멤버수, 리두로그 파일 상태</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LOG_HISTORY</td>
+      <td style="text-align: left">RESETLOG 옵션을 수행하는 시점의 시스템체인지넘버(SCN)에 대한 정보</td>
+      <td style="text-align: left">V$LOGHIST</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LOGHIST</td>
+      <td style="text-align: left">V$LOG_HISTORY의 동적 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$LOGFILE</td>
+      <td style="text-align: left">리두로그 파일 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$METRICNAME</td>
+      <td style="text-align: left">AWR에 저장되어 있는 모든 메트릭스에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$MTTR_TARGET_ADVICE</td>
+      <td style="text-align: left">FAST_START_MTRR_TRAGET 초기화 매개변수 최적화</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$MYSTAT</td>
+      <td style="text-align: left">현재 세션에 대한 통계 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$NLS_VALID_VALUES</td>
+      <td style="text-align: left">현재 데이터베이스에서 사용 가능한 언어의 종류</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$NLS_PARAMETERS</td>
+      <td style="text-align: left">전체 인스턴스에서 지원되는 국가 언어지원의 설정에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$OBJECT_DEPENDENCY</td>
+      <td style="text-align: left">공유 풀 영역에서 현재 로더 된 객체에 대한 종속성을 참조</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$OBJECT_USAGE</td>
+      <td style="text-align: left">INDEX 모니터링</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$OPEN_CURSOR</td>
+      <td style="text-align: left">각각의 사용자 세션을 위해 오픈 되어 있는 커서 수에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$OPTION</td>
+      <td style="text-align: left">현재 데이터베이스의 옵션 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$PARAMETER</td>
+      <td style="text-align: left">현재 설정되어 있는 INIT.ORA 파라미터 내용</td>
+      <td style="text-align: left">SHOW PARAMETERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$PROCESS</td>
+      <td style="text-align: left">프로세스에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$PWFILE_USERS</td>
+      <td style="text-align: left">ORAPWD에 의해서 SYSOP 권한이 주어진 사용자에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$QUEUE</td>
+      <td style="text-align: left">MTS 환경의 응답 큐/요구 큐에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RECOVER_FILE</td>
+      <td style="text-align: left">현재 복구되어야 할 데이터 파일에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RECOVER_FILE_DEST</td>
+      <td style="text-align: left">FLASH RECOVERY AREA SPACE USAGE를 모니터링</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$QUEUE</td>
+      <td style="text-align: left">MTS 환경의 응답 큐/요구 큐에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RECOVER_FILE</td>
+      <td style="text-align: left">현재 복구되어야 할 데이터 파일에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RECOVER_FILE_DEST</td>
+      <td style="text-align: left">FLASH RECOVERY AREA SPACE USAGE를 모니터링</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RECOVERY_LOG</td>
+      <td style="text-align: left">아카이브 로그의 이름과 개수에 대한 정보, 미디어 복구를 처리하는 동안 V$LOG_HISTORY에 정보의 일부분을 저장</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$REQDISK</td>
+      <td style="text-align: left">프로세스의 작업이 요구된 시간에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RESERVED_WORDS</td>
+      <td style="text-align: left">오라클의 예약어 목록</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RESOURCE</td>
+      <td style="text-align: left">데이터베이스에서 사용 할 수 있는 자원에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RESTORE_POINT</td>
+      <td style="text-align: left">FLASHBACK DATABASE에서 사용할 수 있는 시점에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RMAN_BACKUP_JOB_DETAILS</td>
+      <td style="text-align: left">RMAN 툴에서 백업의 실행에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RMAN_BACKUP_SUBJOB_DETAILS</td>
+      <td style="text-align: left">RMAN 툴에서 백업의 실행에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RMAN_ENCRYPTION_ALGORITHMS</td>
+      <td style="text-align: left">RMAN 툴에서 백업에 쓰일 암호화 알고리즘의 종류</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$RMAN_OUTPUT</td>
+      <td style="text-align: left">RMAN툴에서 발생한 각종 OUTPUT내용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ROLLNAME</td>
+      <td style="text-align: left">ROLLBACK SEGMENT에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ROLLSTAT</td>
+      <td style="text-align: left">데이터베이스에서 사용중인 언두 세그먼트에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$ROWCACHE</td>
+      <td style="text-align: left">자료사전 탐색 성능 파악</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SERVICEMETRIC</td>
+      <td style="text-align: left">SERVICEMETRIC에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESS_IO</td>
+      <td style="text-align: left">현재 접속된 세센에 의해 실행된 논리적, 물리적 I/O의 양에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESS_TIME_MODEL</td>
+      <td style="text-align: left">Time 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION</td>
+      <td style="text-align: left">현재 인스턴스에 접속된 각 세션에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION_CURSOR_CACHE</td>
+      <td style="text-align: left">세션을 사용하고 있는 동안 얼마나 많은 커서가 오픈 되었고, 얼마나 자주 사용되었는지에 대한 정보로 튜닝에 사용함</td>
+      <td style="text-align: left">V$SYSTEM_CURSOR_CACHE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION_LONGOPS</td>
+      <td style="text-align: left">트랜젝션의 진행상태 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION_WAIT</td>
+      <td style="text-align: left">로그버퍼영역이 작아서 프로세스간의 경합을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION_WAIT_CLASS</td>
+      <td style="text-align: left">각 세션의 WAIT CLASS 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSION_WAIT_HISTORY</td>
+      <td style="text-align: left">현재 ACTIVE한 세션에 대한 WAIT 사건 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSMETRIC</td>
+      <td style="text-align: left">SESSION METRIC 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SESSTAT</td>
+      <td style="text-align: left">V$SYSTAT 테이블에 보인 정보의 일부분으로 모든 세션 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SGA</td>
+      <td style="text-align: left">SGA 영역에 할당한 메모리 구조의 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SGASTSTAT</td>
+      <td style="text-align: left">메모리 영역인 SGA에 대한 사용현황 정보, 각 공유 서버 프로세스가 얼마나 많이 실행 되었는지에 대한 정보도 포함</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SHARED_POOL_RESERVED</td>
+      <td style="text-align: left">공유 풀 메모리의 낭비여부 파악</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SORT_SEGMENT</td>
+      <td style="text-align: left">TEMPORARY TABLESPACE에 생성되는 TEMPORARY SEGMENT에 대한 정보</td>
+      <td style="text-align: left">DBA_SEGMENTS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SORT_USAGE</td>
+      <td style="text-align: left">TEMPORARY TABLESPACE에 생성되는 TEMPORARY SEGMENTS에 대한 정보</td>
+      <td style="text-align: left">V$SESSION</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SPPARAMETER</td>
+      <td style="text-align: left">서버 파라메터 파일, 즉 SPFILE의 내용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SQL</td>
+      <td style="text-align: left">독립적인 SQL 문장이 얼마나 자주 사용되었는지에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SQLAREA</td>
+      <td style="text-align: left">공유 풀 영역을 검사</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SQLTEXT</td>
+      <td style="text-align: left">공유 풀 영역에 공유된 커서의 SQL 문자 또는 SQL 텍스트 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$STATNAME</td>
+      <td style="text-align: left">모든 사용자가 사용하는 UGA 영역의 크기 정보,</td>
+      <td style="text-align: left">V$SYSSTAT</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSAUX_OCCUPANTS</td>
+      <td style="text-align: left">SYSAUX 테이블스페이스에 대한 정보를 제공</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSMETRIC</td>
+      <td style="text-align: left">현재 메모리에 저장되어 있는 메트릭스에 대한 현재 값</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSMETRIC_HISTORY</td>
+      <td style="text-align: left">V$SYSMETRIC의 실행 내역</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSSTAT</td>
+      <td style="text-align: left">인스턴스가 시작된 이후의 로그온과 논리적, 물리적 I/O의 수 등의 상태에 대한 정보</td>
+      <td style="text-align: left">V$STATNAME</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSTEM_CURSOR_CACHE</td>
+      <td style="text-align: left">전체 시스템에서 사용된 모든 커서의 오픈 수와 비율등에 대한 정보</td>
+      <td style="text-align: left">V$SESSION_CURSOR_CACHE</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSTEM_EVENT</td>
+      <td style="text-align: left">데이터베이스 내의 자원을 사용하기 위해 기다리는 시간에 대한 정보로 시스템 성능 파악</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSTEM_PARAMETER</td>
+      <td style="text-align: left">DB의 PARAMETER에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$SYSTEM_WAIT_CLASS</td>
+      <td style="text-align: left">전체 시스템의 WAIT CLASS 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$TABLESPACE</td>
+      <td style="text-align: left">BIGFILE 요부를 확인, TABLESPACE의 번호와 이름 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$THREAD</td>
+      <td style="text-align: left">병렬서버 환경에서 사용되는 메모리 영역에 대한 정보(동작중인 SID를 확인 할 수 있음)</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$TIMER</td>
+      <td style="text-align: left">자정 이후의 현재 시각을 1/100초로 나타냄</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$TIMEZONE_NAMES</td>
+      <td style="text-align: left">TIME ZONE을 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$TRANSACTION</td>
+      <td style="text-align: left">현재 진행중인 트랜젝션에 대한 정보, 현재 사용중인 UNDO 세그먼트에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$TYPE_SIZE</td>
+      <td style="text-align: left">데이터베이스 구성요소의 크기(테이블과 인덱스의 초기값과 NEXT EXTENT의 크기를 결정하기 위한 참조하는 일정한 크기)</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$UNDOSTAT</td>
+      <td style="text-align: left">UNDO SEGMENT에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">V$VERSION</td>
+      <td style="text-align: left">VERSION에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="x-prefix">X$ Prefix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">X$KCCC</td>
+      <td style="text-align: left">f Control File Names &amp; status</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">X$BH</td>
+      <td style="text-align: left">Buffer Hash</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">X$KCBSW</td>
+      <td style="text-align: left">kernel cache, buffer statistics</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="auditing-views">Auditing Views</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Synonym</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">SYS.AUD$</td>
+      <td style="text-align: left">감사 추적 데이터를 저장하는 테이블임</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">STMT_AUDIT_OPTION_MAP</td>
+      <td style="text-align: left">각 auditing의 옵션과 해당 번호를 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">AUDIT_ACTIONS</td>
+      <td style="text-align: left">감사 기능의 활성화를 위한 LOOKUP 테이블</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ALL_DEF_AUDIT_OPTS</td>
+      <td style="text-align: left">DEFAULT AUDITING OPTION으로 설정된 객체 감사를 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_STMT_AUDIT_OPTS</td>
+      <td style="text-align: left">STATEMENT AUDITING의 IPTION을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_PRIV_AUDIT_OPTS</td>
+      <td style="text-align: left">PRIVILEGE AUDITING의 OPTION을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_OBJ_AUDIT_OPTS</td>
+      <td style="text-align: left">OBJECT AUDITING의 OPTION을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_OBJ_AUDIT_OPTS</td>
+      <td style="text-align: left">USER의 OBJECT AUDITING OPTION을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_TRAIL</td>
+      <td style="text-align: left">데이터베이스의 모든 AUDIT TRAIL을 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DBA_AUDIT_OBJECT</td>
+      <td style="text-align: left">데이터베이스의 객체와 관련된 모든 감사 자료를 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">USER_AUDIT_OBJECT</td>
+      <td style="text-align: left">현재 사용자의 객체와 관련된 모든 감사 자료를 출력</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CAT</td>
+      <td style="text-align: left">USERo_CATALOG의 동의어</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CATALOG</td>
+      <td style="text-align: left">데이터페이스 상의 모든 객체에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CLU</td>
+      <td style="text-align: left">USER_CLUSTERS의 동의어</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">COL</td>
+      <td style="text-align: left">테이블과 뷰의 모든 컬럼 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">COLS</td>
+      <td style="text-align: left">USER_TAB_COLUMNS의 동의어</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">COLUMN_PRIVILEGES</td>
+      <td style="text-align: left">객체 권한 소유자, 부여자, 피부여자이거나 PUBLIC으로 부여된 컬럼 객체권한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATABASE_PROPERTIES</td>
+      <td style="text-align: left">DEFAULT TABLESPACE를 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DEPTREE</td>
+      <td style="text-align: left">객체사이의 종속성 관계에 관한 정보 $HOME/rdbms/admin/utldree.sql 실행 시 생성</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DICT</td>
+      <td style="text-align: left">DICTIONARY의 동의어</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DICT_COLUMNS</td>
+      <td style="text-align: left">모든 자료사전의 테이블 및 뷰의 컬럼 정보를 제공</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DICTIONARY</td>
+      <td style="text-align: left">모든 자료사전의 테이블, 뷰, 동의어를 제공</td>
+      <td style="text-align: left">DICT</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DUAL</td>
+      <td style="text-align: left">특정한 테이블의 지정없이 어떤 기능에 사용하는 경우 참조하는 DUMMY TABLE</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">EXCEPTIONS</td>
+      <td style="text-align: left">제약조건이 비활성화된 상태에서 입력된 데이터가 활성화되면서 무결성을 위반하는 경우, 위반한 데이터를 저장하는 테이블</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FLASHBACK</td>
+      <td style="text-align: left">TRANSACTION QUERY SQL문을 실행하고 COMMIT한 경우</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">FLASHBACK</td>
+      <td style="text-align: left">VERSIONS QUERY 임의의 정보가 어떤 과정으로 변경되었나 알아 봄</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GATHER_STATS_JOB</td>
+      <td style="text-align: left">데이터베이스 관련 통계</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GLOVAL_NAME</td>
+      <td style="text-align: left">현재 데이터베이스의 (글로벌) 이름을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">IND</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_INDEXES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">INDEX_HISTOGRAM</td>
+      <td style="text-align: left">ANALYZE INDERX…VALIDATE INDEX 문을 실행하면 인덱스 키값이 얼마나 자주 사용되었는지, 분포도가 어떤지를 이 테이블에 저장</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">INDEX_STATS</td>
+      <td style="text-align: left">ANALYZE INDEX에 의한 자료 분석결과</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">NLS_DATABASE_PARAMETERS</td>
+      <td style="text-align: left">오라클 설치시에 영구적으로 결정된 값으로 변경불가</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">NLS_INSTANCE_PARAMETERS</td>
+      <td style="text-align: left">명시적으로 설정된 PARAMETER 값을 보여줌. 조기화 PARAMETER에 미리 결정되어 있는 값을 보여줌</td>
+      <td style="text-align: left">V$NLS_VALID_VALUES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">NLS_SESSION_PARAMETERS</td>
+      <td style="text-align: left">현재 SESSION에서 실제로 적용되고 있는 NLS PARAMETER의 설정값을 확인</td>
+      <td style="text-align: left">V$NLS_PARAMETERS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">OBJ</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_OBJECTS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PLAN_TABLE</td>
+      <td style="text-align: left">EXPLAIN PLAN 문에 의한 SQL 문장의 실행계획 및 실행 결과를 저장하는 테이블</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PRODUCT_COMPONENT_VERSION</td>
+      <td style="text-align: left">데이터베이스 서버 버전정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PROPS$</td>
+      <td style="text-align: left">데이터베이스 서버의 CHARACTER SET을 확인</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PUBLICSYN</td>
+      <td style="text-align: left">데이터베이스 현재 생성되어 있는 공용 동의어 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">RECYCLEBIN</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_RECYCLEBIN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">RESOURCE_COST</td>
+      <td style="text-align: left">한 세션의 자원 비용에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ROLE_SYS_PRIVS</td>
+      <td style="text-align: left">시스템 권한을 롤에게 부여했을 때의 정보 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ROLE_TAB_PRIVS</td>
+      <td style="text-align: left">테이블 권한을 롤에게 부여했을 때 관련정보를 알 수 있음</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ROLE_ROLE_PRIVS</td>
+      <td style="text-align: left">롤이 롤에게 부여한 권한을 참조, 권한을 부여할 때 ADMIN 올션으로 부여 했는지 알수 있음</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SEG</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_SEQUENCES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SESSION_PRIVS</td>
+      <td style="text-align: left">SESSION LEVEL의 시스템 권한을 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SESSION_ROLES</td>
+      <td style="text-align: left">현재 사용자의 세션에서 활성화 되어 있는 롤 조회</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYN</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_SYNONYMS</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYNONYMS</td>
+      <td style="text-align: left">생성되어 있는 모든 동의어에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYSFILES</td>
+      <td style="text-align: left">데이터베이스에 의해 사용되고 있는 모든 데이터 파일에 대한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYSSEGOBJ</td>
+      <td style="text-align: left">데이터베이스 상에 생성되어있는 모든 세그먼트의 타입과 PCTFREE, PCTUSED정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYSTEM_PRIVILEGE_MAP</td>
+      <td style="text-align: left">시스템 권한 목록</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SYSTEM</td>
+      <td style="text-align: left">PRIVILEGE</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">OBJECT</td>
+      <td style="text-align: left">PRIVILEGE</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TAB</td>
+      <td style="text-align: left">사용자 생성한 모든 테이블에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TABLE_PRIVILEGE_MAP</td>
+      <td style="text-align: left">일반 테이블에 대해 부여된 권한 내용</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TABLE_PRIVILEGES</td>
+      <td style="text-align: left">객체 권한 소유자, 부여자, 피부여자이거나 PUBLIC으로 부여된 객체권한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TABQUOTAS</td>
+      <td style="text-align: left">특정 사용자가 사용 할 수 있는 테이블 스페이스의 크기에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TABS</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">USER_TABLES</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TS_PITR_CHECK</td>
+      <td style="text-align: left">TABLESPACE POINT-IN-TIME RECOVERY(TSPIRT)에 관한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TS_PITR_OBJECTS_TO_BE_DROPPED</td>
+      <td style="text-align: left">TABLESPACE POINT-IN-TIME RECOVERY(TSPITR)이후 드롭된 정보에 관한 뷰</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PATH_VIEW XML</td>
+      <td style="text-align: left">자원의 경로에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">RESOURCE_VIEW</td>
+      <td style="text-align: left">XML 자원의 경로에 관한 정보</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<span></span><a class="next" href="/database/2016/11/09/database-oracle-database-monitoring-queries.html" title="Oracle 점검을 위한 유용한 SQL 쿼리문 모음">Oracle 점검을 위한 유용한 SQL 쿼리문...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/spring/2022/12/22/spring-dynamic-datasource-routing.html" title="Dynamic Datasource Routing 적용기">
+            Dynamic Datasource Routing 적용기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/web/2023/12/03/web-page-performance.html" title="K-DEVCON 발표 - 웹 페이지 성능 측정 지표">
+            K-DEVCON 발표 - 웹 페이지 성능 측정 지표<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/java/2021/04/13/java-static-Initializer-block.html" title="Initializer Block(초기화 블럭) 의 이해">
+            Initializer Block(초기화 블럭) 의 이해<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/database/2016/12/30/database-oracle-database-table-space.html" title="Oracle 데이터베이스 관리 - 테이블스페이스 생성, 확장, 및 관리 방법">
+            Oracle 데이터베이스 관리 - 테이블스페이스 생성, 확장, 및 관리 방법<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 Young Hwang</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

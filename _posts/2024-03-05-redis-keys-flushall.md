@@ -4,6 +4,7 @@ title: KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유
 subtitle:
 categories: redis
 tags: [redis]
+toc: true
 ---
 
 Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있습니다.

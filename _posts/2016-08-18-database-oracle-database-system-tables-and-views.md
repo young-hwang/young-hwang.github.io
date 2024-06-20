@@ -4,6 +4,9 @@ title: System Tables and Views
 subtitle: 
 categories: database
 tags: [oracle database, system schema]
+pin: true
+math: true
+mermaid: true
 ---
 
 ## System Prefix 설명

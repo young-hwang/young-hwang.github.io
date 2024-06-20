@@ -2,8 +2,11 @@
 layout: post
 title: Redis Architecture
 subtitle: 
-categories: redis
+categories: [redis]
 tags: [redis, architecture]
+toc: true
+math: true
+mermaid: true
 ---
 
 ## Redis Architecture

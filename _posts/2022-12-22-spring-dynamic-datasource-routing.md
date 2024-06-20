@@ -1,9 +1,14 @@
 ---
-layout: post
 title: Dynamic Datasource Routing 적용기
-subtitle:
-categories: spring
+description: Dynamic Datasource Routing
+author: young hwang
+date: 2022-12-22 00:00:00 +0900
+categories: [spring]
 tags: [spring, spring data]
+pin: true
+math: true
+mermaid: true
+toc: true
 ---
 
 ## 언제 사용하는가?

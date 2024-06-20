@@ -4,6 +4,9 @@ title: Oracle 점검을 위한 유용한 SQL 쿼리문 모음
 subtitle:
 categories: database
 tags: [oracle database, tablespace]
+pin: true
+math: true
+mermaid: true
 ---
 
 Oracle 데이터베이스를 운영하면서 일상적인 관리와 모니터링이 필수적입니다. 

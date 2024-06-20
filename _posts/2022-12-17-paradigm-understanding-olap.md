@@ -4,6 +4,9 @@ title: OLAP 의 이해
 subtitle:
 categories: paradigm
 tags: [olap]
+pin: true
+math: true
+mermaid: true
 ---
 
 온라인 분석 처리 또는 OLAP 은 컴퓨팅에서 다차원 분석(MDA) 쿼리에 신속하게응답하는 접근 방식이다.

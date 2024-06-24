@@ -3,7 +3,7 @@ name: CD
 on:
   push:
     branches:
-      - production
+      - main
     tags-ignore:
       - "**"
 

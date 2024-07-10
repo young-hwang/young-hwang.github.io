@@ -15,7 +15,7 @@ toc: true
 
 급박하게 고객사 이슈를 대응하던 중 Redis Connection 과 관련된 이슈가 등록되었다. 어떠한 이유에서인지 모르겠지만 고객사에서 서비스 구동 시 아래와 같이 Redis Connection의 socket 이 알수 없는 이유로 종료가 발생하는 것이다.
 
-![SocketClosedUnexpectedlyError](https://1drv.ms/i/s!AnRpxBH-5oQIjV9YEvwOR42ppv0Y?e=k9ES3P)
+![SocketClosedUnexpectedlyError](https://onedrive.live.com/embed?resid=884E6FE11C46974%211759&authkey=%21AIV8ZZsW88ebEm4&width=984&height=323)
 
 SocketClosedUnexpectedlyError
 
@@ -47,7 +47,7 @@ export default class RedisTemplate {
 
 이를 적용하여 테스트 진행 시에는 문제가 발생하지 않았으나 라이브에 배포 후 또 다른 문제가 발생하게 되었다. 바로 ‘EADDRNOTAVAIL’이라는 에러 코드가 나타나면서 connection이 실패하게 된다.
 
-![Screenshot 2024-06-24 at 10.46.59.png](https://photos.onedrive.com/share/884E6FE11C46974!1758?cid=884E6FE11C46974&resId=884E6FE11C46974!1758&authkey=!AEX8hZPVHom7n7Y&ithint=photo&e=TJ1s31)
+![Screenshot 2024-06-24 at 10.46.59.png](https://onedrive.live.com/embed?resid=884E6FE11C46974%211758&authkey=%21AOHwwBVUWSnksHU&width=1264&height=544)
 
 그렇다면 ‘EADDRNOTAVAIL’ 에러 코드는 무엇을 의미할까?
 
@@ -123,11 +123,11 @@ TIME_WAIT 상태에 있는 동안은 같은 연결이 발생하지 못하도록 
 
 server 측은 listen port 만 사용하기에 문제가 없다. 소켓의 주소는 local과 foreign address 가 페어(pair)로 되어있는데 서버측은 listen port로 고정되어 클라이언트 주소만 달라진다. 예를 들어 ssh 서버에 접속한 클라이언트가 3개가 있는 그림을 보면 쉽게 이해가 갈 것이다.
 
-![client 에서 서버에 여러개 접근시의 netstat](https://1drv.ms/i/s!AnRpxBH-5oQIjVzCPS5N6uS5l1zi?e=caLmCP)
+![client 에서 서버에 여러개 접근시의 netstat](https://onedrive.live.com/embed?resid=884E6FE11C46974%211756&authkey=%21AEBkTQJOTCp9nZU&width=642&height=127)
 
 client 에서 서버에 여러개 접근시의 netstat
 
-![server 에서의 netstat 상태](https://1drv.ms/i/s!AnRpxBH-5oQIjV2IM4lqLPcLKCd4?e=b0h7uh)
+![server 에서의 netstat 상태](https://onedrive.live.com/embed?resid=884E6FE11C46974%211757&authkey=%21ADsvUXa1ezzutSc&width=672&height=136)
 
 server 에서의 netstat 상태
 

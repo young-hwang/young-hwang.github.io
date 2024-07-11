@@ -2,8 +2,8 @@
 layout: post
 title: EADDNOTVAIL ERROR
 subtitle:
-categories: LINUX
-tags: [TCP, LINUX]
+categories: linux
+tags: [tcp, linux]
 toc: true
 ---
 

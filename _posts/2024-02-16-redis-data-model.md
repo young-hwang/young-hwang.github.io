@@ -1,9 +1,12 @@
 ---
-layout: post
 title: Redis Data Model
 subtitle:
 categories: redis
 tags: [redis, data model]
+date: 2024-02-16 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 Redis DB에서 설계 가능한 데이터 모델 유형들과 실제 구현 방법에 대해 정리해 보겠습니다.

@@ -1,10 +1,9 @@
 ---
-layout: post
 title: Oracle 점검을 위한 유용한 SQL 쿼리문 모음
-subtitle:
 categories: database
 tags: [oracle database, tablespace]
-pin: true
+date: 2016-11-09 00:00:00 0000
+toc: true
 math: true
 mermaid: true
 ---

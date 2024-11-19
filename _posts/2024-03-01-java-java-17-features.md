@@ -1,9 +1,11 @@
 ---
-layout: post
 title: Java 17 Features
-subtitle:
 categories: java
 tags: [java, java 17, JDK 17, switch, sealed, SplittableRandom]
+date: 2024-03-01 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 Spring Boot 3.0 출시 이후 Java 17 버전이 필수가 되었습니다.

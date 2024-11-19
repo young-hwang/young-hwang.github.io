@@ -1,9 +1,11 @@
 ---
-layout: post
 title: vanilla javascript를 이용한 객체 배열 그룹핑
-subtitle:
 categories: javascript
 tags: [javascript, grouping]
+date: 2023-09-09 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 Javascript에서 객체 배열을 이용하여 특정 속성을 기준으로 그룹핑하고자 하였다.

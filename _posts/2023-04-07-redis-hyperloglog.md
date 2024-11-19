@@ -1,9 +1,11 @@
 ---
-layout: post
 title: HyperLogLog를 이용한 확률적 추론
-subtitle:
 categories: redis
 tags: [algorithm, hyperloglog, redis]
+date: 2023-04-07 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 ## 문제점

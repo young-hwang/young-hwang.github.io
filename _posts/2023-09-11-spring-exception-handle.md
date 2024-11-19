@@ -1,9 +1,11 @@
 ---
-layout: post
 title: Spring MVC에서 exception handling 하기-01
-subtitle:
 categories: spring
 tags: [spring, exception]
+date: 2023-09-11 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 스프링을 사용하여 예외 처리를 구현하는 방법에 대하여 정리한다.

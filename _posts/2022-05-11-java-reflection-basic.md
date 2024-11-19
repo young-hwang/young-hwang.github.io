@@ -1,9 +1,11 @@
 ---
-layout: post
 title: Reflection 이해
-subtitle:
 categories: java
 tags: [java, reflection]
+date: 2022-05-11 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ----
 
 일반적으로 클래스를 통해 객체를 생성했다. 

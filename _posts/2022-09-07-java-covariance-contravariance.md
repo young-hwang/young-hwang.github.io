@@ -1,9 +1,11 @@
 ---
-layout: post
 title: 공변성과 반공변성
-subtitle:
 categories: java
 tags: [java, covariance, contravariance, 공변성, 반공변성]
+date: 2022-09-07 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 공변성과 반공변성은 제네릭 프로그래밍과 타입 시스템에서 중요한 개념이다. 

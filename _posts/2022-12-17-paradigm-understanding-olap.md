@@ -1,10 +1,9 @@
 ---
-layout: post
 title: OLAP 의 이해
-subtitle:
 categories: paradigm
 tags: [olap]
-pin: true
+date: 2022-12-17 00:00:00 0000
+toc: true
 math: true
 mermaid: true
 ---

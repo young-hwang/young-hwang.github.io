@@ -1,9 +1,11 @@
 ---
-layout: post
 title: K-DEVCON 발표 - 웹 페이지 성능 측정 지표
-subtitle:
 categories: web
 tags: [web, web vitals, core web vitals, cwv]
+date: 2023-12-03 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 ## K-DEVCON 발표

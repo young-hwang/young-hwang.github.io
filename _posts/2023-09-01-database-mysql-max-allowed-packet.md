@@ -1,24 +1,26 @@
 ---
-layout: post
 title: mysql에서 max_allowed_packet 설정은 언제 사용하는가?
-subtitle:
 categories: database
 tags: [mysql, max_allowed_packet]
+date: 2023-09-01 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 max_allowed_packet은 서버에서 읽거나 생성되어지는 MySQL 네트워크 패킷의 최대 사이즈를 의미합니다.
 parameter는 요구사항에 따라 변경할 수 있는 기본값, 최소값, 최대값을 제공합니다.
 
-| name | description |
-|--|--|
-| Variable | max_allowed_packet |
-| Configuration | Supported |
-| Scope | session, global |
-| Status | Dynamic |
-| Data Type | BIGINT UNSIGNED |
-| Default Value | 16777216 |
-| Minimum Value | 1024 |
-| Maximum Value | 1073741824 |
+| name          | description        |
+| ------------- | ------------------ |
+| Variable      | max_allowed_packet |
+| Configuration | Supported          |
+| Scope         | session, global    |
+| Status        | Dynamic            |
+| Data Type     | BIGINT UNSIGNED    |
+| Default Value | 16777216           |
+| Minimum Value | 1024               |
+| Maximum Value | 1073741824         |
 
 ## 사용 방법
 

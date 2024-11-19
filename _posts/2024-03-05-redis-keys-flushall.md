@@ -1,10 +1,11 @@
 ---
-layout: post
 title: KEYS와 FLUSHALL 명령어를 쓰지 말아야되는 이유
-subtitle:
 categories: redis
 tags: [redis]
+date: 2024-03-05 00:00:00 0000
 toc: true
+math: true
+mermaid: true
 ---
 
 Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있습니다.
@@ -29,13 +30,13 @@ redis 127.0.0.1:6379> keys user:*
 
 지원하는 glob-style 패턴을 살펴보면 다음과 같습니다.
 
-| 패턴 | 설명 |
-|---|---|
-| h?llo |matches hello, hallo and hxllo|
-| h*llo |matches hllo and heeeello|
-| h[ae]llo |matches hello and hallo, but not hillo|
-| h[^e]llo |matches hallo, hbllo, ... but not hello|
-| h[a-b]llo |matches hallo and hbllo|
+| 패턴      | 설명                                    |
+| --------- | --------------------------------------- |
+| h?llo     | matches hello, hallo and hxllo          |
+| h*llo     | matches hllo and heeeello               |
+| h[ae]llo  | matches hello and hallo, but not hillo  |
+| h[^e]llo  | matches hallo, hbllo, ... but not hello |
+| h[a-b]llo | matches hallo and hbllo                 |
 
 여기까지 살펴보면 `KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 강력한 명령어라는 것을 알 수 있습니다.
 하지만 실제 서비스에서 해당 명령을 사용하면 장애로 이어질 가능성이 높습니다.

@@ -1,9 +1,11 @@
 ---
-layout: post
 title: 커서, 임시 테이블, 테이블 변수란
-subtitle:
 categories: database
 tags: [sql-server, table variable]
+date: 2021-07-08 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 데이터 처리는 대부분 집합 단위로 이루어지기도 하지만 행 단위로 처리하기도 합니다.

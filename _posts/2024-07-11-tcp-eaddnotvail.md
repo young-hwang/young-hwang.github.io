@@ -1,10 +1,11 @@
 ---
-layout: post
 title: EADDNOTVAIL ERROR
-subtitle:
 categories: linux
 tags: [tcp, linux]
+date: 2024-07-11 00:00:00 0000
 toc: true
+math: true
+mermaid: true
 ---
 
 항상 시간은 없고 급박하게 개발을 진행해 오면서 수 많은 오류를 만들어 왔다고 생각 됩니다. 하지만 이번에는 너무 기본적인 것을 놓쳐 다는 생각에 다시는 발생하지 않도록 회고를 하고자 한다.

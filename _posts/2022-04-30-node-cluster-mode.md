@@ -1,9 +1,11 @@
 ---
-layout: post
 title: PM2 Cluster Mode의 이해
-subtitle:
 categories: node
 tags: [pm2, node, cluster]
+date: 2022-04-30 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 ## PM2 잘 사용한다. 나 빼고

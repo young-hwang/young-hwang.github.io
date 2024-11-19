@@ -1,9 +1,8 @@
 ---
-layout: post
 title: Redis Architecture
-subtitle: 
 categories: [redis]
 tags: [redis, architecture]
+date: 2024-02-19 00:00:00 0000
 toc: true
 math: true
 mermaid: true
@@ -250,14 +249,14 @@ $ strace -p 16310
 
 ## System 사양
 
-|          내용           |       최소 사양       |                 권장 사양                 |
-|:---------------------:|:-----------------:|:-------------------------------------:|
-| # of node per cluster |      2 Cores      |              >= 3 Cores               |
-|  # of cores per node  |      3 Cores      |              >= 8 Cores               |
-|          RAM          |       15GB        |                >= 30GB                |
-|        Storage        | SATA(RAM 크기 * 10) |                 40GB                  |
+|         내용          |      최소 사양      |                권장 사양                |
+| :-------------------: | :-----------------: | :-------------------------------------: |
+| # of node per cluster |       2 Cores       |               >= 3 Cores                |
+|  # of cores per node  |       3 Cores       |               >= 8 Cores                |
+|          RAM          |        15GB         |                 >= 30GB                 |
+|        Storage        | SATA(RAM 크기 * 10) |                  40GB                   |
 | Persistentce Storage  |    RAM 크기 * 3     | >= RAM 크기 * 6 \n (>= RAM + Flash * 5) |
-|    Network    |        1G         |                >= 10G                 |
+|        Network        |         1G          |                 >= 10G                  |
 
 서버의 사양을 어떻게 결정할 것인가?
 

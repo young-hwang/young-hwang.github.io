@@ -1,9 +1,11 @@
 ---
-layout: post
 title: Initializer Block(초기화 블럭) 의 이해
-subtitle:
 categories: java
 tags: [java, initializer block]
+date: 2021-04-13 00:00:00 0000
+toc: true
+math: true
+mermaid: true
 ---
 
 ```java

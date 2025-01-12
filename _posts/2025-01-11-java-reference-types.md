@@ -2,7 +2,7 @@
 title: Strong, Weak, Soft and Phantom References in Java
 categories: java
 tags: [java, reference, strong reference, soft reference, weak reference, phantom reference]
-date: 2025-01-04 00:00:00 0000
+date: 2025-01-11 00:00:00 0000
 toc: true
 math: true
 mermaid: true

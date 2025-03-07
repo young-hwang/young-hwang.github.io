@@ -44,15 +44,15 @@ WITH (NOLOCK) 힌트는 SQL Server에서 성능 향상을 위해 자주 사용�
 ```sql
 -- 트랜잭션 A: 데이터 수정 중이지만 아직 커밋하지 않음
 BEGIN TRANSACTION
-    UPDATE Customers SET CreditLimit = 10000 WHERE CustomerID = 1
-    -- 이 시점에서 커밋하지 않은 상태
+UPDATE Customers SET CreditLimit = 10000 WHERE CustomerID = 1
+-- 이 시점에서 커밋하지 않은 상태
     
 -- 트랜잭션 B: NOLOCK으로 데이터 읽기
-SELECT CreditLimit FROM Customers WITH (NOLOCK) WHERE CustomerID = 1
+SELECT CreditLimit FROM Customers WITH (NOLOCK) WHERE CustomerID = 1
 -- 결과: 10000 (아직 커밋되지 않은 값)
 
 -- 트랜잭션 A: 롤백 결정
-ROLLBACK TRANSACTION
+ROLLBACK TRANSACTION
 -- 실제 데이터는 원래 값으로 복원됨
 ```
 
@@ -64,15 +64,17 @@ ROLLBACK TRANSACTION
 한 트랜잭션 내에서 여러 테이블이나 관련 데이터를 조회할 때, 각 쿼리는 서로 다른 시점의 데이터를 볼 수 있습니다.
 
 ```sql
-BEGIN TRANSACTION
-    -- 주문 헤더 정보 조회
-    SELECT * FROM Orders WITH (NOLOCK) WHERE OrderID = 1000
+BEGIN TRANSACTION
 
-    -- 다른 트랜잭션에서 주문 상세 정보 변경 중...
+-- 주문 헤더 정보 조회
+SELECT * FROM Orders WITH (NOLOCK) WHERE OrderID = 1000
 
-    -- 주문 상세 정보 조회
-    SELECT * FROM OrderDetails WITH (NOLOCK) WHERE OrderID = 1000
-COMMIT TRANSACTION
+-- 다른 트랜잭션에서 주문 상세 정보 변경 중...
+
+-- 주문 상세 정보 조회
+SELECT * FROM OrderDetails WITH (NOLOCK) WHERE OrderID = 1000
+
+COMMIT TRANSACTION
 ```
 
 **문제점**: 주문 헤더와 상세 정보가 서로 일치하지 않는 상태(예: 헤더의 총액과 상세 항목의 합계가 다름)로 조회될 수 있습니다.
@@ -83,11 +85,11 @@ COMMIT TRANSACTION
 
 ```sql
 -- 재고 확인 (NOLOCK 사용)
-SELECT Quantity FROM Inventory WITH (NOLOCK) WHERE ProductID = 100
+SELECT Quantity FROM Inventory WITH (NOLOCK) WHERE ProductID = 100
 -- 결과: 5 (다른 트랜잭션에서 -3으로 업데이트 중이지만 아직 커밋되지 않음)
 
 -- 재고가 충분하다고 판단하여 주문 처리
-INSERT INTO Orders (ProductID, Quantity) VALUES (100, 5)
+INSERT INTO Orders (ProductID, Quantity) VALUES (100, 5)
 
 -- 다른 트랜잭션이 롤백되면 실제 재고는 원래 값(예: 2)으로 복원됨
 
@@ -102,7 +104,7 @@ commit되지 않은 데이터를 포함한 집계 결과는 실제 데이터와
 
 ```sql
 -- 매출 합계 계산 (NOLOCK 사용)
-SELECT SUM(Amount) AS TotalSales FROM Sales WITH (NOLOCK)
+SELECT SUM(Amount) AS TotalSales FROM Sales WITH (NOLOCK)
 -- 결과에 아직 커밋되지 않은 대규모 거래가 포함될 수 있음
 
 -- 이 결과를 기반으로 보너스 계산
@@ -117,11 +119,11 @@ SELECT SUM(Amount) AS TotalSales FROM Sales WITH (NOLOCK)
 
 ```sql
 -- 중복 이메일 확인 (NOLOCK 사용)
-SELECT COUNT(*) FROM Users WITH (NOLOCK) WHERE Email = 'user@example.com'
+SELECT COUNT(*) FROM Users WITH (NOLOCK) WHERE Email = 'user@example.com'
 -- 결과: 0 (다른 트랜잭션에서 이 이메일로 사용자 추가 중이지만 아직 커밋되지 않음)
 
 -- 중복이 없다고 판단하여 같은 이메일로 사용자 추가
-INSERT INTO Users (Email, Name) VALUES ('user@example.com', 'New User')
+INSERT INTO Users (Email, Name) VALUES ('user@example.com', 'New User')
 
 -- 다른 트랜잭션이 커밋되면 동일한 이메일을 가진 두 사용자가 생성됨
 ```
@@ -134,19 +136,20 @@ NOLOCK을 사용하면 다른 트랜잭션의 롤백 여부를 알 수 없어, 
 
 ```sql
 -- 트랜잭션 A: 중요한 상태 변경
-BEGIN TRANSACTION
-    UPDATE Orders SET Status = 'Shipped' WHERE OrderID = 5000
-    -- 문제 발생으로 롤백 예정
+BEGIN TRANSACTION
+
+UPDATE Orders SET Status = 'Shipped' WHERE OrderID = 5000
+-- 문제 발생으로 롤백 예정
 
 -- 트랜잭션 B: 상태 확인 및 후속 작업
-SELECT Status FROM Orders WITH (NOLOCK) WHERE OrderID = 5000
+SELECT Status FROM Orders WITH (NOLOCK) WHERE OrderID = 5000
 -- 결과: 'Shipped' (아직 롤백되지 않은 상태)
 
 -- 배송 상태로 판단하여 고객에게 배송 알림 발송
-EXEC SendShippingNotification @OrderID = 5000
+EXEC SendShippingNotification @OrderID = 5000
 
 -- 트랜잭션 A: 롤백
-ROLLBACK TRANSACTION
+ROLLBACK TRANSACTION
 
 -- 실제로는 주문이 배송되지 않았지만, 고객은 이미 배송 알림을 받음
 ```
@@ -162,12 +165,12 @@ NOLOCK의 문제점을 인식하면서도 성능상의 이유로 사용해야 �
 
 ```sql
 -- 데이터베이스에서 스냅샷 격리 활성화
-ALTER DATABASE [YourDatabase] SET ALLOW_SNAPSHOT_ISOLATION ON
+ALTER DATABASE [YourDatabase] SET ALLOW_SNAPSHOT_ISOLATION ON
 
 -- 트랜잭션에서 스냅샷 격리 사용
-SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+SET TRANSACTION ISOLATION LEVEL SNAPSHOT
 
-BEGIN TRANSACTION
+BEGIN TRANSACTION
 -- 쿼리 실행
 
 COMMIT
@@ -180,7 +183,7 @@ COMMIT
 
 ```sql
 -- 데이터베이스에서 READ COMMITTED SNAPSHOT 활성화
-ALTER DATABASE [YourDatabase] SET READ_COMMITTED_SNAPSHOT ON
+ALTER DATABASE [YourDatabase] SET READ_COMMITTED_SNAPSHOT ON
 ```
 
 각 문장이 실행될 때마다 일관된 스냅샷을 제공합니다.
@@ -210,7 +213,7 @@ NOLOCK으로 읽은 데이터를 사용하기 전에 추가 검증 단계를 �
 ### 4. 테이블 힌트 조합 사용
 
 ```sql
-SELECT * FROM Orders WITH (READCOMMITTED)
+SELECT * FROM Orders WITH (READCOMMITTED)
 ```
 
 특정 테이블에 대해서만 더 높은 격리 수준을 적용할 수 있습니다.

@@ -43,12 +43,12 @@ WITH (NOLOCK) 힌트는 SQL Server에서 성능 향상을 위해 자주 사용�
 
 ```sql
 -- 트랜잭션 A: 데이터 수정 중이지만 아직 커밋하지 않음
-BEGIN TRANSACTION
+BEGIN TRANSACTION
 UPDATE Customers SET CreditLimit = 10000 WHERE CustomerID = 1
 -- 이 시점에서 커밋하지 않은 상태
     
 -- 트랜잭션 B: NOLOCK으로 데이터 읽기
-SELECT CreditLimit FROM Customers WITH (NOLOCK) WHERE CustomerID = 1
+SELECT CreditLimit FROM Customers WITH (NOLOCK) WHERE CustomerID = 1
 -- 결과: 10000 (아직 커밋되지 않은 값)
 
 -- 트랜잭션 A: 롤백 결정
@@ -165,7 +165,7 @@ NOLOCK의 문제점을 인식하면서도 성능상의 이유로 사용해야 �
 
 ```sql
 -- 데이터베이스에서 스냅샷 격리 활성화
-ALTER DATABASE [YourDatabase] SET ALLOW_SNAPSHOT_ISOLATION ON
+ALTER DATABASE [YourDatabase] SET ALLOW_SNAPSHOT_ISOLATION ON
 
 -- 트랜잭션에서 스냅샷 격리 사용
 SET TRANSACTION ISOLATION LEVEL SNAPSHOT

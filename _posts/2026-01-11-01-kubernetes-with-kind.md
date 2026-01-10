@@ -1,5 +1,5 @@
 ---
-title: 13. Provisioning Pod Network Routes
+title: 01. Kubernetes with kind
 categories: kubernetes
 tags: [devops, kubernetes]
 date: 2026-01-11 00:00:00 0000

@@ -60,7 +60,7 @@ let objClone = { ...obj };
 
 Bracket notation(괄호 표기법)은 객체의 프로퍼티에 접근하는 다른 방법 중 하나이다.
 보통 객체의 프로퍼티에 접근하기 위해서는 Dot notation(점 표기법)을 사용할 것이다. 
-간단히 예를 살펴 보겠다.
+간단히 예를 살펴 보다.
 
 ```javascript
 
@@ -80,7 +80,7 @@ console.log(a["name"]);
 ## Grouping Function 만들기
 
 지금까지 Grouping Function을 만들기 위한 javascript의 특징을 살펴보았다. 
-이제부터 본격적으로 함수를 만들어 보겠다. 
+이제부터 본격적으로 함수를 만들어 보다. 
 아래의 함수는 객체 배열의 그룹핑할 컬럼을 기준으로 객체를 배열화하여 객체로 리턴하게 된다.
 
 ```javascript
@@ -126,7 +126,7 @@ const result = grouping(arr, 'key');
 ## 마무리
 
 spread syntax와 bracket notation을 이용하여 데이터를 그룹화해 보았다.
-정말 다양한 곳에서 수시로 사용 되니 눈에 익혀두는게 좋겠다.
+정말 다양한 곳에서 수시로 사용 되니 눈에 익혀두는게 좋다.
 
 ---
 

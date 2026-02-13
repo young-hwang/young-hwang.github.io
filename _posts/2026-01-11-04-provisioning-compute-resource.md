@@ -10,13 +10,13 @@ mermaid: true
 
 # 컴퓨팅 리소스 프로비저닝 - 노드 간 통신 설정
 
-> 이 글에서는 쿠버네티스 클러스터를 구성할 머신들의 정보를 정리하고, Jumpbox에서 모든 노드에 SSH 키 기반으로 접속할 수 있도록 설정합니다. 이 설정이 완료되면 Jumpbox에서 암호 없이 모든 노드를 관리할 수 있습니다.
+> 이 글에서는 쿠버네티스 클러스터를 구성할 머신들의 정보를 정리하고, Jumpbox에서 모든 노드에 SSH 키 기반으로 접속할 수 있도록 설정한다. 이 설정이 완료되면 Jumpbox에서 암호 없이 모든 노드를 관리할 수 있다.
 
 ---
 
 ## 개요
 
-Kubernetes는 Control Plane과 Worker Node를 호스팅할 여러 대의 머신이 필요합니다. 이번 단계에서는 다음 작업을 수행합니다:
+Kubernetes는 Control Plane과 Worker Node를 호스팅할 여러 대의 머신이 필요한다. 이번 단계에서는 다음 작업을 수행한다:
 
 1. **Machine Database 생성**: 각 노드의 IP, 호스트명, 파드 서브넷 정보 정리
 2. **SSH 키 기반 인증 설정**: 비밀번호 없이 모든 노드에 접속 가능하도록 구성
@@ -26,11 +26,11 @@ Kubernetes는 Control Plane과 Worker Node를 호스팅할 여러 대의 머신�
 
 ## Machine Database 생성
 
-텍스트 파일을 활용하여 **Machine Database** 역할을 하는 파일을 생성합니다. 이 파일은 이후 스크립트에서 각 노드에 설정을 배포할 때 반복적으로 사용됩니다.
+텍스트 파일을 활용하여 **Machine Database** 역할을 하는 파일을 생성한다. 이 파일은 이후 스크립트에서 각 노드에 설정을 배포할 때 반복적으로 사용된다.
 
 ### 스키마 정의
 
-한 줄에 하나의 머신 정보를 저장하며, 다음 형식을 따릅니다:
+한 줄에 하나의 머신 정보를 저장하며, 다음 형식을 따른다:
 
 ```
 IPV4_ADDRESS FQDN HOSTNAME POD_SUBNET
@@ -45,7 +45,7 @@ IPV4_ADDRESS FQDN HOSTNAME POD_SUBNET
 
 ### machines.txt 파일 생성
 
-Jumpbox에 접속하여 Machine Database 파일을 생성합니다.
+Jumpbox에 접속하여 Machine Database 파일을 생성한다.
 
 ```bash
 # jumpbox 접속
@@ -67,11 +67,11 @@ EOF
 cat machines.txt
 ```
 
-> **왜 server에는 POD_SUBNET이 없나요?**
+> **왜 server에는 POD_SUBNET이 없나?**
 >
-> `server`는 Control Plane 역할만 수행하며, 이 실습에서는 kubelet이 실행되지 않습니다. 따라서 파드가 스케줄링되지 않으므로 파드 네트워크 대역이 필요 없습니다.
+> `server`는 Control Plane 역할만 수행하며, 이 실습에서는 kubelet이 실행되지 않는다. 따라서 파드가 스케줄링되지 않으므로 파드 네트워크 대역이 필요 없다.
 >
-> Worker 노드(node-0, node-1)에서만 파드가 실행되므로, 각각 고유한 파드 서브넷을 할당합니다.
+> Worker 노드(node-0, node-1)에서만 파드가 실행되므로, 각각 고유한 파드 서브넷을 할당한다.
 
 ### 파드 네트워크 구조
 
@@ -128,28 +128,28 @@ IP: 192.168.10.102, FQDN: node-1.kubernetes.local, HOST: node-1, SUBNET: 10.200.
 
 ## SSH 키 기반 인증 설정
 
-Jumpbox에서 모든 노드에 비밀번호 없이 SSH 접속할 수 있도록 설정합니다. 이렇게 하면 이후 단계에서 스크립트를 통한 자동화 작업이 가능해집니다.
+Jumpbox에서 모든 노드에 비밀번호 없이 SSH 접속할 수 있도록 설정한다. 이렇게 하면 이후 단계에서 스크립트를 통한 자동화 작업이 가능해진다.
 
 ### 현재 SSH 설정 확인
 
-먼저 각 노드의 SSH 서버가 비밀번호 인증을 허용하는지 확인합니다.
+먼저 각 노드의 SSH 서버가 비밀번호 인증을 허용하는지 확인한다.
 
 ```bash
 # SSH 데몬 설정 확인 (주석 제외)
 grep "^[^#]" /etc/ssh/sshd_config
 ```
 
-다음 설정이 활성화되어 있어야 합니다:
+다음 설정이 활성화되어 있어야 한다:
 ```
 PasswordAuthentication yes
 PermitRootLogin yes
 ```
 
-> 이 설정은 `init_cfg.sh` 스크립트에서 이미 적용되어 있습니다.
+> 이 설정은 `init_cfg.sh` 스크립트에서 이미 적용되어 있다.
 
 ### SSH 키 쌍 생성
 
-Jumpbox에서 새로운 SSH 키 쌍을 생성합니다.
+Jumpbox에서 새로운 SSH 키 쌍을 생성한다.
 
 ```bash
 # RSA 키 쌍 생성 (비밀번호 없이)
@@ -171,7 +171,7 @@ ls -l /root/.ssh
 
 ### 공개 키 배포
 
-생성한 공개 키를 모든 노드에 복사합니다. `sshpass`를 사용하여 비밀번호를 자동으로 입력합니다.
+생성한 공개 키를 모든 노드에 복사한다. `sshpass`를 사용하여 비밀번호를 자동으로 입력한다.
 
 ```bash
 # 모든 노드에 공개 키 복사
@@ -190,7 +190,7 @@ done < machines.txt
 
 ### 키 배포 확인
 
-각 노드에 공개 키가 정상적으로 등록되었는지 확인합니다.
+각 노드에 공개 키가 정상적으로 등록되었는지 확인한다.
 
 ```bash
 # 각 노드의 authorized_keys 파일 확인
@@ -202,7 +202,7 @@ done < machines.txt
 
 > **ssh -n 옵션이란?**
 >
-> `-n` 옵션은 표준 입력을 `/dev/null`로 리다이렉트합니다. `while read` 루프 안에서 ssh를 실행할 때, ssh가 루프의 표준 입력을 소비하는 것을 방지합니다.
+> `-n` 옵션은 표준 입력을 `/dev/null`로 리다이렉트한다. `while read` 루프 안에서 ssh를 실행할 때, ssh가 루프의 표준 입력을 소비하는 것을 방지한다.
 
 ---
 
@@ -226,7 +226,7 @@ node-1
 
 ### 호스트명 기반 접속 테스트
 
-`/etc/hosts` 파일에 호스트명이 등록되어 있으므로 호스트명으로도 접속할 수 있습니다.
+`/etc/hosts` 파일에 호스트명이 등록되어 있으므로 호스트명으로도 접속할 수 있다.
 
 ```bash
 # /etc/hosts 파일 확인
@@ -266,7 +266,7 @@ node-1 aarch64 GNU/Linux
 
 ## FQDN(Fully Qualified Domain Name) 확인
 
-각 노드가 올바른 FQDN을 반환하는지 확인합니다.
+각 노드가 올바른 FQDN을 반환하는지 확인한다.
 
 ```bash
 # 각 노드의 /etc/hosts 파일 확인
@@ -292,7 +292,7 @@ node-1.kubernetes.local
 
 ## 연결 구성 요약
 
-설정이 완료되면 다음과 같은 연결이 가능합니다:
+설정이 완료되면 다음과 같은 연결이 가능한다:
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
@@ -330,13 +330,13 @@ node-1.kubernetes.local
 Permission denied (publickey,password)
 ```
 
-**해결**: 대상 서버의 SSH 설정을 확인합니다.
+**해결**: 대상 서버의 SSH 설정을 확인한다.
 
 ```bash
 ssh root@<IP> grep -E "PasswordAuthentication|PermitRootLogin" /etc/ssh/sshd_config
 ```
 
-`PasswordAuthentication yes`와 `PermitRootLogin yes`가 설정되어 있어야 합니다.
+`PasswordAuthentication yes`와 `PermitRootLogin yes`가 설정되어 있어야 한다.
 
 ### sshpass 명령을 찾을 수 없음
 
@@ -356,7 +356,7 @@ apt-get update && apt-get install -y sshpass
 Host key verification failed
 ```
 
-**해결**: known_hosts 파일을 초기화하거나, `-o StrictHostKeyChecking=no` 옵션을 사용합니다.
+**해결**: known_hosts 파일을 초기화하거나, `-o StrictHostKeyChecking=no` 옵션을 사용한다.
 
 ```bash
 # known_hosts 초기화
@@ -368,9 +368,9 @@ ssh -o StrictHostKeyChecking=no root@<HOST>
 
 ### while 루프에서 첫 번째 노드만 실행됨
 
-**원인**: `ssh`가 표준 입력을 소비하여 루프가 중단됩니다.
+**원인**: `ssh`가 표준 입력을 소비하여 루프가 중단된다.
 
-**해결**: `ssh -n` 옵션을 사용합니다.
+**해결**: `ssh -n` 옵션을 사용한다.
 
 ```bash
 # 잘못된 예
@@ -396,4 +396,4 @@ done < machines.txt
 - IP 주소 및 호스트명 기반 SSH 접속 확인
 - FQDN 설정 확인
 
-이제 Jumpbox에서 모든 노드에 비밀번호 없이 접속할 수 있습니다. 다음 단계에서는 이 연결을 활용하여 CA(Certificate Authority)를 설정하고 TLS 인증서를 생성합니다.
+이제 Jumpbox에서 모든 노드에 비밀번호 없이 접속할 수 있다. 다음 단계에서는 이 연결을 활용하여 CA(Certificate Authority)를 설정하고 TLS 인증서를 생성한다.

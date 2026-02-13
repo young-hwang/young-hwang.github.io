@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-항상 시간은 없고 급박하게 개발을 진행해 오면서 수 많은 오류를 만들어 왔다고 생각 됩니다. 하지만 이번에는 너무 기본적인 것을 놓쳐 다는 생각에 다시는 발생하지 않도록 회고를 하고자 한다.
+항상 시간은 없고 급박하게 개발을 진행해 오면서 수 많은 오류를 만들어 왔다고 생각 된다. 하지만 이번에는 너무 기본적인 것을 놓쳐 다는 생각에 다시는 발생하지 않도록 회고를 하고자 한다.
 
 아시다시피 TCP(Transmission Control Protocol, 전송 제어 프로토콜)는 인터넷 프로토콜 스위트(Internet Protocol Suite)의 핵심 프로토콜 중 하나 이다. 하지만 얼마나 이를 이해하고 있었는지 부끄러울 따름이다.
 
@@ -54,7 +54,7 @@ export default class RedisTemplate {
 
 ## TCP 상태 전이도(TCP State Transition)
 
-EADDRNOTAVAIL Error를 살펴보기 전에 먼저 TCP State Transition에 대해서 살펴보겠다. 흔히 우리가 TCP를 공부 할 때 server와 client 연결 설정을 위해서는 3-Handshake가 일어난다고 알고 있을 것이다.
+EADDRNOTAVAIL Error를 살펴보기 전에 먼저 TCP State Transition에 대해서 살펴본다. 흔히 우리가 TCP를 공부 할 때 server와 client 연결 설정을 위해서는 3-Handshake가 일어난다고 알고 있을 것이다.
 
 ```
 State      Client                    Server       State
@@ -92,7 +92,7 @@ State      Client                    Server       State
 
 ## TIME_WAIT은 왜 필요한가?
 
-그렇다면 한가지 의문 사항이 생긴다. server에서 client로 FIN segment를 보낸 후 client는 메시지를 받으면 ACK segment를 server로 보내면서 TIME_WAIT 상태가 됩니다. 즉 서로간의 확인하에 연결이 끊기게 됩니다. 근데 이 상태에서 곧바로 CLOSED 상태가 되는 것이 아닌 2 MSL(maximum segment lifetime, 1~4분) 동안 TIME_WAIT 상태를 유지 해야 할까?
+그렇다면 한가지 의문 사항이 생긴다. server에서 client로 FIN segment를 보낸 후 client는 메시지를 받으면 ACK segment를 server로 보내면서 TIME_WAIT 상태가 된다. 즉 서로간의 확인하에 연결이 끊기게 된다. 근데 이 상태에서 곧바로 CLOSED 상태가 되는 것이 아닌 2 MSL(maximum segment lifetime, 1~4분) 동안 TIME_WAIT 상태를 유지 해야 할까?
 
 그 이유는 아래의 2가지 이유로 설명 가능하다.
 
@@ -184,7 +184,7 @@ TCP 클라이언트측은 주로 socket, connect, send/recv, close 순서로 함
 
 이를 없애기 위해서는 SO_REUSEADDR 옵션을 이용하여 간단히 해결이 가능하다.
 
-또는 LINGER를 사용할 수도 있는데 이는 RST segment를 보내 socket을 즉시 close 한다는 것만 기억하면 되겠다. 그리고 RST를 사용한다고 해서 꼭 나쁜 것은 아니며 명시적으로 application layer의 패킷에서 약속된 종료 메시지를 주고 받거나 IoT 시스템, 스트리밍의 경우 종종 사용된다.
+또는 LINGER를 사용할 수도 있는데 이는 RST segment를 보내 socket을 즉시 close 한다는 것만 기억하면 되다. 그리고 RST를 사용한다고 해서 꼭 나쁜 것은 아니며 명시적으로 application layer의 패킷에서 약속된 종료 메시지를 주고 받거나 IoT 시스템, 스트리밍의 경우 종종 사용된다.
 
 ---
 

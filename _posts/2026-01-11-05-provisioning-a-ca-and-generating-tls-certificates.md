@@ -10,13 +10,13 @@ mermaid: true
 
 # CA 프로비저닝 및 TLS 인증서 생성
 
-> 이 글에서는 쿠버네티스 클러스터의 보안 통신을 위한 PKI(Public Key Infrastructure) 인프라를 구축합니다. OpenSSL을 사용하여 CA(Certificate Authority)를 생성하고, 각 컴포넌트를 위한 TLS 인증서를 발급합니다.
+> 이 글에서는 쿠버네티스 클러스터의 보안 통신을 위한 PKI(Public Key Infrastructure) 인프라를 구축한다. OpenSSL을 사용하여 CA(Certificate Authority)를 생성하고, 각 컴포넌트를 위한 TLS 인증서를 발급한다.
 
 ---
 
 ## 개요
 
-쿠버네티스의 모든 컴포넌트들은 TLS를 통해 암호화된 통신을 합니다. 이를 위해 다음 인증서들이 필요합니다:
+쿠버네티스의 모든 컴포넌트들은 TLS를 통해 암호화된 통신을 한다. 이를 위해 다음 인증서들이 필요한다:
 
 | 인증서 | 용도 | 사용 컴포넌트 |
 |--------|------|---------------|
@@ -52,7 +52,7 @@ mermaid: true
 
 ### PKI(Public Key Infrastructure)란?
 
-PKI는 디지털 인증서를 생성, 관리, 배포하는 시스템입니다. 핵심 개념:
+PKI는 디지털 인증서를 생성, 관리, 배포하는 시스템이다. 핵심 개념:
 
 | 용어 | 설명 |
 |------|------|
@@ -72,7 +72,7 @@ PKI는 디지털 인증서를 생성, 관리, 배포하는 시스템입니다. �
 
 ## 참고: Kind 클러스터의 인증서 구조
 
-Kind 또는 kubeadm으로 생성한 클러스터의 인증서 구조를 참고로 확인해봅니다.
+Kind 또는 kubeadm으로 생성한 클러스터의 인증서 구조를 참고로 확인해본다.
 
 ```bash
 # Kind 클러스터에서 인증서 만료일 확인
@@ -94,7 +94,7 @@ etcd-ca                 Jan 08, 2036 04:57 UTC   9y
 front-proxy-ca          Jan 08, 2036 04:57 UTC   9y
 ```
 
-> **참고**: kubeadm은 3개의 CA를 사용합니다:
+> **참고**: kubeadm은 3개의 CA를 사용한다:
 > - `ca`: 쿠버네티스 컴포넌트용
 > - `etcd-ca`: etcd 전용
 > - `front-proxy-ca`: API aggregation용
@@ -134,7 +134,7 @@ docker exec -it myk8s-control-plane tree /etc/kubernetes/pki
 
 ## ca.conf 설정 파일 이해
 
-OpenSSL 설정 파일(`ca.conf`)은 인증서 생성에 필요한 모든 정보를 담고 있습니다.
+OpenSSL 설정 파일(`ca.conf`)은 인증서 생성에 필요한 모든 정보를 담고 있다.
 
 ### 전체 구조 개요
 
@@ -199,7 +199,7 @@ O  = system:masters                          # 쿠버네티스 슈퍼유저 그�
 > | CN (Common Name) | User | 사용자 이름 |
 > | O (Organization) | Group | 그룹 멤버십 |
 >
-> `O = system:masters`는 쿠버네티스의 슈퍼유저 그룹으로, 모든 RBAC 권한을 우회합니다.
+> `O = system:masters`는 쿠버네티스의 슈퍼유저 그룹으로, 모든 RBAC 권한을 우회한다.
 
 ### Worker 노드 (kubelet) 섹션
 
@@ -222,7 +222,7 @@ O  = system:nodes                            # Node Authorizer 그룹
 
 > **Node Authorizer란?**
 >
-> 쿠버네티스의 특수 인가 모드로, kubelet의 API 요청을 제어합니다:
+> 쿠버네티스의 특수 인가 모드로, kubelet의 API 요청을 제어한다:
 > - CN은 반드시 `system:node:<nodeName>` 형식이어야 함
 > - O는 반드시 `system:nodes`여야 함
 > - kubelet은 자신의 노드와 관련된 리소스만 접근 가능
@@ -258,15 +258,15 @@ CN = kubernetes
 
 > **SAN (Subject Alternative Name)이 중요한 이유**
 >
-> 클라이언트가 API 서버에 접속할 때, 접속 주소가 인증서의 SAN 목록에 있어야 합니다.
+> 클라이언트가 API 서버에 접속할 때, 접속 주소가 인증서의 SAN 목록에 있어야 한다.
 > 예를 들어 `kubectl`이 `https://server.kubernetes.local:6443`으로 접속하면,
-> 인증서의 SAN에 `server.kubernetes.local`이 포함되어 있어야 합니다.
+> 인증서의 SAN에 `server.kubernetes.local`이 포함되어 있어야 한다.
 
 ---
 
 ## CA 인증서 생성
 
-모든 작업은 jumpbox에서 수행합니다.
+모든 작업은 jumpbox에서 수행한다.
 
 ```bash
 # jumpbox 접속
@@ -344,7 +344,7 @@ Certificate:
 
 ## admin 클라이언트 인증서 생성
 
-kubectl에서 사용할 관리자 인증서를 생성합니다.
+kubectl에서 사용할 관리자 인증서를 생성한다.
 
 ### 개인 키 생성
 
@@ -401,7 +401,7 @@ Certificate:
 
 ## 나머지 컴포넌트 인증서 일괄 생성
 
-루프를 사용하여 나머지 모든 컴포넌트의 인증서를 생성합니다.
+루프를 사용하여 나머지 모든 컴포넌트의 인증서를 생성한다.
 
 ### ca.conf 오타 수정 (필요시)
 
@@ -480,7 +480,7 @@ service-accounts.key
 
 ## 인증서 내용 검증
 
-각 인증서가 올바르게 생성되었는지 확인합니다.
+각 인증서가 올바르게 생성되었는지 확인한다.
 
 ### Worker 노드 인증서
 
@@ -525,7 +525,7 @@ X509v3 Subject Alternative Name:
 
 ## 인증서 배포
 
-생성한 인증서를 각 노드에 배포합니다.
+생성한 인증서를 각 노드에 배포한다.
 
 ### 배포 구조
 
@@ -661,4 +661,4 @@ chmod 600 /var/lib/kubelet/kubelet.key
   - service-accounts
 - Worker 노드와 Control Plane에 인증서 배포
 
-다음 단계에서는 이 인증서들을 사용하여 kubeconfig 파일을 생성합니다.
+다음 단계에서는 이 인증서들을 사용하여 kubeconfig 파일을 생성한다.

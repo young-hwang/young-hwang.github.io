@@ -10,13 +10,13 @@ mermaid: true
 
 # Kubernetes Control Plane 부트스트랩
 
-> 이 글에서는 Kubernetes Control Plane의 핵심 컴포넌트인 API Server, Controller Manager, Scheduler를 설치하고 구성합니다. Control Plane은 클러스터의 두뇌 역할을 하며, 모든 관리 작업을 처리합니다.
+> 이 글에서는 Kubernetes Control Plane의 핵심 컴포넌트인 API Server, Controller Manager, Scheduler를 설치하고 구성한다. Control Plane은 클러스터의 두뇌 역할을 하며, 모든 관리 작업을 처리한다.
 
 ---
 
 ## Control Plane 아키텍처
 
-Kubernetes Control Plane은 세 가지 핵심 컴포넌트로 구성됩니다.
+Kubernetes Control Plane은 세 가지 핵심 컴포넌트로 구성된다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -68,9 +68,9 @@ Kubernetes Control Plane은 세 가지 핵심 컴포넌트로 구성됩니다.
 
 ### service-cluster-ip-range 이슈 해결
 
-원본 튜토리얼에서 누락된 `--service-cluster-ip-range` 옵션을 추가합니다.
+원본 튜토리얼에서 누락된 `--service-cluster-ip-range` 옵션을 추가한다.
 
-> **참고**: 이 이슈는 [GitHub Issue #905](https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/905)에서 확인할 수 있습니다.
+> **참고**: 이 이슈는 [GitHub Issue #905](https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/905)에서 확인할 수 있다.
 
 ```bash
 # ca.conf에서 Service IP 확인
@@ -177,7 +177,7 @@ EOF
 
 ## API Server → Kubelet RBAC 설정
 
-API Server가 kubelet API에 접근하려면 RBAC 권한이 필요합니다.
+API Server가 kubelet API에 접근하려면 RBAC 권한이 필요한다.
 
 ### 왜 필요한가?
 
@@ -414,7 +414,7 @@ systemctl enable kube-apiserver kube-controller-manager kube-scheduler
 systemctl start kube-apiserver kube-controller-manager kube-scheduler
 ```
 
-> **참고**: API Server가 완전히 초기화되는 데 최대 10초가 소요될 수 있습니다.
+> **참고**: API Server가 완전히 초기화되는 데 최대 10초가 소요될 수 있다.
 
 ### 포트 확인
 
@@ -483,7 +483,7 @@ NAME                   ENDPOINTS        AGE
 endpoints/kubernetes   10.0.2.15:6443   110m
 ```
 
-> **kubernetes 서비스**: API Server를 가리키는 기본 서비스. Pod 내에서 `kubernetes.default.svc`로 API Server에 접근할 수 있습니다.
+> **kubernetes 서비스**: API Server를 가리키는 기본 서비스. Pod 내에서 `kubernetes.default.svc`로 API Server에 접근할 수 있다.
 
 ### ClusterRole 확인
 
@@ -507,11 +507,11 @@ Kubernetes가 기본으로 생성하는 주요 ClusterRole:
 
 ## RBAC for Kubelet Authorization 적용
 
-API Server가 kubelet API에 접근할 수 있도록 RBAC을 적용합니다.
+API Server가 kubelet API에 접근할 수 있도록 RBAC을 적용한다.
 
 ### RBAC이 필요한 이유
 
-- **Webhook 인가 모드**: kubelet은 `--authorization-mode=Webhook`으로 설정됩니다
+- **Webhook 인가 모드**: kubelet은 `--authorization-mode=Webhook`으로 설정된다
 - **SubjectAccessReview**: kubelet은 API Server에 권한 확인 요청
 - **필요한 작업**: 메트릭 수집, 로그 조회, Pod 내 명령 실행
 
@@ -541,7 +541,7 @@ kubectl get clusterrolebindings system:kube-apiserver --kubeconfig admin.kubecon
 
 ## Jumpbox에서 Control Plane 확인
 
-Server에서 나와서 Jumpbox에서 API Server에 접근해봅니다.
+Server에서 나와서 Jumpbox에서 API Server에 접근해본다.
 
 ```bash
 exit  # server에서 나가기
@@ -664,6 +664,6 @@ kubectl describe clusterrolebindings system:kube-apiserver --kubeconfig admin.ku
 - API Server → Kubelet RBAC 설정
 - 클러스터 상태 확인
 
-Control Plane이 정상적으로 실행되면 Worker Node를 추가할 준비가 완료됩니다.
+Control Plane이 정상적으로 실행되면 Worker Node를 추가할 준비가 완료된다.
 
-다음 단계에서는 Worker Node에 kubelet, kube-proxy, containerd를 설치하여 클러스터를 완성합니다.
+다음 단계에서는 Worker Node에 kubelet, kube-proxy, containerd를 설치하여 클러스터를 완성한다.

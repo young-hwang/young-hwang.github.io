@@ -17,7 +17,7 @@ Java는 가비지 컬렉션(Garbage Collection, 이하 GC) 메커니즘을 제�
 이러한 문제를 해결하기 위해, 4가지 주요 객체 참조 유형인 Strong Reference(이하 강한 참조), Soft Reference(이하 소프트 참조), Weak Reference(이하 약한 참조) 그리고 Phantom Reference(이하 팬텀 참조)를 제공한다.
 각 참조는 객체 수명과 GC 간의 상호작용 방식을 다르게 정의하며, 이를 활용하면 캐시 관리, 자원 해제, 메모리 최적화 등 다양한 문제를 효과적으로 해결할 수 있다.
 
-이 글에서는 다음 질문에 답하며 객체 참조에 대해 자세히 살펴보겠다.
+이 글에서는 다음 질문에 답하며 객체 참조에 대해 자세히 살펴본다.
 
 - Java의 기본 참조 타입인 Strong Reference 란 무엇이며, 왜 위험할 수 있는가?
 - Soft Reference와 Weak Reference는 어떻게 메모리 효율을 높일 수 있는가?
@@ -264,7 +264,7 @@ HashMap과 WeakHashMap을 사용하였을 때를 비교해보면 Key 객체가 �
 
 ## 팬텀 참조(Phantom Reference)
 
-팬텀 참조는 Java의 `java.lang.ref.PhantomReference` 클래스를 이용해 구현되는 특수한 참조 유형 입니다.
+팬텀 참조는 Java의 `java.lang.ref.PhantomReference` 클래스를 이용해 구현되는 특수한 참조 유형 이다.
 객체가 GC에 의해 제거되기 전 마지막 단계를 관리할 때 사용한다.
 강한 참조, 소프트 참조, 약한 참조보다 더 약하며, 특정 메모리 관리 작업을 수행하거나 리소스를 해제하는데 유용하다.
 

@@ -45,7 +45,7 @@ public void printAnimals(List<? extends Animal> animals) {
 
 ```
 
-이 메서드는 `List<Dog>`, `List<Cat>` 등의 리스트를 인수로 받을 수 있습니다.
+이 메서드는 `List<Dog>`, `List<Cat>` 등의 리스트를 인수로 받을 수 있다.
 
 ## 반공변성 (Contravariance)
 

@@ -8,17 +8,17 @@ math: true
 mermaid: true
 ---
 
-Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있습니다.
-이들은 모두 Redis가 싱글 스레드라는 것을 잊어 버리거나 모르고 있기 때문에 발생하는 문제입니다.
+Redis를 사용하다 보면 의도하지 않은 장애가 발생하거나 성능이 저하되는 경우가 있다.
+이들은 모두 Redis가 싱글 스레드라는 것을 잊어 버리거나 모르고 있기 때문에 발생하는 문제이다.
 
-Redis는 싱글 스레드이기 때문에, 태생적으로 하나의 명령이 오랜 시간을 소모하는 작업에는 적합하지 않습니다.
-그러나 이러한 특성을 이해하지 못하는 경우 장애가 발생하게 됩니다.
+Redis는 싱글 스레드이기 때문에, 태생적으로 하나의 명령이 오랜 시간을 소모하는 작업에는 적합하지 않다.
+그러나 이러한 특성을 이해하지 못하는 경우 장애가 발생하게 된다.
 
-이번 글에서는 `KEYS`와 `FLUSHALL` 명령어가 왜 장애의 원인될 수 있는지 알아보겠습니다.
+이번 글에서는 `KEYS`와 `FLUSHALL` 명령어가 왜 장애의 원인될 수 있는지 알아본다.
 
 ## 서버에서 KEYS 명령를 쓰지 말자
 
-`KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 명령어입니다.
+`KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 명령어이다.
 예를 들어, `KEYS *`는 모든 키를 찾아주고, `KEYS user:*`는 `user:`로 시작하는 모든 키를 찾아줍니다.
 
 ```bash
@@ -28,7 +28,7 @@ redis 127.0.0.1:6379> keys user:*
   3) "user:2h"
 ```
 
-지원하는 glob-style 패턴을 살펴보면 다음과 같습니다.
+지원하는 glob-style 패턴을 살펴보면 다음과 같다.
 
 | 패턴      | 설명                                    |
 | --------- | --------------------------------------- |
@@ -38,10 +38,10 @@ redis 127.0.0.1:6379> keys user:*
 | h[^e]llo  | matches hallo, hbllo, ... but not hello |
 | h[a-b]llo | matches hallo and hbllo                 |
 
-여기까지 살펴보면 `KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 강력한 명령어라는 것을 알 수 있습니다.
-하지만 실제 서비스에서 해당 명령을 사용하면 장애로 이어질 가능성이 높습니다.
+여기까지 살펴보면 `KEYS` 명령어는 특정 패턴에 매칭되는 키를 찾아주는 강력한 명령어라는 것을 알 수 있다.
+하지만 실제 서비스에서 해당 명령을 사용하면 장애로 이어질 가능성이 높다.
 
-[Redis 매뉴얼](https://redis.io/commands/keys/)에서도 다음과 같이 해당 명령은 실제 제품에서는 쓰지말라고 권고하고 있습니다.
+[Redis 매뉴얼](https://redis.io/commands/keys/)에서도 다음과 같이 해당 명령은 실제 제품에서는 쓰지말라고 권고하고 있다.
 
 > Warning: consider KEYS as a command that should only be used in production environments with extreme care.
 > It may ruin performance when it is executed against large databases.
@@ -49,8 +49,8 @@ redis 127.0.0.1:6379> keys user:*
 > Don't use KEYS in your regular application code.
 > If you're looking for a way to find keys in a subset of your keyspace, consider using SCAN or sets.
 
-왜 그렇다면 `KEYS` 명령어를 사용하면 안된다고 권고 할까요?
-소스코드를 보면 이해할 수 있습니다.
+왜 그렇다면 `KEYS` 명령어를 사용하면 안된다고 권고 할까?
+소스코드를 보면 이해할 수 있다.
 
 ```c
 void keysCommand(client *c) {
@@ -97,17 +97,17 @@ void keysCommand(client *c) {
 }
 ```
 
-소스 코드를 살펴보면, 현재 설정된 db의 모든 키를 모두 순회하며 stringmatchlen 함수를 통해 패턴에 매칭되는 키를 찾아주는 것을 알 수 있습니다.
-이러한 방식으로 동작하기 때문에, 만약 Redis에 수십만개 이상의 키가 존재한다면, 해당 명령어를 실행하는 동안 다른 명령어들이 블로킹되어 성능이 저하될 수 있습니다.
-그렇다면 어떻게 해야 할까요?
+소스 코드를 살펴보면, 현재 설정된 db의 모든 키를 모두 순회하며 stringmatchlen 함수를 통해 패턴에 매칭되는 키를 찾아주는 것을 알 수 있다.
+이러한 방식으로 동작하기 때문에, 만약 Redis에 수십만개 이상의 키가 존재한다면, 해당 명령어를 실행하는 동안 다른 명령어들이 블로킹되어 성능이 저하될 수 있다.
+그렇다면 어떻게 해야 할까?
 
 ### SCAN 명령어를 사용하자
 
 `SCAN` 명령어는 `KEYS` 명령어와 비슷하게 동작하지만, 키를 순회하는 방식이 다릅니다.
-SCAN 명령어는 요청을 여러 개의 작은 요청으로 분할하여 처리하므로, 대규모 데이터셋에서도 실시간으로 요청을 처리할 수 있습니다.
+SCAN 명령어는 요청을 여러 개의 작은 요청으로 분할하여 처리하므로, 대규모 데이터셋에서도 실시간으로 요청을 처리할 수 있다.
 
-또한 Redis 클러스터에서는 KEYS 명령어를 사용할 수 없습니다.
-대신 SCAN 명령어를 사용하여 클러스터 전체에서 키를 검색할 수 있습니다.
+또한 Redis 클러스터에서는 KEYS 명령어를 사용할 수 없다.
+대신 SCAN 명령어를 사용하여 클러스터 전체에서 키를 검색할 수 있다.
 
 ```bash
 127.0.0.1:6379> SCAN 0 MATCH user:*
@@ -118,16 +118,16 @@ SCAN 명령어는 요청을 여러 개의 작은 요청으로 분할하여 처�
 
 ## 서버에서 FLUSHALL 명령을 쓰지 말자
 
-모든 데이터를 삭제하는 명령어인 'FLUSHALL/FLUSHDB'라는 명령어가 존재합니다.
-Redis는 db라는 가상의 공간을 분리할 수 있는 개념을 제공하고, select 명령으로 이동할 수 있습니다.
-이를 통해 같은 키라도 db '0번'이나 '1번' 등으로 나누어 여러개의 데이터를 저장할 수 있습니다.
-이런 db 하나의 내용을 통째로 지우는 것이 'FLUSHDB' 명령입니다.
-(따로 select 명령어로 db 지정하지 않을 시 0번을 사용합니다.)
-또한, 모든 db의 내용을 지우는 것이 'FLUSHALL' 명령입니다.
+모든 데이터를 삭제하는 명령어인 'FLUSHALL/FLUSHDB'라는 명령어가 존재한다.
+Redis는 db라는 가상의 공간을 분리할 수 있는 개념을 제공하고, select 명령으로 이동할 수 있다.
+이를 통해 같은 키라도 db '0번'이나 '1번' 등으로 나누어 여러개의 데이터를 저장할 수 있다.
+이런 db 하나의 내용을 통째로 지우는 것이 'FLUSHDB' 명령이다.
+(따로 select 명령어로 db 지정하지 않을 시 0번을 사용한다.)
+또한, 모든 db의 내용을 지우는 것이 'FLUSHALL' 명령이다.
 
-간단히 예를 들어 살펴 보겠습니다.
-아래는 db 0번과 1번에 각각 'young'이라는 키를 생성하고 '123', '456'이라는 값을 할당하였습니다.
-이때 select 명령어로 db를 변경하여 각각의 db에 키를 가져올 수 있습니다.
+간단히 예를 들어 살펴 본다.
+아래는 db 0번과 1번에 각각 'young'이라는 키를 생성하고 '123', '456'이라는 값을 할당하이었다.
+이때 select 명령어로 db를 변경하여 각각의 db에 키를 가져올 수 있다.
 
 ```bash
 127.0.0.1:6379> select 0
@@ -144,12 +144,12 @@ OK
 "hwang"
 ```
 
-flushdb를 사용하여 하나의 db를 선택하여 지우거나 flushall로 전체 db를 지울 때 주의를 해야합니다.
-flushall 명령은 전체 데이터를 다 지우며, keys 명령처럼 많은 시간이 필요합니다.
+flushdb를 사용하여 하나의 db를 선택하여 지우거나 flushall로 전체 db를 지울 때 주의를 해야한다.
+flushall 명령은 전체 데이터를 다 지우며, keys 명령처럼 많은 시간이 필요한다.
 
 fushall을 이용해서 데이터를 지우는 속도를 측정해보면 아이템 개수에 비례하여 시간이 걸립니다.
 
-다음 소스 코드를 통해 flushall 명령에 대해 살펴 보겠습니다.
+다음 소스 코드를 통해 flushall 명령에 대해 살펴 본다.
 
 > /src/db.c
 
@@ -171,9 +171,9 @@ void flushallCommand(client *c) {
 }
 ```
 
-flushallCommand 함수는 FLUSHALL 명령을 처리하는 함수 입니다.
-getFlushCommandFlags 함수를 통해 동기적으로 실행되어야 하는지, 아니면 비동기로 실행되어야 하는지 결정합니다.
-flushAllDataAndResetRDB 함수를 통해 실제 데이터를 지우는 작업을 수행합니다.
+flushallCommand 함수는 FLUSHALL 명령을 처리하는 함수 이다.
+getFlushCommandFlags 함수를 통해 동기적으로 실행되어야 하는지, 아니면 비동기로 실행되어야 하는지 결정한다.
+flushAllDataAndResetRDB 함수를 통해 실제 데이터를 지우는 작업을 수행한다.
 
 > /src/db.c
 
@@ -199,7 +199,7 @@ void flushAllDataAndResetRDB(int flags) {
 ```
 
 emptyData 함수를 호출하여 모든 데이터를 비웁니다.
-첫번째 인자로 -1을 넘겨주면 모든 db를 비우게 됩니다.
+첫번째 인자로 -1을 넘겨주면 모든 db를 비우게 된다.
 
 > /src/db.c
 
@@ -347,9 +347,9 @@ void dictEmpty(dict *d, void(callback)(dict*)) {
 }
 ```
 
-주어진 딕셔너리의 모든 항목을 비우는 역할을 합니다.
+주어진 딕셔너리의 모든 항목을 비우는 역할을 한다.
 _dictClear 함수를 두 번 호출하여 딕셔너리의 두 해시 테이블을 비웁니다.
-_dictClear 함수는 딕셔너리의 해시 테이블에서 모든 항목을 제거합니다.
+_dictClear 함수는 딕셔너리의 해시 테이블에서 모든 항목을 제거한다.
 _dictClear(d, 0, callback) 은 첫 번째 해시 테이블을, _dictClear(d, 1, callback) 는 두 번째 해시 테이블을 비웁니다.
 
 > /src/dict.c
@@ -383,11 +383,11 @@ int _dictClear(dict *d, int htidx, void(callback)(dict*)) {
 }
 ```
 
-주어진 딕셔너리의 모든 항목을 제거하는 역할을 합니다.
-먼저 해시 DICTHT_SIZE(d->ht_size_exp[htidx])로 테이블 크기와 d->ht_used[htidx] 로 해시 테이블에 사용된 항목 수를 확인 합니다.
+주어진 딕셔너리의 모든 항목을 제거하는 역할을 한다.
+먼저 해시 DICTHT_SIZE(d->ht_size_exp[htidx])로 테이블 크기와 d->ht_used[htidx] 로 해시 테이블에 사용된 항목 수를 확인 한다.
 dictEntry *he를 사용하여 현재 항목을 가져옵니다.
 dictGetNext(he)를 사용하여 다음 항목을 가져옵니다.
-dictFreeKey와 dictFreeVal 함수를 사용하여 키와 값을 제거합니다.
-이처럼 실제 데이터를 일일이 삭제하는 것을 확인 할 수 있습니다.
-따라서 지우는 속도가 O(n)이기 때문에 데이터 양에 영향을 받게 됩니다.
+dictFreeKey와 dictFreeVal 함수를 사용하여 키와 값을 제거한다.
+이처럼 실제 데이터를 일일이 삭제하는 것을 확인 할 수 있다.
+따라서 지우는 속도가 O(n)이기 때문에 데이터 양에 영향을 받게 된다.
 

@@ -10,13 +10,13 @@ mermaid: true
 
 # Kubeconfig 파일 생성 - 인증 설정 파일 구성
 
-> 이 글에서는 쿠버네티스 클라이언트가 API 서버에 연결하고 인증하기 위한 kubeconfig 파일들을 생성합니다. 각 컴포넌트(kubelet, kube-proxy, controller-manager, scheduler, admin)별로 kubeconfig를 만들고 해당 노드에 배포합니다.
+> 이 글에서는 쿠버네티스 클라이언트가 API 서버에 연결하고 인증하기 위한 kubeconfig 파일들을 생성한다. 각 컴포넌트(kubelet, kube-proxy, controller-manager, scheduler, admin)별로 kubeconfig를 만들고 해당 노드에 배포한다.
 
 ---
 
 ## Kubeconfig란?
 
-**Kubeconfig**는 쿠버네티스 클라이언트(kubectl, kubelet 등)가 API 서버에 접속하기 위한 설정 파일입니다. 다음 정보를 포함합니다:
+**Kubeconfig**는 쿠버네티스 클라이언트(kubectl, kubelet 등)가 API 서버에 접속하기 위한 설정 파일이다. 다음 정보를 포함한다:
 
 | 구성 요소 | 설명 |
 |-----------|------|
@@ -63,7 +63,7 @@ current-context: default
 
 ## Kubeconfig 생성 과정
 
-kubeconfig 파일 생성은 4단계로 이루어집니다:
+kubeconfig 파일 생성은 4단계로 이루어진다:
 
 ```
 1. set-cluster    → 클러스터 정보 설정 (API 서버 주소, CA 인증서)
@@ -85,7 +85,7 @@ kubeconfig 파일 생성은 4단계로 이루어집니다:
 
 > **`--embed-certs=true`가 중요한 이유**
 >
-> 이 옵션을 사용하면 인증서 내용이 kubeconfig 파일에 직접 포함됩니다.
+> 이 옵션을 사용하면 인증서 내용이 kubeconfig 파일에 직접 포함된다.
 > - 장점: kubeconfig 파일 하나만 있으면 됨, 이식성이 좋음
 > - 단점: 파일 크기가 커짐, 인증서 갱신 시 kubeconfig도 재생성 필요
 
@@ -93,7 +93,7 @@ kubeconfig 파일 생성은 4단계로 이루어집니다:
 
 ## Worker 노드용 Kubeconfig (kubelet)
 
-kubelet이 API 서버에 인증하기 위한 kubeconfig를 생성합니다.
+kubelet이 API 서버에 인증하기 위한 kubeconfig를 생성한다.
 
 ### node-0 kubeconfig 생성
 
@@ -157,14 +157,14 @@ ls -l *.kubeconfig
 
 > **사용자명이 `system:node:node-0` 형식인 이유**
 >
-> 쿠버네티스의 Node Authorizer는 kubelet의 사용자명이 `system:node:<nodeName>` 형식이어야 합니다.
-> 이 형식을 통해 kubelet이 자신의 노드와 관련된 리소스만 접근하도록 제한합니다.
+> 쿠버네티스의 Node Authorizer는 kubelet의 사용자명이 `system:node:<nodeName>` 형식이어야 한다.
+> 이 형식을 통해 kubelet이 자신의 노드와 관련된 리소스만 접근하도록 제한한다.
 
 ---
 
 ## kube-proxy Kubeconfig
 
-kube-proxy가 API 서버에서 서비스/엔드포인트 정보를 조회하기 위한 kubeconfig입니다.
+kube-proxy가 API 서버에서 서비스/엔드포인트 정보를 조회하기 위한 kubeconfig이다.
 
 ```bash
 kubectl config set-cluster kubernetes-the-hard-way \
@@ -198,7 +198,7 @@ cat kube-proxy.kubeconfig
 
 ## kube-controller-manager Kubeconfig
 
-Controller Manager가 API 서버와 통신하기 위한 kubeconfig입니다.
+Controller Manager가 API 서버와 통신하기 위한 kubeconfig이다.
 
 ```bash
 kubectl config set-cluster kubernetes-the-hard-way \
@@ -232,7 +232,7 @@ cat kube-controller-manager.kubeconfig
 
 ## kube-scheduler Kubeconfig
 
-Scheduler가 API 서버와 통신하기 위한 kubeconfig입니다.
+Scheduler가 API 서버와 통신하기 위한 kubeconfig이다.
 
 ```bash
 kubectl config set-cluster kubernetes-the-hard-way \
@@ -266,7 +266,7 @@ cat kube-scheduler.kubeconfig
 
 ## admin Kubeconfig
 
-kubectl 관리자용 kubeconfig입니다. Control Plane 노드(server)에서 사용됩니다.
+kubectl 관리자용 kubeconfig이다. Control Plane 노드(server)에서 사용된다.
 
 ```bash
 kubectl config set-cluster kubernetes-the-hard-way \
@@ -290,11 +290,11 @@ kubectl config use-context default \
   --kubeconfig=admin.kubeconfig
 ```
 
-> **왜 admin만 `127.0.0.1:6443`을 사용하나요?**
+> **왜 admin만 `127.0.0.1:6443`을 사용하는가?**
 >
-> admin.kubeconfig는 Control Plane 노드(server)에서 직접 사용됩니다.
-> API 서버와 같은 머신에서 실행되므로 localhost로 접속합니다.
-> 반면 다른 kubeconfig들은 원격 노드에서 사용되므로 `server.kubernetes.local`을 사용합니다.
+> admin.kubeconfig는 Control Plane 노드(server)에서 직접 사용된다.
+> API 서버와 같은 머신에서 실행되므로 localhost로 접속한다.
+> 반면 다른 kubeconfig들은 원격 노드에서 사용되므로 `server.kubernetes.local`을 사용한다.
 
 ### 확인
 
@@ -323,7 +323,7 @@ ls -l *.kubeconfig
 
 ## Kubeconfig 파일 배포
 
-생성한 kubeconfig 파일들을 각 노드에 배포합니다.
+생성한 kubeconfig 파일들을 각 노드에 배포한다.
 
 ### 배포 구조
 
@@ -359,7 +359,7 @@ ls -l *.kubeconfig
 
 ### Worker 노드에 배포
 
-kubelet과 kube-proxy용 kubeconfig를 node-0, node-1에 배포합니다.
+kubelet과 kube-proxy용 kubeconfig를 node-0, node-1에 배포한다.
 
 ```bash
 for host in node-0 node-1; do
@@ -390,7 +390,7 @@ ssh node-1 ls -l /var/lib/*/kubeconfig
 
 ### Control Plane에 배포
 
-controller-manager, scheduler, admin용 kubeconfig를 server에 배포합니다.
+controller-manager, scheduler, admin용 kubeconfig를 server에 배포한다.
 
 ```bash
 scp admin.kubeconfig \
@@ -512,4 +512,4 @@ openssl x509 -in node-0.crt -text -noout | grep Subject
 - Worker 노드와 Control Plane에 kubeconfig 배포
 - 쿠버네티스 인증 흐름 이해
 
-다음 단계에서는 데이터 암호화를 위한 encryption config를 생성합니다.
+다음 단계에서는 데이터 암호화를 위한 encryption config를 생성한다.

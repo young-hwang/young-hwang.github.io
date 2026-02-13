@@ -10,15 +10,15 @@ mermaid: true
 
 # 데이터 암호화 설정 및 키 생성
 
-> 이 글에서는 쿠버네티스 클러스터의 민감한 데이터(Secrets 등)를 etcd에 저장할 때 암호화하기 위한 Encryption Config를 생성합니다. 이를 통해 etcd 데이터를 보호하고 보안을 강화합니다.
+> 이 글에서는 쿠버네티스 클러스터의 민감한 데이터(Secrets 등)를 etcd에 저장할 때 암호화하기 위한 Encryption Config를 생성한다. 이를 통해 etcd 데이터를 보호하고 보안을 강화한다.
 
 ---
 
 ## Encryption at Rest란?
 
-**Encryption at Rest(저장 데이터 암호화)** 는 데이터가 디스크에 저장될 때 암호화하는 것을 의미합니다.
+**Encryption at Rest(저장 데이터 암호화)** 는 데이터가 디스크에 저장될 때 암호화하는 것을 의미한다.
 
-쿠버네티스는 클러스터 상태, 애플리케이션 구성, Secrets 등 다양한 데이터를 etcd에 저장합니다. 기본적으로 이 데이터는 **평문(plaintext)** 으로 저장되므로, etcd 데이터베이스에 접근할 수 있는 사람은 모든 Secret을 읽을 수 있습니다.
+쿠버네티스는 클러스터 상태, 애플리케이션 구성, Secrets 등 다양한 데이터를 etcd에 저장한다. 기본적으로 이 데이터는 **평문(plaintext)** 으로 저장되므로, etcd 데이터베이스에 접근할 수 있는 사람은 모든 Secret을 읽을 수 있다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -46,7 +46,7 @@ mermaid: true
 
 ## 암호화 Provider 종류
 
-쿠버네티스는 여러 암호화 방식(Provider)을 지원합니다:
+쿠버네티스는 여러 암호화 방식(Provider)을 지원한다:
 
 | Provider | 설명 | 권장 여부 |
 |----------|------|-----------|
@@ -56,13 +56,13 @@ mermaid: true
 | **kms v2** | 외부 KMS(Key Management Service) 연동 | 프로덕션 권장 |
 | **secretbox** | XSalsa20 + Poly1305 암호화 | 권장 |
 
-이 실습에서는 **aescbc**를 사용합니다.
+이 실습에서는 **aescbc**를 사용한다.
 
 ---
 
 ## 암호화 키 생성
 
-먼저 AES-CBC 암호화에 사용할 32바이트 무작위 키를 생성합니다.
+먼저 AES-CBC 암호화에 사용할 32바이트 무작위 키를 생성한다.
 
 ```bash
 # 32바이트 무작위 데이터를 생성하고 Base64로 인코딩
@@ -80,10 +80,10 @@ echo $ENCRYPTION_KEY
 > | `/dev/urandom` | Linux 시스템의 암호학적으로 안전한 난수 생성기 |
 > | `base64` | 바이너리 데이터를 텍스트로 인코딩 |
 
-> **왜 32바이트인가요?**
+> **왜 32바이트인가?**
 >
-> AES-256 암호화는 256비트(32바이트) 키를 사용합니다.
-> Base64로 인코딩하면 약 44자의 문자열이 됩니다.
+> AES-256 암호화는 256비트(32바이트) 키를 사용한다.
+> Base64로 인코딩하면 약 44자의 문자열이 된다.
 
 ---
 
@@ -137,7 +137,7 @@ providers:
 > - 새로운 데이터는 **무조건 암호화**되어 저장
 > - 이전에 평문으로 저장된 데이터도 **문제없이 읽기** 가능
 >
-> 점진적으로 암호화를 적용할 때 유용합니다.
+> 점진적으로 암호화를 적용할 때 유용한다.
 
 ---
 
@@ -165,7 +165,7 @@ resources:
 
 ### 환경 변수 치환하여 최종 파일 생성
 
-`envsubst` 명령어를 사용하여 `${ENCRYPTION_KEY}`를 실제 값으로 치환합니다.
+`envsubst` 명령어를 사용하여 `${ENCRYPTION_KEY}`를 실제 값으로 치환한다.
 
 ```bash
 # 환경 변수 치환
@@ -177,7 +177,7 @@ cat encryption-config.yaml
 
 > **envsubst 명령어란?**
 >
-> 환경 변수(environment substitution)를 치환하는 유틸리티입니다.
+> 환경 변수(environment substitution)를 치환하는 유틸리티이다.
 > - `${VARIABLE}` 또는 `$VARIABLE` 형태의 문자열을 환경 변수 값으로 대체
 > - 템플릿 파일에서 설정 파일을 생성할 때 유용
 
@@ -201,7 +201,7 @@ resources:
 
 ## Control Plane에 배포
 
-생성한 encryption-config.yaml을 Control Plane 노드(server)에 복사합니다.
+생성한 encryption-config.yaml을 Control Plane 노드(server)에 복사한다.
 
 ```bash
 # server에 파일 복사
@@ -211,9 +211,9 @@ scp encryption-config.yaml root@server:~/
 ssh server ls -l /root/encryption-config.yaml
 ```
 
-> **이 파일은 어떻게 사용되나요?**
+> **이 파일은 어떻게 사용되나?**
 >
-> kube-apiserver 실행 시 `--encryption-provider-config` 플래그로 이 파일을 지정합니다:
+> kube-apiserver 실행 시 `--encryption-provider-config` 플래그로 이 파일을 지정한다:
 > ```bash
 > kube-apiserver \
 >   --encryption-provider-config=/root/encryption-config.yaml \
@@ -224,14 +224,14 @@ ssh server ls -l /root/encryption-config.yaml
 
 ## etcd에 저장된 암호화된 데이터 확인 (참고)
 
-클러스터가 구성된 후, Secret이 실제로 암호화되어 저장되었는지 확인할 수 있습니다.
+클러스터가 구성된 후, Secret이 실제로 암호화되어 저장되었는지 확인할 수 있다.
 
 ```bash
 # etcd에서 직접 Secret 데이터 조회
 etcdctl get /registry/secrets/default/my-secret | hexdump -C
 ```
 
-암호화된 경우 데이터 앞에 다음과 같은 헤더가 붙습니다:
+암호화된 경우 데이터 앞에 다음과 같은 헤더가 붙는다:
 
 ```
 k8s:enc:aescbc:v1:key1:<암호화된 데이터>
@@ -320,4 +320,4 @@ export ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
 - Provider 순서의 의미 (aescbc + identity 조합)
 - encryption-config.yaml 파일 생성 및 Control Plane 배포
 
-다음 단계에서는 etcd를 부트스트랩하여 클러스터 상태 저장소를 구성합니다.
+다음 단계에서는 etcd를 부트스트랩하여 클러스터 상태 저장소를 구성한다.

@@ -10,13 +10,13 @@ mermaid: true
 
 # etcd 클러스터 부트스트랩
 
-> 이 글에서는 쿠버네티스의 상태 저장소인 etcd를 Control Plane 노드(server)에 설치하고 구성합니다. etcd는 클러스터의 모든 상태 정보를 저장하는 핵심 컴포넌트입니다.
+> 이 글에서는 쿠버네티스의 상태 저장소인 etcd를 Control Plane 노드(server)에 설치하고 구성한다. etcd는 클러스터의 모든 상태 정보를 저장하는 핵심 컴포넌트이다.
 
 ---
 
 ## etcd란?
 
-**etcd**는 분산 Key-Value 저장소로, 쿠버네티스 클러스터의 모든 상태 데이터를 저장합니다.
+**etcd**는 분산 Key-Value 저장소로, 쿠버네티스 클러스터의 모든 상태 데이터를 저장한다.
 
 ### 쿠버네티스에서 etcd의 역할
 
@@ -52,7 +52,7 @@ mermaid: true
 
 ### 쿠버네티스 컴포넌트의 Stateless 특성
 
-쿠버네티스의 모든 컴포넌트(API Server, Controller Manager, Scheduler)는 **stateless**입니다. 모든 상태는 etcd에만 저장되므로:
+쿠버네티스의 모든 컴포넌트(API Server, Controller Manager, Scheduler)는 **stateless**이다. 모든 상태는 etcd에만 저장되므로:
 - 컴포넌트가 재시작되어도 상태가 유지됨
 - 여러 인스턴스를 실행하여 고가용성 확보 가능
 
@@ -62,7 +62,7 @@ mermaid: true
 
 ### etcd.service 파일 수정
 
-원본 파일의 `controller`를 `server`로 변경합니다.
+원본 파일의 `controller`를 `server`로 변경한다.
 
 ```bash
 # 현재 설정 확인
@@ -124,11 +124,11 @@ cat units/etcd.service | grep server
 | **2379** | 클라이언트 통신 (API Server → etcd) |
 | **2380** | Peer 통신 (etcd 멤버 간 통신) |
 
-> **참고**: 이 실습에서는 단일 노드 etcd를 사용하고, localhost에서만 통신하므로 HTTP(평문)를 사용합니다. 프로덕션 환경에서는 반드시 TLS를 사용해야 합니다.
+> **참고**: 이 실습에서는 단일 노드 etcd를 사용하고, localhost에서만 통신하므로 HTTP(평문)를 사용한다. 프로덕션 환경에서는 반드시 TLS를 사용해야 한다.
 
 ### 파일 복사
 
-etcd 바이너리와 서비스 파일을 server에 복사합니다.
+etcd 바이너리와 서비스 파일을 server에 복사한다.
 
 ```bash
 scp \
@@ -142,7 +142,7 @@ scp \
 
 ## etcd 설치 및 구성 (server에서 실행)
 
-server 노드에 SSH로 접속합니다.
+server 노드에 SSH로 접속한다.
 
 ```bash
 ssh root@server
@@ -393,6 +393,6 @@ ss -tnlp | grep 2379
 - etcd 서비스 시작 및 활성화
 - 클러스터 멤버 및 상태 확인
 
-etcd가 정상적으로 실행되면 쿠버네티스 API Server가 연결하여 클러스터 상태를 저장할 수 있습니다.
+etcd가 정상적으로 실행되면 쿠버네티스 API Server가 연결하여 클러스터 상태를 저장할 수 있다.
 
-다음 단계에서는 Kubernetes Control Plane 컴포넌트(API Server, Controller Manager, Scheduler)를 부트스트랩합니다.
+다음 단계에서는 Kubernetes Control Plane 컴포넌트(API Server, Controller Manager, Scheduler)를 부트스트랩한다.

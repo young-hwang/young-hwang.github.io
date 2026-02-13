@@ -10,13 +10,13 @@ mermaid: true
 
 # kubectl 원격 접근 설정
 
-> 이 글에서는 Jumpbox에서 Kubernetes 클러스터에 원격으로 접근할 수 있도록 kubectl을 설정합니다. 관리자 인증서를 사용하여 kubeconfig 파일을 생성하고, 클러스터 상태를 확인합니다.
+> 이 글에서는 Jumpbox에서 Kubernetes 클러스터에 원격으로 접근할 수 있도록 kubectl을 설정한다. 관리자 인증서를 사용하여 kubeconfig 파일을 생성하고, 클러스터 상태를 확인한다.
 
 ---
 
 ## 원격 접근 아키텍처
 
-지금까지는 `--kubeconfig admin.kubeconfig` 옵션을 사용하여 클러스터에 접근했습니다. 이제 기본 kubeconfig 파일(`~/.kube/config`)을 설정하여 옵션 없이 kubectl을 사용할 수 있게 합니다.
+지금까지는 `--kubeconfig admin.kubeconfig` 옵션을 사용하여 클러스터에 접근했다. 이제 기본 kubeconfig 파일(`~/.kube/config`)을 설정하여 옵션 없이 kubectl을 사용할 수 있게 한다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -52,7 +52,7 @@ mermaid: true
 
 ### API Server 접근 테스트
 
-kubeconfig를 생성하기 전에 API Server에 접근할 수 있는지 확인합니다.
+kubeconfig를 생성하기 전에 API Server에 접근할 수 있는지 확인한다.
 
 ```bash
 # DNS 확인 (/etc/hosts에 설정됨)
@@ -75,7 +75,7 @@ curl -s --cacert ca.crt https://server.kubernetes.local:6443/version | jq
 
 ## kubeconfig 파일 생성
 
-kubectl은 기본적으로 `~/.kube/config` 파일에서 클러스터 접근 정보를 읽습니다. `kubectl config` 명령으로 이 파일을 생성합니다.
+kubectl은 기본적으로 `~/.kube/config` 파일에서 클러스터 접근 정보를 읽는다. `kubectl config` 명령으로 이 파일을 생성한다.
 
 ### kubeconfig 구조
 
@@ -130,7 +130,7 @@ kubectl config set-credentials admin \
 | `--client-certificate` | 클라이언트 인증서 (admin.crt) |
 | `--client-key` | 클라이언트 개인 키 (admin.key) |
 
-> **admin 인증서 정보**: admin.crt는 `CN=admin, O=system:masters`로 생성되었습니다. `system:masters` 그룹은 Kubernetes의 기본 ClusterRoleBinding에 의해 `cluster-admin` 권한을 갖습니다.
+> **admin 인증서 정보**: admin.crt는 `CN=admin, O=system:masters`로 생성되었다. `system:masters` 그룹은 Kubernetes의 기본 ClusterRoleBinding에 의해 `cluster-admin` 권한을 갖는다.
 
 ### 3단계: 컨텍스트 생성
 
@@ -152,7 +152,7 @@ kubectl config set-context kubernetes-the-hard-way \
 kubectl config use-context kubernetes-the-hard-way
 ```
 
-이 명령은 `current-context`를 `kubernetes-the-hard-way`로 설정합니다.
+이 명령은 `current-context`를 `kubernetes-the-hard-way`로 설정한다.
 
 ---
 
@@ -192,7 +192,7 @@ kubectl config view
 
 ## 클러스터 접근 테스트
 
-이제 `--kubeconfig` 옵션 없이 kubectl을 사용할 수 있습니다.
+이제 `--kubeconfig` 옵션 없이 kubectl을 사용할 수 있다.
 
 ### 버전 확인
 
@@ -220,7 +220,7 @@ node-1   Ready    <none>   9m    v1.32.3   192.168.10.102   <none>        Debian
 
 ### 상세 로그로 확인
 
-`-v` 옵션으로 kubectl이 어떤 kubeconfig 파일을 사용하는지 확인할 수 있습니다.
+`-v` 옵션으로 kubectl이 어떤 kubeconfig 파일을 사용하는지 확인할 수 있다.
 
 ```bash
 kubectl get nodes -v=6
@@ -237,7 +237,7 @@ I0104 16:27:17.687800    2735 loader.go:402] Config loaded from file:  /root/.ku
 kubectl get pod -A
 ```
 
-> **참고**: 이 시점에서는 아직 Pod가 없습니다. 다음 단계(Smoke Test)에서 Pod를 배포합니다.
+> **참고**: 이 시점에서는 아직 Pod가 없다. 다음 단계(Smoke Test)에서 Pod를 배포한다.
 
 ---
 
@@ -260,7 +260,7 @@ kubectl get pod -A
 
 ## 여러 클러스터 관리 (참고)
 
-실무에서는 여러 클러스터를 관리해야 할 수 있습니다.
+실무에서는 여러 클러스터를 관리해야 할 수 있다.
 
 ### 여러 컨텍스트 사용
 
@@ -274,7 +274,7 @@ kubectl config use-context production-cluster
 
 ### KUBECONFIG 환경 변수
 
-여러 kubeconfig 파일을 병합하여 사용할 수 있습니다.
+여러 kubeconfig 파일을 병합하여 사용할 수 있다.
 
 ```bash
 # 여러 파일 지정 (콜론으로 구분)
@@ -286,7 +286,7 @@ kubectl config view
 
 ### kubectx 도구 (권장)
 
-컨텍스트 전환을 더 쉽게 해주는 도구입니다.
+컨텍스트 전환을 더 쉽게 해주는 도구이다.
 
 ```bash
 # 설치 (이전 Kind 문서에서 설치함)
@@ -385,6 +385,6 @@ kubectl config set-cluster ...
 - 원격 클러스터 접근 확인
 - --kubeconfig 옵션 없이 kubectl 사용 가능
 
-이제 Jumpbox에서 직접 클러스터를 관리할 수 있습니다.
+이제 Jumpbox에서 직접 클러스터를 관리할 수 있다.
 
-다음 단계에서는 Smoke Test를 통해 Pod 배포, 네트워크, 로그, exec 등 클러스터의 핵심 기능이 정상 동작하는지 확인합니다.
+다음 단계에서는 Smoke Test를 통해 Pod 배포, 네트워크, 로그, exec 등 클러스터의 핵심 기능이 정상 동작하는지 확인한다.

@@ -38,7 +38,7 @@ public class GreetingController{
 그러나 이 해결책은 애플리케이션에서 여러 불가능한 상황이 발생한다.
 예를 들어, 컨트롤러는 이미 다른 기본 클래스에서 확장된 것일 수도 있고, 다른 jar에 있거나 직접적인 수정이 불가능한 경우가 해당될 것이다.
 
-다음으로 전역적인 문제와 컨트롤러와 같은 기존 아티팩트에 대한 변경을하지 않는 다른 방법에 대해 살펴보겠다.
+다음으로 전역적인 문제와 컨트롤러와 같은 기존 아티팩트에 대한 변경을하지 않는 다른 방법에 대해 살펴본다.
 
 ## handlerExceptionResolver를 이용한 방법
 
@@ -58,7 +58,7 @@ Spring 3.0에 도입 되었다.
 이는 대응하는 HTTP 상태 코드, 즉 클라이언트 오류 4xx 및 서버 오류 5xx 상태 코드에 대한 표준 Spring 예외를 해결하는 데 사용된다.
 처리하는 Spring 예외의 전체 목록과 상태 코드에 매핑하는 방법은 다음과 같다.
 응답의 상태 코드를 올바르게 설정하지만, 한 가지 제한 사항은 응답 본문에 아무것도 설정하지 않는다는 것이다.
-REST API의 경우 상태 코드가 클라이언트에 제공하기에 충분하지 않은 정보입니다. 응답 본문이 있어야 애플리케이션이 실패에 대한 추가 정보를 제공할 수 있다.
+REST API의 경우 상태 코드가 클라이언트에 제공하기에 충분하지 않은 정보이다. 응답 본문이 있어야 애플리케이션이 실패에 대한 추가 정보를 제공할 수 있다.
 이는 ModelAndView를 통해 뷰 해상도와 렌더링 오류 콘텐츠를 구성하면 해결할 수 있지만 솔루션이 최적이 아닌 것은 분명하다.
 그렇기 때문에 Spring 3.2에서 더 나은 옵션을 추가했다.
 
@@ -70,7 +70,7 @@ Spring 3.0에 도입 되었다.
 
 ## HandlerExceptionResolver들이 어떻게 Bean으로 등록되는가?
 
-그렇다면 어떻게 HandlerExceptionResolver 들이 빈으로 등록이 되는지 살펴 보겠다.
+그렇다면 어떻게 HandlerExceptionResolver 들이 빈으로 등록이 되는지 살펴 보다.
 Spring MVC의 자동 설정인 WebMvcAutoConfiguration을 먼저 살표보자.
 
 ```java
@@ -191,7 +191,7 @@ classDiagram
 
 ## handlerExceptoinResolver들은 어떻게 동작하는가?
 
-hanlderExceptionResolver가 빈으로 등록이 완료되었고 애플리케이션이 실행될 때 어떻게 실행이 되는지 살펴보도록 하겠다.
+hanlderExceptionResolver가 빈으로 등록이 완료되었고 애플리케이션이 실행될 때 어떻게 실행이 되는지 살펴본다.
 MVC를 기준으로 살펴보기에 DispatcherServlet에서의 동작을 확인한다.
 
 ```mermaid
@@ -328,4 +328,4 @@ public class DispatcherServlet extends FrameworkServlet {
 지금까지 스프링에서 사용하는 HandlerExceptionResolever의 간단히 종류와 역할에 대해서 살펴보았다.
 또한 이러한 Resolver들이 어떻게 Bean으로 등록이 되고 DispatchServlet에 어떻게 주입이 되는지 까지도 보았다.
 스프링에서 Composite Pattern 패턴 이나 Tempate Method 패턴을 어떻게 활용하고 있는지도 살펴 볼수 있었다.
-다음에는 이 문서의 후속으로 어떻게 Controller에서 Exception을 핸들링하는지 HandlerExceptionResolver에서 어떻게 Exception을 확인하는지 알아보겠다.
+다음에는 이 문서의 후속으로 어떻게 Controller에서 Exception을 핸들링하는지 HandlerExceptionResolver에서 어떻게 Exception을 확인하는지 알아본다.

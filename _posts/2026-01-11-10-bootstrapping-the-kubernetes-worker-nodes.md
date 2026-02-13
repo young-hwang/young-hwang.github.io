@@ -10,13 +10,13 @@ mermaid: true
 
 # Kubernetes Worker Node 부트스트랩
 
-> 이 글에서는 두 개의 Worker Node(node-0, node-1)에 컨테이너 런타임과 Kubernetes 컴포넌트를 설치합니다. containerd, kubelet, kube-proxy, CNI 플러그인을 구성하여 실제 워크로드를 실행할 수 있는 노드를 만듭니다.
+> 이 글에서는 두 개의 Worker Node(node-0, node-1)에 컨테이너 런타임과 Kubernetes 컴포넌트를 설치한다. containerd, kubelet, kube-proxy, CNI 플러그인을 구성하여 실제 워크로드를 실행할 수 있는 노드를 만든다.
 
 ---
 
 ## Worker Node 아키텍처
 
-Worker Node는 실제 컨테이너가 실행되는 곳입니다.
+Worker Node는 실제 컨테이너가 실행되는 곳이다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -68,7 +68,7 @@ Worker Node는 실제 컨테이너가 실행되는 곳입니다.
 
 ### kubelet-config.yaml 이해
 
-kubelet 설정 파일의 주요 옵션을 살펴봅니다.
+kubelet 설정 파일의 주요 옵션을 살펴본다.
 
 ```yaml
 kind: KubeletConfiguration
@@ -251,7 +251,7 @@ swapon --show
 # 출력이 없으면 swap이 비활성화된 상태
 ```
 
-> **Swap과 Kubernetes**: Kubernetes는 기본적으로 swap이 활성화되면 시작을 거부합니다. 메모리 관리의 예측 가능성을 위해서입니다. `failSwapOn: false`로 설정하면 swap이 있어도 실행됩니다.
+> **Swap과 Kubernetes**: Kubernetes는 기본적으로 swap이 활성화되면 시작을 거부한다. 메모리 관리의 예측 가능성을 위해서이다. `failSwapOn: false`로 설정하면 swap이 있어도 실행된다.
 
 ### 디렉토리 구조 생성
 
@@ -300,11 +300,11 @@ mv 10-bridge.conf 99-loopback.conf /etc/cni/net.d/
 cat /etc/cni/net.d/10-bridge.conf
 ```
 
-> **파일 이름의 숫자**: CNI는 설정 파일을 알파벳순으로 읽습니다. `10-bridge.conf`가 `99-loopback.conf`보다 먼저 적용됩니다.
+> **파일 이름의 숫자**: CNI는 설정 파일을 알파벳순으로 읽는다. `10-bridge.conf`가 `99-loopback.conf`보다 먼저 적용된다.
 
 ### br-netfilter 커널 모듈 로드
 
-브리지 네트워크 트래픽이 iptables를 거치도록 설정합니다.
+브리지 네트워크 트래픽이 iptables를 거치도록 설정한다.
 
 ```bash
 # 현재 상태 확인
@@ -520,7 +520,7 @@ exit
 
 ## node-1 구성
 
-node-1에서도 동일한 과정을 반복합니다.
+node-1에서도 동일한 과정을 반복한다.
 
 ```bash
 ssh root@node-1
@@ -606,7 +606,7 @@ ssh server "kubectl get nodes node-0 -o yaml --kubeconfig admin.kubeconfig" | yq
 ssh server "kubectl get pod -A --kubeconfig admin.kubeconfig"
 ```
 
-> **참고**: 이 시점에서는 아직 Pod가 없습니다. 다음 단계(Smoke Test)에서 Pod를 배포합니다.
+> **참고**: 이 시점에서는 아직 Pod가 없다. 다음 단계(Smoke Test)에서 Pod를 배포한다.
 
 ---
 
@@ -747,6 +747,6 @@ iptables -t nat -L KUBE-SERVICES -n
 - br-netfilter 커널 모듈 설정
 - 노드 등록 및 Ready 상태 확인
 
-두 Worker Node가 Ready 상태가 되면 Pod를 배포할 준비가 완료됩니다.
+두 Worker Node가 Ready 상태가 되면 Pod를 배포할 준비가 완료된다.
 
-다음 단계에서는 Smoke Test를 통해 클러스터가 정상적으로 동작하는지 확인합니다.
+다음 단계에서는 Smoke Test를 통해 클러스터가 정상적으로 동작하는지 확인한다.
